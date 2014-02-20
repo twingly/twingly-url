@@ -23,6 +23,16 @@ class NormalizerTest < Test::Unit::TestCase
       url = "http://news.google.com/news/url?sa=t&fd=R&usg=AFQjCNGc4A_sfGS6fMMqggiK_8h6yk2miw&url=http:%20%20%20//fansided.com/2013/08/02/nike-decides-to-drop-milwaukee-brewers-ryan-braun"
       assert @normalizer.normalize(url)
     end
+
+    should "handle URL with umlauts in host" do
+      url = "http://www.åäö.se/"
+      assert_equal [url], @normalizer.normalize(url)
+    end
+
+    should "handle URL with umlauts in path" do
+      url = "http://www.aoo.se/öö"
+      assert_equal [url], @normalizer.normalize(url)
+    end
   end
 
   context ".extract_urls" do
