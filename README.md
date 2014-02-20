@@ -1,5 +1,7 @@
 # twingly-url-normalizer
 
+[![Build Status](https://magnum.travis-ci.com/twingly/twingly-url-normalizer.png?token=ADz8fWxRD3uP4KZPPZQS&branch=master)](https://magnum.travis-ci.com/twingly/twingly-url-normalizer)
+
 Ruby gem for URL normalization
 
 ## Example

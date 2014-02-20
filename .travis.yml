@@ -1,0 +1,14 @@
+language: ruby
+
+rvm:
+  - 2.0.0
+
+cache: bundler
+
+notifications:
+  email: false
+  hipchat:
+    rooms: 0715dd54b78b69f7dc310969a35036@208408
+    on_success: never
+    on_failure: change
+    template: '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
