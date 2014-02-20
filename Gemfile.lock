@@ -1,0 +1,51 @@
+PATH
+  remote: .
+  specs:
+    twingly-url-normalizer (0.0.1)
+      domainatrix
+      postrank-uri
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (4.0.3)
+      i18n (~> 0.6, >= 0.6.4)
+      minitest (~> 4.2)
+      multi_json (~> 1.3)
+      thread_safe (~> 0.1)
+      tzinfo (~> 0.3.37)
+    addressable (2.3.5)
+    ansi (1.4.3)
+    atomic (1.1.14)
+    domainatrix (0.0.11)
+      addressable
+    i18n (0.6.9)
+    minitest (4.7.5)
+    multi_json (1.8.4)
+    nokogiri (1.5.11)
+    postrank-uri (1.0.17)
+      addressable (~> 2.3.0)
+      nokogiri (~> 1.5.5)
+      public_suffix (~> 1.1.3)
+    public_suffix (1.1.3)
+    rake (10.1.1)
+    shoulda (3.5.0)
+      shoulda-context (~> 1.0, >= 1.0.1)
+      shoulda-matchers (>= 1.4.1, < 3.0)
+    shoulda-context (1.1.6)
+    shoulda-matchers (2.5.0)
+      activesupport (>= 3.0.0)
+    thread_safe (0.1.3)
+      atomic
+    turn (0.9.6)
+      ansi
+    tzinfo (0.3.38)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rake
+  shoulda
+  turn
+  twingly-url-normalizer!

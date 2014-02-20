@@ -15,6 +15,10 @@ Gem::Specification.new do |s|
   s.add_dependency "postrank-uri"
   s.add_dependency "domainatrix"
 
+  s.add_development_dependency "turn"
+  s.add_development_dependency "rake"
+  s.add_development_dependency "shoulda"
+
   s.files        = Dir.glob("{lib}/**/*") + %w(README.md)
   s.require_path = 'lib'
 end
