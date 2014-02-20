@@ -5,12 +5,12 @@ module Twingly
   module URL
     class Normalizer
       def self.normalize(potential_urls)
-        extract_urls(potential_urls).map do |url|
-          normalize_url(url)
+        extract_urls(potential_urls).map do |potential_url|
+          normalize_url(potential_url)
         end.compact
       end
 
-      def self.extract_urls (potential_urls)
+      def self.extract_urls(potential_urls)
         Array(potential_urls).map(&:split).flatten
       end
 
