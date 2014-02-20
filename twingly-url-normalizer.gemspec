@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "turn"
   s.add_development_dependency "rake"
-  s.add_development_dependency "shoulda"
+  s.add_development_dependency "shoulda-context"
 
   s.files        = Dir.glob("{lib}/**/*") + %w(README.md)
   s.require_path = 'lib'
