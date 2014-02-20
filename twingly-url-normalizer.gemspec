@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "postrank-uri"
   s.add_dependency "domainatrix"
+  s.add_dependency "addressable"
 
   s.add_development_dependency "turn"
   s.add_development_dependency "rake"

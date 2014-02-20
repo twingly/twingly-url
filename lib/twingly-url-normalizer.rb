@@ -1,6 +1,6 @@
 require 'postrank-uri'
 require 'domainatrix'
-require 'uri'
+require 'addressable/uri'
 
 module Twingly
   module URL
@@ -17,7 +17,7 @@ module Twingly
 
       def self.normalize_url(url)
         subdomain = Domainatrix.parse(url).subdomain
-        uri = URI.parse(url)
+        uri = Addressable::URI.parse(url)
         if subdomain.empty?
           uri.host = "www.#{uri.host}"
         end

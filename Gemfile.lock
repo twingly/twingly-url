@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     twingly-url-normalizer (0.0.1)
+      addressable
       domainatrix
       postrank-uri
 
