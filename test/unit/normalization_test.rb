@@ -33,6 +33,11 @@ class NormalizerTest < Test::Unit::TestCase
       url = "http://www.aoo.se/öö"
       assert_equal [url], @normalizer.normalize(url)
     end
+
+    should "should not blow up when there's no URL in the text" do
+      url = "Just some text"
+      assert @normalizer.normalize(url)
+    end
   end
 
   context ".extract_urls" do
