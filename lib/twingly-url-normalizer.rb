@@ -1,5 +1,5 @@
-require 'domainatrix'
 require 'addressable/uri'
+require 'public_suffix'
 
 module Twingly
   module URL
@@ -7,20 +7,22 @@ module Twingly
       def self.normalize(potential_urls)
         extract_urls(potential_urls).map do |url|
           normalize_url(url)
-        end
+        end.compact
       end
 
-      def self.extract_urls(potential_urls)
+      def self.extract_urls (potential_urls)
         Array(potential_urls).map(&:split).flatten
       end
 
-      def self.normalize_url(url)
-        subdomain = Domainatrix.parse(url).subdomain
-        uri = Addressable::URI.parse(url)
-        if subdomain.empty?
-          uri.host = "www.#{uri.host}"
+      def self.normalize_url(potential_url)
+        uri    = Addressable::URI.heuristic_parse(potential_url)
+        domain = PublicSuffix.parse(uri.host)
+
+        unless domain.subdomain?
+          uri.host = "www.#{domain}"
         end
         uri.to_s
+      rescue PublicSuffix::DomainInvalid
       end
     end
   end
