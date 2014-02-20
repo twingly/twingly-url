@@ -9,7 +9,7 @@ def measure(name, count, &block)
     end
 
     result = RubyProf.stop
-    printer = RubyProf::FlatPrinter.new(result)
-    printer.print(STDOUT)
+    printer = RubyProf::MultiPrinter.new(result)
+    printer.print(path: 'tmp')
   end
 end
