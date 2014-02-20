@@ -38,6 +38,11 @@ class NormalizerTest < Test::Unit::TestCase
       url = "Just some text"
       assert @normalizer.normalize(url)
     end
+
+    should "should not create URLs for normal words" do
+      url = "This is, just, some words. Yay!"
+      assert_equal [], @normalizer.normalize(url)
+    end
   end
 
   context ".extract_urls" do
@@ -92,9 +97,18 @@ class NormalizerTest < Test::Unit::TestCase
       assert_equal "http://www.twingly.com/", result
     end
 
-    should "not be able to normalize url without protocol" do
-      url = "twingly.com/"
-      assert_raises(Addressable::URI::InvalidURIError) { @normalizer.normalize_url(url) }
+    should "be able to normalize url without protocol" do
+      url = "www.twingly.com/"
+      result = @normalizer.normalize_url(url)
+
+      assert_equal "http://www.twingly.com/", result
+    end
+
+    should "not return broken URLs" do
+      url = "http://www.twingly."
+      result = @normalizer.normalize_url(url)
+
+      assert_equal nil, result
     end
   end
 end
