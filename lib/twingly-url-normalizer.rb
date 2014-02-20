@@ -1,4 +1,3 @@
-require 'postrank-uri'
 require 'domainatrix'
 require 'addressable/uri'
 
@@ -12,7 +11,7 @@ module Twingly
       end
 
       def self.extract_urls(potential_urls)
-        PostRank::URI.extract(potential_urls)
+        Array(potential_urls).map(&:split).flatten
       end
 
       def self.normalize_url(url)

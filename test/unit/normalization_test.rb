@@ -86,5 +86,10 @@ class NormalizerTest < Test::Unit::TestCase
 
       assert_equal "http://www.twingly.com/", result
     end
+
+    should "not be able to normalize url without protocol" do
+      url = "twingly.com/"
+      assert_raises(Addressable::URI::InvalidURIError) { @normalizer.normalize_url(url) }
+    end
   end
 end

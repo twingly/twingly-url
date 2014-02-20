@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
   s.summary     = "Ruby library for URL normalization"
   s.required_ruby_version = ">= 1.9.3"
 
-  s.add_dependency "postrank-uri"
   s.add_dependency "domainatrix"
   s.add_dependency "addressable"
 

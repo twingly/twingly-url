@@ -4,7 +4,6 @@ PATH
     twingly-url-normalizer (0.0.1)
       addressable
       domainatrix
-      postrank-uri
 
 GEM
   remote: https://rubygems.org/
@@ -13,12 +12,6 @@ GEM
     ansi (1.4.3)
     domainatrix (0.0.11)
       addressable
-    nokogiri (1.5.11)
-    postrank-uri (1.0.17)
-      addressable (~> 2.3.0)
-      nokogiri (~> 1.5.5)
-      public_suffix (~> 1.1.3)
-    public_suffix (1.1.3)
     rake (10.1.1)
     shoulda-context (1.1.6)
     turn (0.9.6)
