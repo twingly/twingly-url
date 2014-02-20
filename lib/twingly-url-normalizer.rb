@@ -2,9 +2,6 @@ require 'postrank-uri'
 require 'domainatrix'
 require 'uri'
 
-# TODO
-# * Handle blogspot.se -> blogspot.com
-
 module Twingly
   module URL
     class Normalizer
