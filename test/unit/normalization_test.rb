@@ -13,6 +13,16 @@ class NormalizerTest < Test::Unit::TestCase
     should "accept an Array" do
       assert @normalizer.normalize([])
     end
+
+    should "handle URL with ] in it" do
+      url = "http://www.iwaseki.co.jp/cgi/yybbs/yybbs.cgi/%DEuropean]buy"
+      assert @normalizer.normalize(url)
+    end
+
+    should "handle URL with reference to another URL in it" do
+      url = "http://news.google.com/news/url?sa=t&fd=R&usg=AFQjCNGc4A_sfGS6fMMqggiK_8h6yk2miw&url=http:%20%20%20//fansided.com/2013/08/02/nike-decides-to-drop-milwaukee-brewers-ryan-braun"
+      assert @normalizer.normalize(url)
+    end
   end
 
   context ".extract_urls" do
