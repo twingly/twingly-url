@@ -13,6 +13,7 @@ GEM
     domainatrix (0.0.11)
       addressable
     rake (10.1.1)
+    ruby-prof (0.14.2)
     shoulda-context (1.1.6)
     turn (0.9.6)
       ansi
@@ -22,6 +23,7 @@ PLATFORMS
 
 DEPENDENCIES
   rake
+  ruby-prof
   shoulda-context
   turn
   twingly-url-normalizer!

@@ -18,3 +18,13 @@ Ruby gem for URL normalization
 Run tests with
 
     bundle exec rake
+
+### Profiling
+
+You can get some profiling by running
+
+    bundle exec rake test:profile
+
+Note that this isn't a benchmark, we're using [ruby-prof] which will slow things down.
+
+[ruby-prof]: http://ruby-prof.rubyforge.org/

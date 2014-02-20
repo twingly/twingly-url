@@ -15,5 +15,6 @@ namespace :test do
     test.pattern = "test/profile/*_test.rb"
     test.libs << 'lib'
     test.libs << 'test'
+    test.libs << 'test/lib'
   end
 end
