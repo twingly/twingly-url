@@ -12,3 +12,9 @@ Ruby gem for URL normalization
 [6] pry(main)> Twingly::URL::Normalizer.normalize('duh.se')
 => ["http://www.duh.se/"]
 ```
+
+## Tests
+
+Run tests with
+
+    bundle exec rake
