@@ -12,8 +12,13 @@ Gem::Specification.new do |s|
   s.summary     = "Ruby library for URL normalization"
   s.required_ruby_version = ">= 1.9.3"
 
-  s.add_dependency "postrank-uri"
-  s.add_dependency "domainatrix"
+  s.add_dependency "addressable"
+  s.add_dependency "public_suffix", "~> 1.4.0"
+
+  s.add_development_dependency "turn"
+  s.add_development_dependency "rake"
+  s.add_development_dependency "shoulda-context"
+  s.add_development_dependency "ruby-prof"
 
   s.files        = Dir.glob("{lib}/**/*") + %w(README.md)
   s.require_path = 'lib'
