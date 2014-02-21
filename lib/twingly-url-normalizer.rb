@@ -21,6 +21,11 @@ module Twingly
         unless domain.subdomain?
           uri.host = "www.#{domain}"
         end
+
+        if uri.path.empty?
+          uri.path = "/"
+        end
+
         uri.to_s
       rescue PublicSuffix::DomainInvalid
       end

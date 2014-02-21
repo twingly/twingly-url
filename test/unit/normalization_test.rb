@@ -97,6 +97,13 @@ class NormalizerTest < Test::Unit::TestCase
       assert_equal "http://www.twingly.com/", result
     end
 
+    should "add an ending slash if missing" do
+      url = "http://www.twingly.com"
+      result = @normalizer.normalize_url(url)
+
+      assert_equal "http://www.twingly.com/", result
+    end
+
     should "be able to normalize url without protocol" do
       url = "www.twingly.com/"
       result = @normalizer.normalize_url(url)
