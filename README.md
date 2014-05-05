@@ -7,11 +7,14 @@ Ruby gem for URL normalization
 ## Example
 
 ```
-irb(main):001:0> Twingly::URL::Normalizer.normalize('http://duh.se')
-=> ["http://www.duh.se"]
-irb(main):002:0> Twingly::URL::Normalizer.normalize('http://duh.se http://blog.twingly.com/')
-=> ["http://www.duh.se", "http://blog.twingly.com/"]
-irb(main):003:0>
+[1] pry(main)> require 'twingly-url-normalizer'
+=> true
+[2] pry(main)> Twingly::URL::Normalizer.normalize('http://duh.se')
+=> ["http://www.duh.se/"]
+[3] pry(main)> Twingly::URL::Normalizer.normalize('http://duh.se http://blog.twingly.com/')
+=> ["http://www.duh.se/", "http://blog.twingly.com/"]
+[4] pry(main)> Twingly::URL::Normalizer.normalize('no URL')
+=> []
 ```
 
 ## Tests
