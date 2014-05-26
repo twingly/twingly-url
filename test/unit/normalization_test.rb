@@ -117,5 +117,12 @@ class NormalizerTest < Test::Unit::TestCase
 
       assert_equal nil, result
     end
+
+    should "not add www. to blogspot blogs" do
+      url = "http://jlchen1026.blogspot.com/"
+      result = @normalizer.normalize_url(url)
+
+      assert_equal url, result
+    end
   end
 end

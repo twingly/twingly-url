@@ -1,6 +1,8 @@
 require 'addressable/uri'
 require 'public_suffix'
 
+PublicSuffix::List.private_domains = false
+
 module Twingly
   module URL
     class Normalizer
