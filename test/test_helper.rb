@@ -3,4 +3,5 @@ require 'turn/autorun'
 require 'shoulda-context'
 
 require 'twingly/url'
+require 'twingly/url/hasher'
 require 'twingly/url/normalizer'
