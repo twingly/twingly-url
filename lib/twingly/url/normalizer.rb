@@ -1,7 +1,4 @@
-require 'addressable/uri'
-require 'public_suffix'
-
-PublicSuffix::List.private_domains = false
+require 'twingly/url'
 
 module Twingly
   module URL
@@ -19,19 +16,19 @@ module Twingly
       end
 
       def normalize_url(potential_url)
-        uri    = Addressable::URI.heuristic_parse(potential_url)
-        domain = PublicSuffix.parse(uri.host)
+        url, domain = Twingly::URL.extract_url_and_domain(potential_url)
+
+        return nil unless url || domain
 
         unless domain.subdomain?
-          uri.host = "www.#{domain}"
+          url.host = "www.#{domain}"
         end
 
-        if uri.path.empty?
-          uri.path = "/"
+        if url.path.empty?
+          url.path = "/"
         end
 
-        uri.to_s
-      rescue PublicSuffix::DomainInvalid
+        url.to_s
       end
     end
   end
