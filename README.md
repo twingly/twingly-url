@@ -5,6 +5,7 @@
 Twingly URL tools.
 
 * `twingly/url` - Parse and validate URLs
+    * `Twingly::URL.parse` - Returns a Struct with `#url` and `#domain` accessors
     * `Twingly::URL.validate` - Validates a URL
 * `twingly/url/normalizer` - Normalize URLs
     * `Twingly::URL::Normalizer.normalize(string)` - Extracts URLs from string (Array)

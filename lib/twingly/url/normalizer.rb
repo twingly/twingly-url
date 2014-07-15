@@ -16,19 +16,19 @@ module Twingly
       end
 
       def normalize_url(potential_url)
-        url, domain = Twingly::URL.extract_url_and_domain(potential_url)
+        result = Twingly::URL.parse(potential_url)
 
-        return nil unless url || domain
+        return nil unless result.valid?
 
-        unless domain.subdomain?
-          url.host = "www.#{domain}"
+        unless result.domain.subdomain?
+          result.url.host = "www.#{result.domain}"
         end
 
-        if url.path.empty?
-          url.path = "/"
+        if result.url.path.empty?
+          result.url.path = "/"
         end
 
-        url.to_s
+        result.url.to_s
       end
     end
   end

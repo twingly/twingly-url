@@ -7,6 +7,17 @@ module Twingly
   module URL
     module_function
 
+    UrlObject = Struct.new(:url, :domain) do
+      def valid?
+        url && domain
+      end
+    end
+
+    def parse(potential_url)
+      url, domain = extract_url_and_domain(potential_url)
+      UrlObject.new(url, domain)
+    end
+
     def extract_url_and_domain(potential_url)
       url    = Addressable::URI.heuristic_parse(potential_url)
       domain = PublicSuffix.parse(url.host)
@@ -17,7 +28,7 @@ module Twingly
     end
 
     def validate(potential_url)
-      extract_url_and_domain(potential_url).size == 2
+      parse(potential_url).valid?
     rescue
       false
     end
