@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Johan Eckerström"]
   s.email       = ["johan.eckerstrom@twingly.com"]
-  s.homepage    = "http://github.com/twingly/twingly-url-normalizer"
+  s.homepage    = "http://github.com/twingly/twingly-url"
   s.summary     = "Ruby library for URL handling"
   s.required_ruby_version = ">= 1.9.3"
 
