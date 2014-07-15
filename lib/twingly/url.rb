@@ -1,0 +1,36 @@
+require 'addressable/uri'
+require 'public_suffix'
+
+PublicSuffix::List.private_domains = false
+
+module Twingly
+  module URL
+    module_function
+
+    UrlObject = Struct.new(:url, :domain) do
+      def valid?
+        url && domain
+      end
+    end
+
+    def parse(potential_url)
+      url, domain = extract_url_and_domain(potential_url)
+      UrlObject.new(url, domain)
+    end
+
+    def extract_url_and_domain(potential_url)
+      url    = Addressable::URI.heuristic_parse(potential_url)
+      domain = PublicSuffix.parse(url.host)
+
+      [url, domain]
+    rescue PublicSuffix::DomainInvalid
+      []
+    end
+
+    def validate(potential_url)
+      parse(potential_url).valid?
+    rescue
+      false
+    end
+  end
+end
