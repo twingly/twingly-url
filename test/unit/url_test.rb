@@ -6,7 +6,7 @@ class UrlTest < Test::Unit::TestCase
       assert Twingly::URL.validate("http://blog.twingly.com/"), "Should be valid"
     end
 
-    should "return false for a valid url" do
+    should "return false for a invalid url" do
       refute Twingly::URL.validate("http://"), "Should not be valid"
     end
   end
