@@ -3,13 +3,13 @@
 require File.expand_path('../lib/version', __FILE__)
 
 Gem::Specification.new do |s|
-  s.name        = "twingly-url-normalizer"
-  s.version     = Twingly::URL::Normalizer::VERSION
+  s.name        = "twingly-url"
+  s.version     = Twingly::URL::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Johan Eckerström"]
   s.email       = ["johan.eckerstrom@twingly.com"]
   s.homepage    = "http://github.com/twingly/twingly-url-normalizer"
-  s.summary     = "Ruby library for URL normalization"
+  s.summary     = "Ruby library for URL handling"
   s.required_ruby_version = ">= 1.9.3"
 
   s.add_dependency "addressable"

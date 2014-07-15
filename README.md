@@ -1,13 +1,20 @@
-# twingly-url-normalizer
+# Twingly::URL
 
 [![Build Status](https://magnum.travis-ci.com/twingly/twingly-url-normalizer.png?token=ADz8fWxRD3uP4KZPPZQS&branch=master)](https://magnum.travis-ci.com/twingly/twingly-url-normalizer)
 
-Ruby gem for URL normalization
+Twingly URL tools.
 
-## Example
+* `twingly/url/normalizer` - Normalize URLs
+
+TODO:
+
+* `twingly/url` - Parse and validate URLs
+* `twingly/url/hasher` - Generate URL hashes suitable for primary keys
+
+## Normalization example
 
 ```
-[1] pry(main)> require 'twingly-url-normalizer'
+[1] pry(main)> require 'twingly/url/normalizer'
 => true
 [2] pry(main)> Twingly::URL::Normalizer.normalize('http://duh.se')
 => ["http://www.duh.se/"]
