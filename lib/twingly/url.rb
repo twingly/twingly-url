@@ -15,5 +15,11 @@ module Twingly
     rescue PublicSuffix::DomainInvalid
       []
     end
+
+    def validate(potential_url)
+      extract_url_and_domain(potential_url).size == 2
+    rescue
+      false
+    end
   end
 end
