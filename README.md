@@ -1,6 +1,6 @@
 # Twingly::URL
 
-[![Build Status](https://magnum.travis-ci.com/twingly/twingly-url-normalizer.png?token=ADz8fWxRD3uP4KZPPZQS&branch=master)](https://magnum.travis-ci.com/twingly/twingly-url-normalizer)
+[![Build Status](https://travis-ci.org/twingly/twingly-url.svg?branch=master)](https://travis-ci.org/twingly/twingly-url)
 
 Twingly URL tools.
 
