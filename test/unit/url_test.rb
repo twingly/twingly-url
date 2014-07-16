@@ -8,6 +8,7 @@ class UrlTest < Test::Unit::TestCase
 
     should "return false for a invalid url" do
       refute Twingly::URL.validate("http://"), "Should not be valid"
+      refute Twingly::URL.validate("feedville.com,2007-06-19:/blends/16171"), "Should not be valid"
     end
   end
 end
