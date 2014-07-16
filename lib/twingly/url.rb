@@ -23,14 +23,12 @@ module Twingly
       domain = PublicSuffix.parse(url.host)
 
       [url, domain]
-    rescue PublicSuffix::DomainInvalid
+    rescue PublicSuffix::DomainInvalid, Addressable::URI::InvalidURIError
       []
     end
 
     def validate(potential_url)
       parse(potential_url).valid?
-    rescue
-      false
     end
   end
 end
