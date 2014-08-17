@@ -16,15 +16,17 @@ Twingly URL tools.
 
 ## Normalization example
 
-```
-[1] pry(main)> require 'twingly/url/normalizer'
-=> true
-[2] pry(main)> Twingly::URL::Normalizer.normalize('http://duh.se')
-=> ["http://www.duh.se/"]
-[3] pry(main)> Twingly::URL::Normalizer.normalize('http://duh.se http://blog.twingly.com/')
-=> ["http://www.duh.se/", "http://blog.twingly.com/"]
-[4] pry(main)> Twingly::URL::Normalizer.normalize('no URL')
-=> []
+```ruby
+require 'twingly/url/normalizer'
+
+Twingly::URL::Normalizer.normalize('http://duh.se')
+# => ["http://www.duh.se/"]
+
+Twingly::URL::Normalizer.normalize('http://duh.se http://blog.twingly.com/')
+# => ["http://www.duh.se/", "http://blog.twingly.com/"]
+
+Twingly::URL::Normalizer.normalize('no URL')
+# => []
 ```
 
 ## Tests
