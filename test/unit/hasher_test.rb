@@ -1,6 +1,13 @@
 require 'test_helper'
 
 class HasherTest < Test::Unit::TestCase
+  context ".taskdb_hash" do
+    should "return a MD5 hexdigest" do
+      assert_equal Twingly::URL::Hasher.taskdb_hash("http://blog.twingly.com/"),
+        "B1E2D5AECF6649C2E44D17AEA3E0F4"
+    end
+  end
+
   context ".blogstream_hash" do
     should "return a MD5 hexdigest" do
       assert_equal Twingly::URL::Hasher.blogstream_hash("http://blog.twingly.com/"),

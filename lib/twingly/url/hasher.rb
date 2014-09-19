@@ -6,6 +6,10 @@ module Twingly
     module Hasher
       module_function
 
+      def taskdb_hash(url)
+        Digest::MD5.hexdigest(url)[0..29].upcase
+      end
+
       def blogstream_hash(url)
         Digest::MD5.hexdigest(url)[0..29].upcase
       end
