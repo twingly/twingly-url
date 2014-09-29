@@ -21,6 +21,10 @@ module Twingly
       def autopingdb_hash(url)
         Digest::SHA256.digest(url).unpack("q")[0]
       end
+
+      def pingloggerdb_hash(url)
+        Digest::SHA256.digest(url).unpack("Q")[0]
+      end
     end
   end
 end
