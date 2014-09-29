@@ -28,4 +28,11 @@ class HasherTest < Test::Unit::TestCase
         -3105991861312135623
     end
   end
+
+  context ".pingloggerdb_hash" do
+    should "return a SHA256 64-bit unsigned, native endian digest" do
+      assert_equal Twingly::URL::Hasher.pingloggerdb_hash("http://blog.twingly.com/"),
+        15340752212397415993
+    end
+  end
 end
