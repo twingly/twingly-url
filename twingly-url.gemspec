@@ -14,12 +14,12 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
   s.required_ruby_version = ">= 1.9.3"
 
-  s.add_dependency "addressable", "~> 0"
+  s.add_dependency "addressable", "~> 2"
   s.add_dependency "public_suffix", "~> 1.4"
 
   s.add_development_dependency "turn", "~> 0"
-  s.add_development_dependency "rake", "~> 0"
-  s.add_development_dependency "shoulda-context", "~> 0"
+  s.add_development_dependency "rake", "~> 10"
+  s.add_development_dependency "shoulda-context", "~> 1"
   s.add_development_dependency "ruby-prof", "~> 0"
 
   s.files        = Dir.glob("{lib}/**/*") + %w(README.md)
