@@ -10,15 +10,17 @@ Gem::Specification.new do |s|
   s.email       = ["johan.eckerstrom@twingly.com"]
   s.homepage    = "http://github.com/twingly/twingly-url"
   s.summary     = "Ruby library for URL handling"
+  s.description = "Twingly URL tools"
+  s.license     = "MIT"
   s.required_ruby_version = ">= 1.9.3"
 
-  s.add_dependency "addressable"
-  s.add_dependency "public_suffix", "~> 1.4.0"
+  s.add_dependency "addressable", "~> 0"
+  s.add_dependency "public_suffix", "~> 1.4"
 
-  s.add_development_dependency "turn"
-  s.add_development_dependency "rake"
-  s.add_development_dependency "shoulda-context"
-  s.add_development_dependency "ruby-prof"
+  s.add_development_dependency "turn", "~> 0"
+  s.add_development_dependency "rake", "~> 0"
+  s.add_development_dependency "shoulda-context", "~> 0"
+  s.add_development_dependency "ruby-prof", "~> 0"
 
   s.files        = Dir.glob("{lib}/**/*") + %w(README.md)
   s.require_path = 'lib'
