@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.name        = "twingly-url"
   s.version     = Twingly::URL::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Johan Eckerström"]
-  s.email       = ["johan.eckerstrom@twingly.com"]
+  s.authors     = ["Twingly AB"]
+  s.email       = ["support@twingly.com"]
   s.homepage    = "http://github.com/twingly/twingly-url"
   s.summary     = "Ruby library for URL handling"
   s.description = "Twingly URL tools"
