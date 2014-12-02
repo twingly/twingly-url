@@ -10,8 +10,9 @@ Twingly URL tools.
 * `twingly/url/normalizer` - Normalize URLs
     * `Twingly::URL::Normalizer.normalize(string)` - Extracts URLs from string (Array)
 * `twingly/url/hasher` - Generate URL hashes suitable for primary keys
-    * `Twingly::URL::Hasher.documentdb_hash(url)` - MD5 hexdigest
-    * `Twingly::URL::Hasher.blogstream_hash(url)` - SHA256 unsigned long, native endian digest
+    * `Twingly::URL::Hasher.taskdb_hash(url)` - MD5 hexdigest
+    * `Twingly::URL::Hasher.blogstream_hash(url)` - MD5 hexdigest
+    * `Twingly::URL::Hasher.documentdb_hash(url)` - SHA256 unsigned long, native endian digest
     * `Twingly::URL::Hasher.autopingdb_hash(url)` - SHA256 64-bit signed, native endian digest
     * `Twingly::URL::Hasher.pingloggerdb_hash(url)` - SHA256 64-bit unsigned, native endian digest
 
