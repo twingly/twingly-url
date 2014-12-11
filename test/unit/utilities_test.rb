@@ -57,5 +57,26 @@ class TestUtilities < MiniTest::Unit::TestCase
       result = Twingly::URL::Utilities.remove_scheme(url)
       assert_equal '//www.thecloset.gr/people/bloggers-pick-ιωάννα-τσιγαρίδα', result
     end
+
+    should "only remove scheme from HTTP URL" do
+      url = 'http://feedjira.herokuapp.com/?url=http://developer.twingly.com/feed.xml'
+
+      result = Twingly::URL::Utilities.remove_scheme(url)
+      assert_equal '//feedjira.herokuapp.com/?url=http://developer.twingly.com/feed.xml', result
+    end
+
+    should "only remove scheme from HTTPS URL" do
+      url = 'https://feedjira.herokuapp.com/?url=https://signalvnoise.com/posts.rss'
+
+      result = Twingly::URL::Utilities.remove_scheme(url)
+      assert_equal '//feedjira.herokuapp.com/?url=https://signalvnoise.com/posts.rss', result
+    end
+
+    should "not remove scheme from non HTTP(S) URLs with parameter" do
+      url = 'ftp://ftp.example.com/?url=https://www.example.com/'
+
+      result = Twingly::URL::Utilities.remove_scheme(url)
+      assert_equal 'ftp://ftp.example.com/?url=https://www.example.com/', result
+    end
   end
 end

@@ -6,7 +6,7 @@ module Twingly
       PROTOCOL_EXPRESSION = /^https?:/i
 
       def remove_scheme(url)
-        url.gsub(PROTOCOL_EXPRESSION, '')
+        url.sub(PROTOCOL_EXPRESSION, '')
       end
     end
   end
