@@ -18,6 +18,10 @@ Twingly URL tools.
 * `twingly/url/utilities` - Utilities to work with URLs
     * `Twingly::URL::Utilities.remove_scheme(url)` - Removes scheme from HTTP/HTTPS URLs (`http://twingly.com` -> `//twingly.com`)
 
+## Installation
+
+    gem install twingly-url
+
 ## Normalization example
 
 ```ruby
@@ -46,5 +50,15 @@ You can get some profiling by running
     bundle exec rake test:profile
 
 Note that this isn't a benchmark, we're using [ruby-prof] which will slow things down.
+
+## Release workflow
+
+Build the gem.
+
+    gem build twingly-url.gemspec
+
+[Publish](http://guides.rubygems.org/publishing/) the gem.
+
+    gem push twingly-url-x.y.z.gem
 
 [ruby-prof]: http://ruby-prof.rubyforge.org/
