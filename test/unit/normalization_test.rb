@@ -124,5 +124,12 @@ class NormalizerTest < Test::Unit::TestCase
 
       assert_equal url, result
     end
+
+    should "downcase URL" do
+      url = "http://www.Twingly.com/"
+      result = @normalizer.normalize_url(url)
+
+      assert_equal url.downcase, result
+    end
   end
 end

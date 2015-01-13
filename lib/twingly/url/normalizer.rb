@@ -28,7 +28,7 @@ module Twingly
           result.url.path = "/"
         end
 
-        result.url.to_s
+        result.url.to_s.downcase
       end
     end
   end
