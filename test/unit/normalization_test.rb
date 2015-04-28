@@ -34,6 +34,11 @@ class NormalizerTest < Test::Unit::TestCase
       assert_equal [url], @normalizer.normalize(url)
     end
 
+    should "not blow up when there's only protocol in the text" do
+      url = "http://"
+      assert @normalizer.normalize(url)
+    end
+
     should "should not blow up when there's no URL in the text" do
       url = "Just some text"
       assert @normalizer.normalize(url)
