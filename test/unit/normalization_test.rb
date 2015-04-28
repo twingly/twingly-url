@@ -39,12 +39,12 @@ class NormalizerTest < Test::Unit::TestCase
       assert @normalizer.normalize(url)
     end
 
-    should "should not blow up when there's no URL in the text" do
+    should "not blow up when there's no URL in the text" do
       url = "Just some text"
       assert @normalizer.normalize(url)
     end
 
-    should "should not create URLs for normal words" do
+    should "not create URLs for normal words" do
       url = "This is, just, some words. Yay!"
       assert_equal [], @normalizer.normalize(url)
     end
