@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class NormalizerTest < Test::Unit::TestCase
+class NormalizerTest < Minitest::Test
   context ".normalize" do
     setup do
       @normalizer = Twingly::URL::Normalizer
@@ -59,20 +59,20 @@ class NormalizerTest < Test::Unit::TestCase
       urls = "http://blog.twingly.com/ http://twingly.com/"
       response = @normalizer.extract_urls(urls)
 
-      response.size.must_equal 2
+      assert_equal 2, response.size
     end
 
     should "detect two urls in an Array" do
       urls = %w(http://blog.twingly.com/ http://twingly.com/)
       response = @normalizer.extract_urls(urls)
 
-      response.size.must_equal 2
+      assert_equal 2, response.size
     end
 
     should "return an Array" do
       response = @normalizer.extract_urls(nil)
 
-      response.must_be_instance_of Array
+      assert_instance_of Array, response
     end
   end
 
