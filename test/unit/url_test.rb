@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UrlTest < Test::Unit::TestCase
+class UrlTest < MiniTest::Unit::TestCase
   context ".parse" do
     should "not blow up for invalid url" do
       invalid_urls = %w(http://http http:/// http:// http:/ http: htttp a 1 ?)

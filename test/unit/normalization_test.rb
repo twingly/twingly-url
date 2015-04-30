@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class NormalizerTest < Test::Unit::TestCase
+class NormalizerTest < MiniTest::Unit::TestCase
   context ".normalize" do
     setup do
       @normalizer = Twingly::URL::Normalizer
