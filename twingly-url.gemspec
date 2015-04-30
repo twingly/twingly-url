@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.add_dependency "addressable", "~> 2"
   s.add_dependency "public_suffix", "~> 1.4"
 
-  s.add_development_dependency "turn", "~> 0"
+  s.add_development_dependency "minitest-reporters", "~> 1"
   s.add_development_dependency "rake", "~> 10"
   s.add_development_dependency "shoulda-context", "~> 1"
   s.add_development_dependency "ruby-prof", "~> 0"

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestUtilities < MiniTest::Unit::TestCase
+class TestUtilities < Minitest::Test
   context ".normalize" do
     should "not remove scheme from non HTTP(S) URLs" do
       url = 'gopher://www.duh.se/'
