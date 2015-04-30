@@ -9,7 +9,9 @@ def measure(name, count, &block)
     end
 
     result = RubyProf.stop
+    result_directory = "tmp"
+    Dir.mkdir(result_directory) unless File.exists?(result_directory)
     printer = RubyProf::MultiPrinter.new(result)
-    printer.print(path: 'tmp')
+    printer.print(path: result_directory)
   end
 end
