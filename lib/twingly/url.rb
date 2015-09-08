@@ -3,13 +3,13 @@ require 'public_suffix'
 
 PublicSuffix::List.private_domains = false
 
-SCHEMES = %w(http https)
-
 module Twingly
   module URL
     module_function
 
     UrlObject = Struct.new(:url, :domain) do
+      SCHEMES = %w(http https)
+
       def valid?
         url && domain && SCHEMES.include?(url.normalized_scheme)
       end
