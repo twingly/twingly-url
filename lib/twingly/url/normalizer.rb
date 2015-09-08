@@ -26,6 +26,7 @@ module Twingly
           result.url.host = "www.#{result.domain}"
         end
 
+        result.url.host = result.url.normalized_host
         result.url.path = strip_trailing_slashes(result.url.path)
 
         if result.url.path.empty?

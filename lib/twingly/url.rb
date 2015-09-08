@@ -25,7 +25,6 @@ module Twingly
 
       return invalid_url unless url
 
-      url.host = url.normalized_host
       domain = PublicSuffix.parse(url.host)
 
       [url, domain]
