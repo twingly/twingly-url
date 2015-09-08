@@ -20,6 +20,12 @@ describe Twingly::URL do
           expect(described_class.parse(valid_url).valid?).to be true
         end
       end
+
+      it "handles nil input" do
+        actual = described_class.parse(nil)
+        expect(actual.url).to be_nil
+        expect(actual.domain).to be_nil
+      end
     end
   end
 

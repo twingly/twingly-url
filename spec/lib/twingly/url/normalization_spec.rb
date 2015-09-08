@@ -24,7 +24,9 @@ describe Twingly::URL::Normalizer do
 
     it "handles URL with umlauts in host" do
       url = "http://www.åäö.se/"
-      expect(normalizer.normalize(url)).to eq([url])
+      expected = "http://www.xn--4cab6c.se/"
+
+      expect(normalizer.normalize(url)).to eq([expected])
     end
 
     it "handles URL with umlauts in path" do
