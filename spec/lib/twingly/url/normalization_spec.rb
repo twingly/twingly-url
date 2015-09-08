@@ -85,6 +85,12 @@ describe Twingly::URL::Normalizer do
       expect(normalizer.normalize_url(url)).to eq(url)
     end
 
+    it "does not remove www if the host has a subdomain" do
+      url = "http://www.blog.twingly.com/"
+
+      expect(normalizer.normalize_url(url)).to eq(url)
+    end
+
     it "keeps www if the host already has it" do
       url = "http://www.twingly.com/"
 
