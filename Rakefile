@@ -1,20 +1,22 @@
-require 'bundler/setup'
+namespace :profile do
+  require_relative "profile/profile"
 
-task default: 'test:unit'
-task test:    'test:unit'
+  task :normalize_url do |task|
+    require "twingly/url/normalizer"
 
-require 'rake/testtask'
-namespace :test do
-  Rake::TestTask.new(:unit) do |test|
-    test.pattern = "test/unit/*_test.rb"
-    test.libs << 'lib'
-    test.libs << 'test'
+    Profile.measure "normalizing a short URL", 1000 do
+      Twingly::URL::Normalizer.normalize_url('http://www.duh.se/')
+    end
   end
+end
 
-  Rake::TestTask.new(:profile) do |test|
-    test.pattern = "test/profile/*_test.rb"
-    test.libs << 'lib'
-    test.libs << 'test'
-    test.libs << 'test/lib'
+begin
+  require "rspec/core/rake_task"
+
+  task default: "spec"
+
+  RSpec::Core::RakeTask.new(:spec) do |task|
+    task.pattern = "spec/lib/**/*_spec.rb"
   end
+rescue LoadError
 end
