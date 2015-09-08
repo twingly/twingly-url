@@ -5,6 +5,8 @@ module Twingly
     module Normalizer
       module_function
 
+      ENDS_WITH_SLASH = /\/+$/
+
       def normalize(potential_urls)
         extract_urls(potential_urls).map do |potential_url|
           normalize_url(potential_url)
@@ -24,11 +26,17 @@ module Twingly
           result.url.host = "www.#{result.domain}"
         end
 
+        result.url.path = strip_trailing_slashes(result.url.path)
+
         if result.url.path.empty?
           result.url.path = "/"
         end
 
         result.url.to_s.downcase
+      end
+
+      def strip_trailing_slashes(path)
+        path.sub(ENDS_WITH_SLASH, "")
       end
     end
   end

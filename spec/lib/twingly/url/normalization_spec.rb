@@ -89,9 +89,30 @@ describe Twingly::URL::Normalizer do
       expect(normalizer.normalize_url(url)).to eq(url)
     end
 
-    it "adds a trailing slash if missing" do
+    it "adds a trailing slash if missing in origin" do
       url = "http://www.twingly.com"
       expected = "http://www.twingly.com/"
+
+      expect(normalizer.normalize_url(url)).to eq(expected)
+    end
+
+    it "ensures single trailing slash in origin" do
+      url = "http://www.twingly.com//"
+      expected = "http://www.twingly.com/"
+
+      expect(normalizer.normalize_url(url)).to eq(expected)
+    end
+
+    it "removes trailing slash from path" do
+      url = "http://www.twingly.com/blog-data/"
+      expected = "http://www.twingly.com/blog-data"
+
+      expect(normalizer.normalize_url(url)).to eq(expected)
+    end
+
+    it "is able to normalize a url with double slash in path" do
+      url = "www.twingly.com/path//"
+      expected = "http://www.twingly.com/path"
 
       expect(normalizer.normalize_url(url)).to eq(expected)
     end
