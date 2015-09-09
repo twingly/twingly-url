@@ -164,10 +164,24 @@ describe Twingly::URL::Normalizer do
       expect(normalizer.normalize_url(url)).to eq(url)
     end
 
-    it "does not add www. to blogspot blogs" do
+    it "does not add www. to blogspot URLs" do
       url = "http://jlchen1026.blogspot.com/"
 
       expect(normalizer.normalize_url(url)).to eq(url)
+    end
+
+    it "removes www. from blogspot URLs" do
+      url = "http://www.jlchen1026.blogspot.com/"
+      expected = "http://jlchen1026.blogspot.com/"
+
+      expect(normalizer.normalize_url(url)).to eq(expected)
+    end
+
+    it "rewrites blogspot TLDs to .com" do
+      url = "http://WWW.jlchen1026.blogspot.CO.UK/"
+      expected = "http://jlchen1026.blogspot.com/"
+
+      expect(normalizer.normalize_url(url)).to eq(expected)
     end
 
     it "downcases the protocol" do

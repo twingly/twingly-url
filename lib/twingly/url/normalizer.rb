@@ -22,12 +22,8 @@ module Twingly
 
         return nil unless result.valid?
 
-        unless result.domain.subdomain?
-          result.url.host = "www.#{result.domain}"
-        end
-
         result.url.scheme = result.url.scheme.downcase
-        result.url.host   = result.url.normalized_host.downcase
+        result.url.host   = extract_normalized_host(result)
         result.url.path   = strip_trailing_slashes(result.url.path)
 
         if result.url.path.empty?
@@ -39,6 +35,27 @@ module Twingly
 
       def strip_trailing_slashes(path)
         path.sub(ENDS_WITH_SLASH, "")
+      end
+
+      def extract_normalized_host(url_object)
+        host   = url_object.url.normalized_host
+        domain = url_object.domain
+
+        unless domain.subdomain?
+          host = "www.#{host}"
+        end
+
+        host = normalize_blogspot(host, domain)
+
+        host.downcase
+      end
+
+      def normalize_blogspot(host, domain)
+        if domain.sld.downcase == "blogspot"
+          host.sub(/\Awww\./i, "").sub(/#{domain.tld}\z/i, "com")
+        else
+          host
+        end
       end
     end
   end
