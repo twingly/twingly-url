@@ -18,23 +18,19 @@ module Twingly
       end
 
       def normalize_url(potential_url)
-        result = Twingly::URL.parse(potential_url)
+        url_object = Twingly::URL.parse(potential_url)
 
-        return nil unless result.valid?
+        return nil unless url_object.valid?
 
-        result.url.scheme = result.url.scheme.downcase
-        result.url.host   = extract_normalized_host(result)
-        result.url.path   = strip_trailing_slashes(result.url.path)
+        url_object.url.scheme = extract_normalized_scheme(url_object)
+        url_object.url.host   = extract_normalized_host(url_object)
+        url_object.url.path   = extract_normalized_path(url_object)
 
-        if result.url.path.empty?
-          result.url.path = "/"
-        end
-
-        result.url.to_s
+        url_object.url.to_s
       end
 
-      def strip_trailing_slashes(path)
-        path.sub(ENDS_WITH_SLASH, "")
+      def extract_normalized_scheme(url_object)
+        url_object.url.scheme.downcase
       end
 
       def extract_normalized_host(url_object)
@@ -46,8 +42,19 @@ module Twingly
         end
 
         host = normalize_blogspot(host, domain)
+        host = host.downcase
 
-        host.downcase
+        host
+      end
+
+      def extract_normalized_path(url_object)
+        path = strip_trailing_slashes(url_object.url.path)
+
+        (path.empty?) ? "/" : path
+      end
+
+      def strip_trailing_slashes(path)
+        path.sub(ENDS_WITH_SLASH, "")
       end
 
       def normalize_blogspot(host, domain)
