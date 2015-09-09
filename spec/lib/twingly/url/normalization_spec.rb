@@ -144,11 +144,30 @@ describe Twingly::URL::Normalizer do
       expect(normalizer.normalize_url(url)).to eq(url)
     end
 
-    it "downcases the URL" do
-      url = "http://www.Twingly.com/"
-      expected = url.downcase
+    it "downcases the protocol" do
+      url = "HTTPS://www.twingly.com/"
+      expected = "https://www.twingly.com/"
 
       expect(normalizer.normalize_url(url)).to eq(expected)
+    end
+
+    it "downcases the domain" do
+      url = "http://WWW.TWINGLY.COM/"
+      expected = "http://www.twingly.com/"
+
+      expect(normalizer.normalize_url(url)).to eq(expected)
+    end
+
+    it "does not downcase the path" do
+      url = "http://www.twingly.com/PaTH"
+
+      expect(normalizer.normalize_url(url)).to eq(url)
+    end
+
+    it "does not downcase fragment" do
+      url = "http://www.twingly.com/#FRAGment"
+
+      expect(normalizer.normalize_url(url)).to eq(url)
     end
   end
 end

@@ -26,14 +26,15 @@ module Twingly
           result.url.host = "www.#{result.domain}"
         end
 
-        result.url.host = result.url.normalized_host
-        result.url.path = strip_trailing_slashes(result.url.path)
+        result.url.scheme = result.url.scheme.downcase
+        result.url.host   = result.url.normalized_host.downcase
+        result.url.path   = strip_trailing_slashes(result.url.path)
 
         if result.url.path.empty?
           result.url.path = "/"
         end
 
-        result.url.to_s.downcase
+        result.url.to_s
       end
 
       def strip_trailing_slashes(path)
