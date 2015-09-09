@@ -41,9 +41,10 @@ describe Twingly::URL::Normalizer do
     end
 
     it "handles URL with punycoded TLD" do
-      url = "http://www.example.xn--p1ai/"
+      url = "http://example.xn--p1ai/"
+      expected = "http://www.example.xn--p1ai/"
 
-      expect(normalizer.normalize(url)).to eq([url])
+      expect(normalizer.normalize(url)).to eq([expected])
     end
 
     it "converts to a punycoded URL" do
