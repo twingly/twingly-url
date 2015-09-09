@@ -158,6 +158,12 @@ describe Twingly::URL::Normalizer do
       expect(normalizer.normalize_url(url)).to eq(nil)
     end
 
+    it "oddly enough, does not alter URLs with consecutive dots" do
+      url = "http://www..twingly..com/"
+
+      expect(normalizer.normalize_url(url)).to eq(url)
+    end
+
     it "does not add www. to blogspot blogs" do
       url = "http://jlchen1026.blogspot.com/"
 
