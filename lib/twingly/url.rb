@@ -21,13 +21,13 @@ module Twingly
     end
 
     def extract_url_and_domain(potential_url)
-      url = Addressable::URI.heuristic_parse(potential_url)
+      addressable_uri = Addressable::URI.heuristic_parse(potential_url)
 
-      return invalid_url unless url
+      return invalid_url unless addressable_uri
 
-      domain = PublicSuffix.parse(url.host)
+      domain = PublicSuffix.parse(addressable_uri.display_uri.host)
 
-      [url, domain]
+      [addressable_uri, domain]
     rescue PublicSuffix::DomainInvalid, Addressable::URI::InvalidURIError
       invalid_url
     end

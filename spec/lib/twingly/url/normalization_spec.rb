@@ -34,6 +34,25 @@ describe Twingly::URL::Normalizer do
       expect(normalizer.normalize(url)).to eq([url])
     end
 
+    it "handles URL with punycoded SLD" do
+      url = "http://www.xn--4cab6c.se/"
+
+      expect(normalizer.normalize(url)).to eq([url])
+    end
+
+    it "handles URL with punycoded TLD" do
+      url = "http://www.example.xn--p1ai/"
+
+      expect(normalizer.normalize(url)).to eq([url])
+    end
+
+    it "converts to a punycoded URL" do
+      url = "скраповыймир.рф"
+      expected = "http://www.xn--80aesdcplhhhb0k.xn--p1ai/"
+
+      expect(normalizer.normalize(url)).to eq([expected])
+    end
+
     it "does not blow up when there's only protocol in the text" do
       url = "http://"
       expect { normalizer.normalize(url) }.not_to raise_error
