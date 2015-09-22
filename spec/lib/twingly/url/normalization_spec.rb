@@ -227,5 +227,19 @@ describe Twingly::URL::Normalizer do
       url = "Just some text"
       expect(normalizer.normalize_url(url)).to be_nil
     end
+
+    it "handles bengali charachters in path" do
+      url = "https://emani85.wordpress.com/2015/09/22/ইসরায়েল-থেকে-ড্রোন-কিনছে"
+      expected = "https://emani85.wordpress.com/2015/09/22/%e0%a6%87%e0%a6%b8%e0%a6%b0%e0%a6%be%e0%a7%9f%e0%a7%87%e0%a6%b2-%e0%a6%a5%e0%a7%87%e0%a6%95%e0%a7%87-%e0%a6%a1%e0%a7%8d%e0%a6%b0%e0%a7%8b%e0%a6%a8-%e0%a6%95%e0%a6%bf%e0%a6%a8%e0%a6%9b%e0%a7%87/"
+
+      expect(normalizer.normalize_url(url)).to eq(url)
+    end
+
+    it "handles encoded bengali charachters in path" do
+      url = "https://emani85.wordpress.com/2015/09/22/%e0%a6%87%e0%a6%b8%e0%a6%b0%e0%a6%be%e0%a7%9f%e0%a7%87%e0%a6%b2-%e0%a6%a5%e0%a7%87%e0%a6%95%e0%a7%87-%e0%a6%a1%e0%a7%8d%e0%a6%b0%e0%a7%8b%e0%a6%a8-%e0%a6%95%e0%a6%bf%e0%a6%a8%e0%a6%9b%e0%a7%87/"
+      expected = "https://emani85.wordpress.com/2015/09/22/ইসরায়েল-থেকে-ড্রোন-কিনছে"
+
+      expect(normalizer.normalize_url(url)).to eq(expected)
+    end
   end
 end
