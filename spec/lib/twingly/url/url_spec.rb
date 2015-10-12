@@ -40,4 +40,24 @@ describe Twingly::URL do
       end
     end
   end
+
+  describe ".extract_urls" do
+    context "when given a string with URLs" do
+      it "returns an array of extracted urls" do
+        actual   = "hej hopp http://www.twingly.com banan https://www.wordpress.com/forums/sv äpplen/päron"
+        expected = %w(http://www.twingly.com https://www.wordpress.com/forums/sv)
+
+        expect(described_class.extract_urls(actual)).to eq(expected)
+      end
+    end
+
+    context "when given an array with URLs" do
+      it "returns an array of extracted urls" do
+        actual   = %w(hej hopp http://www.twingly.com banan https://www.wordpress.com/forums/sv äpplen/päron)
+        expected = %w(http://www.twingly.com https://www.wordpress.com/forums/sv)
+
+        expect(described_class.extract_urls(actual)).to eq(expected)
+      end
+    end
+  end
 end

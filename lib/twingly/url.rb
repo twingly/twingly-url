@@ -20,6 +20,13 @@ module Twingly
       UrlObject.new(url, domain)
     end
 
+    def extract_urls(text_or_array)
+      potential_urls = Array(text_or_array).flat_map(&:split)
+      potential_urls.map do |potential_url|
+        potential_url if validate(potential_url)
+      end.compact
+    end
+
     def extract_url_and_domain(potential_url)
       addressable_uri = Addressable::URI.heuristic_parse(potential_url)
 
