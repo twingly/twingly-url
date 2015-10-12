@@ -7,8 +7,9 @@ Twingly URL tools.
 * `twingly/url` - Parse and validate URLs
     * `Twingly::URL.parse` - Returns a Struct with `#url` and `#domain` accessors
     * `Twingly::URL.validate` - Validates a URL
+    * `Twingly::URL.extract_urls` - Extracts URLs from string or array
 * `twingly/url/normalizer` - Normalize URLs
-    * `Twingly::URL::Normalizer.normalize(string)` - Extracts URLs from string (Array)
+    * `Twingly::URL::Normalizer.normalize(string)` - Extracts and normalizes URLs from string (Array)
 * `twingly/url/hasher` - Generate URL hashes suitable for primary keys
     * `Twingly::URL::Hasher.taskdb_hash(url)` - MD5 hexdigest
     * `Twingly::URL::Hasher.blogstream_hash(url)` - MD5 hexdigest
