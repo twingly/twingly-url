@@ -59,5 +59,11 @@ describe Twingly::URL do
         expect(described_class.extract_urls(actual)).to eq(expected)
       end
     end
+
+    it "always returns an Array" do
+      response = described_class.extract_urls(nil)
+
+      expect(response).to eq([])
+    end
   end
 end

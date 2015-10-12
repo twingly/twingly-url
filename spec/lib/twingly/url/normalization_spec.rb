@@ -36,28 +36,6 @@ describe Twingly::URL::Normalizer do
     end
   end
 
-  describe ".extract_urls" do
-    let(:urls) { %w(http://blog.twingly.com/ http://twingly.com/) }
-
-    it "detects two urls in a String" do
-      response = normalizer.extract_urls(urls.join(" "))
-
-      expect(response.size).to eq(urls.size)
-    end
-
-    it "detects two urls in an Array" do
-      response = normalizer.extract_urls(urls)
-
-      expect(response.size).to eq(urls.size)
-    end
-
-    it "always returns an Array" do
-      response = normalizer.extract_urls(nil)
-
-      expect(response).to be_instance_of(Array)
-    end
-  end
-
   describe ".normalize_url" do
     it "adds www if host is missing a subdomain" do
       url = "http://twingly.com/"

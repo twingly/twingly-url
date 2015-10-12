@@ -8,13 +8,9 @@ module Twingly
       ENDS_WITH_SLASH = /\/+$/
 
       def normalize(potential_urls)
-        extract_urls(potential_urls).map do |potential_url|
-          normalize_url(potential_url)
+        Twingly::URL.extract_urls(potential_urls).map do |url|
+          normalize_url(url)
         end.compact
-      end
-
-      def extract_urls(potential_urls)
-        Array(potential_urls).map(&:split).flatten
       end
 
       def normalize_url(potential_url)
