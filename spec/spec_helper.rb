@@ -1,6 +1,6 @@
 require "twingly/url"
+require "twingly/url/null_url"
 require "twingly/url/hasher"
-require "twingly/url/normalizer"
 require "twingly/url/utilities"
 
 RSpec.configure do |config|

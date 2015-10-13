@@ -1,7 +1,7 @@
 require 'digest'
 
 module Twingly
-  module URL
+  class URL
     module Hasher
       module_function
 
