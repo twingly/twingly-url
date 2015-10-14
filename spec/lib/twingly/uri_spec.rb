@@ -385,4 +385,58 @@ describe Twingly::URL do
       it { is_expected.to eq(expected) }
     end
   end
+
+  describe "#to_s" do
+    subject { url.to_s }
+    it { is_expected.to eq(test_url) }
+  end
+
+  describe "comparable methods" do
+    let(:a) { "http://a.com" }
+    let(:b) { "http://b.com" }
+
+    describe "#<=>" do
+      let(:test_urls) { [b, a, b, a, a] }
+
+      subject do
+        test_urls.map { |url| described_class.parse(url) }.sort.map(&:to_s)
+      end
+
+      it { is_expected.to eq(test_urls.sort) }
+    end
+
+    describe "#==" do
+      context "when parsing the same URLs" do
+        subject { described_class.parse(a) == described_class.parse(a) }
+        it { is_expected.to be(true) }
+      end
+
+      context "when parsing different URLs" do
+        subject { described_class.parse(a) == described_class.parse(b) }
+        it { is_expected.to be(false) }
+      end
+    end
+
+    describe "#===" do
+      context "when parsing the same URLs" do
+        subject { described_class.parse(a) === described_class.parse(a) }
+        it { is_expected.to be(true) }
+      end
+
+      context "when parsing different URLs" do
+        subject { described_class.parse(a) === described_class.parse(b) }
+        it { is_expected.to be(false) }
+      end
+    end
+
+    context "with invalid and valid URLs" do
+      let(:test_urls) { [b, "", a] }
+
+      subject do
+        test_urls.map { |url| described_class.parse(url) }.sort.map(&:to_s)
+      end
+
+      it { is_expected.to eq(test_urls.sort) }
+    end
+  end
 end

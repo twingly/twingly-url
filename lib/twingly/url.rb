@@ -8,6 +8,8 @@ PublicSuffix::List.private_domains = false
 
 module Twingly
   class URL
+    include Comparable
+
     SCHEMES = %w(http https)
     ENDS_WITH_SLASH = /\/+$/
 
@@ -87,6 +89,10 @@ module Twingly
 
     def valid?
       addressable_uri && public_suffix_domain && SCHEMES.include?(normalized_scheme)
+    end
+
+    def <=>(other)
+      self.to_s <=> other.to_s
     end
 
     def to_s
