@@ -16,10 +16,39 @@ module Twingly
     def self.parse(potential_url)
       potential_url = String(potential_url)
 
-      # TODO: Can we make this less send-y?
-      self.new.send(:setup, potential_url)
+      internal_parse(potential_url)
     rescue Twingly::URL::Error, Twingly::URL::Error::ParseError => error
       NullURL.new
+    end
+
+    def self.internal_parse(potential_url)
+      if potential_url.is_a?(Addressable::URI)
+        addressable_uri = potential_url
+      else
+        addressable_uri = Addressable::URI.heuristic_parse(potential_url)
+      end
+
+      raise Twingly::Error::ParseError if addressable_uri.nil?
+
+      public_suffix_domain = PublicSuffix.parse(addressable_uri.display_uri.host)
+
+      self.new(addressable_uri, public_suffix_domain)
+    rescue Addressable::URI::InvalidURIError, PublicSuffix::DomainInvalid => error
+      error.extend(Twingly::URL::Error)
+      raise
+    end
+
+    def initialize(addressable_uri, public_suffix_domain)
+      unless addressable_uri.is_a?(Addressable::URI)
+        raise ArgumentError, "First parameter must be an Addressable::URI"
+      end
+
+      unless public_suffix_domain.is_a?(PublicSuffix::Domain)
+        raise ArgumentError, "Second parameter must be a PublicSuffix::Domain"
+      end
+
+      @addressable_uri      = addressable_uri
+      @public_suffix_domain = public_suffix_domain
     end
 
     def scheme
@@ -65,7 +94,7 @@ module Twingly
       normalized_url.host   = normalized_host
       normalized_url.path   = normalized_path
 
-      setup(normalized_url)
+      self.class.internal_parse(normalized_url)
     end
 
     def normalized_scheme
@@ -106,23 +135,6 @@ module Twingly
     private
 
     attr_reader :addressable_uri, :public_suffix_domain
-
-    def setup(potential_url)
-      if potential_url.is_a?(Addressable::URI)
-        @addressable_uri = potential_url
-      else
-        @addressable_uri = Addressable::URI.heuristic_parse(potential_url)
-      end
-
-      raise Twingly::Error::ParseError if addressable_uri.nil?
-
-      @public_suffix_domain = PublicSuffix.parse(addressable_uri.display_uri.host)
-
-      self
-    rescue Addressable::URI::InvalidURIError, PublicSuffix::DomainInvalid => error
-      error.extend(Twingly::URL::Error)
-      raise
-    end
 
     def normalize_blogspot(host, domain)
       if domain.sld.downcase == "blogspot"

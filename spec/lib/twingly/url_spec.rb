@@ -45,6 +45,14 @@ describe Twingly::URL do
     end
   end
 
+  describe "#initialize" do
+    context "when given input parameters of wrong types" do
+      it "raises an error" do
+        expect { described_class.new("a", "b") }.to raise_error
+      end
+    end
+  end
+
   describe "#scheme" do
     subject { url.scheme }
     it { is_expected.to eq("http") }
