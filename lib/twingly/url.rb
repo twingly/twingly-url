@@ -46,6 +46,10 @@ module Twingly
       addressable_uri.host
     end
 
+    def origin
+      addressable_uri.origin
+    end
+
     def path
       addressable_uri.path
     end

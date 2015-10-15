@@ -75,6 +75,11 @@ describe Twingly::URL do
     it { is_expected.to eq("www.blog.twingly.co.uk") }
   end
 
+  describe "#origin" do
+    subject { url.origin }
+    it { is_expected.to eq("http://www.blog.twingly.co.uk") }
+  end
+
   describe "#path" do
     subject { url.path }
     it { is_expected.to eq("/2015/07/01/language-detection-changes/") }

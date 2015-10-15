@@ -43,6 +43,11 @@ describe Twingly::URL::NullURL do
     it { is_expected.to eq("") }
   end
 
+  describe "#origin" do
+    subject { url.origin }
+    it { is_expected.to eq("") }
+  end
+
   describe "#path" do
     subject { url.path }
     it { is_expected.to eq("") }
