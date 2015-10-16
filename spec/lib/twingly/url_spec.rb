@@ -43,6 +43,27 @@ describe Twingly::URL do
         expect(actual).to be_a(Twingly::URL::NullURL)
       end
     end
+
+    context "with url containing starting and trailing new lines" do
+      let(:test_url) { "\nhttp://www.twingly.com/blog-data/\r\n" }
+      let(:expected) { "http://www.twingly.com/blog-data/" }
+
+      it { is_expected.to eq(expected) }
+    end
+
+    context "with url containing starting and trailing whitespaces" do
+      let(:test_url) { "   http://www.twingly.com/blog-data/     " }
+      let(:expected) { "http://www.twingly.com/blog-data/" }
+
+      it { is_expected.to eq(expected) }
+    end
+
+    context "with url containing both newlines and whitespaces" do
+      let(:test_url) { "  \n\r   https://anniaksa.wordpress.com/2014/05/19/privy-digging-blogg100/   \r   \n   " }
+      let(:expected) { "https://anniaksa.wordpress.com/2014/05/19/privy-digging-blogg100/" }
+
+      it { is_expected.to eq(expected) }
+    end
   end
 
   describe "#initialize" do
@@ -177,19 +198,11 @@ describe Twingly::URL do
       it { is_expected.to eq(expected) }
     end
 
-    # TODO: Investigate legacy behavior
-    context "removes trailing slash from path ending with newline" do
-      let(:url)      { "http://www.twingly.com/blog-data/\n" }
-      let(:expected) { "http://www.twingly.com/blog-data\n" }
+    context "does not remove whitespaces from middle of path" do
+      let(:url)      { "http://www.twingly.com/blo g-data/" }
+      let(:expected) { "http://www.twingly.com/blo g-data" }
 
       it { is_expected.to eq(expected) }
-    end
-
-    # TODO: Investigate legacy behavior
-    context "does not remove trailing slash from path ending with space" do
-      let(:url) { "http://www.twingly.com/blog-data/ " }
-
-      it { is_expected.to eq(url) }
     end
 
     context "is able to normalize a url with double slash in path" do
