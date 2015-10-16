@@ -156,14 +156,14 @@ describe Twingly::URL do
       it { is_expected.to eq(url) }
     end
 
-    context "adds a trailing slash if missing in origin" do
+    context "ensures that path starts with slash" do
       let(:url)      { "http://www.twingly.com" }
       let(:expected) { "http://www.twingly.com/" }
 
       it { is_expected.to eq(expected) }
     end
 
-    context "ensures single trailing slash in origin" do
+    context "ensures that path only starts with single slash" do
       let(:url)      { "http://www.twingly.com//" }
       let(:expected) { "http://www.twingly.com/" }
 
