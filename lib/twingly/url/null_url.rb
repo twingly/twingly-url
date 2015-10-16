@@ -1,7 +1,7 @@
 module Twingly
   class URL
     class NullURL
-    include Comparable
+      include Comparable
 
       def method_missing(name, *)
         error = NoMethodError.new("undefined method `#{name}'")
