@@ -24,6 +24,15 @@ def invalid_urls
   ]
 end
 
+def valid_urls
+  [
+    "http://blog.twingly.com/",
+    "hTTP://blog.twingly.com/",
+    "https://blog.twingly.com",
+    "http://3.bp.blogspot.com/_lRbEHeizXlQ/Sf4RdEqCqhI/AAAAAAAAAAw/Pl8nGPsyhXc/s1600-h/images[4].jpg",
+  ]
+end
+
 describe Twingly::URL do
   let(:test_url) do
     "http://www.blog.twingly.co.uk/2015/07/01/language-detection-changes/"
@@ -136,7 +145,7 @@ describe Twingly::URL do
       end
     end
 
-    %w(http://blog.twingly.com/ hTTP://blog.twingly.com/ https://blog.twingly.com).each do |valid_url|
+    valid_urls.each do |valid_url|
       it "returns true for the valid url '#{valid_url}'" do
         expect(described_class.parse(valid_url).valid?).to be true
       end
