@@ -200,7 +200,7 @@ describe Twingly::URL do
       it { is_expected.to eq(expected) }
     end
 
-    context "removes trailing slash from path" do
+    context "removes trailing slash from end of path unless path becomes empty" do
       let(:url)      { "http://www.twingly.com/blog-data/" }
       let(:expected) { "http://www.twingly.com/blog-data" }
 
