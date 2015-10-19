@@ -27,6 +27,7 @@ end
 def valid_urls
   [
     "http://blog.twingly.com/",
+    "http://blOg.tWingly.coM/",
     "hTTP://blog.twingly.com/",
     "https://blog.twingly.com",
     "http://3.bp.blogspot.com/_lRbEHeizXlQ/Sf4RdEqCqhI/AAAAAAAAAAw/Pl8nGPsyhXc/s1600-h/images[4].jpg",
@@ -43,6 +44,14 @@ describe Twingly::URL do
     subject { url }
 
     it { is_expected.to be_a(Twingly::URL) }
+
+    context "when given valid urls" do
+      valid_urls.each do |valid_url|
+        it "does not ruin the url '#{valid_url}'" do
+          expect(described_class.parse(valid_url).to_s).to eq(valid_url)
+        end
+      end
+    end
 
     context "when given bad input" do
       let(:invalid_url) { "banan" }
