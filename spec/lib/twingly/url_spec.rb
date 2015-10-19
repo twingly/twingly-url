@@ -78,7 +78,7 @@ describe Twingly::URL do
   describe "#initialize" do
     context "when given input parameters of wrong types" do
       it "raises an error" do
-        expect { described_class.new("a", "b") }.to raise_error
+        expect { described_class.new("a", "b") }.to raise_error(ArgumentError)
       end
     end
   end
