@@ -62,6 +62,26 @@ describe Twingly::URL do
       end
     end
 
+    context "when given badly encoded input" do
+      let(:badly_encoded_url) { "http://abc.se/öあ\x81b\xE3" }
+      let(:expected)          { "http://abc.se/öあ\uFFFDb\uFFFD" }
+      let(:actual)            { described_class.parse(badly_encoded_url) }
+
+      it "will replace badly encoded characters with unicode replacement character (U+FFFD)" do
+        expect(actual.to_s).to eq(expected)
+      end
+    end
+
+    context "when given ASCII input" do
+      let(:ascii_url) { "http://www.twingly.com/öあ".force_encoding("ASCII-8BIT") }
+      let(:expected)  { "http://www.twingly.com/öあ" }
+      let(:actual)    { described_class.parse(ascii_url).to_s }
+
+      it "can handle it but returns UTF-8" do
+        expect(actual).to eq(expected)
+      end
+    end
+
     context "with url containing starting and trailing new lines" do
       let(:test_url) { "\nhttp://www.twingly.com/blog-data/\r\n" }
       let(:expected) { "http://www.twingly.com/blog-data/" }

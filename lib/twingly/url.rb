@@ -15,6 +15,7 @@ module Twingly
 
     def self.parse(potential_url)
       potential_url = String(potential_url)
+      potential_url = potential_url.scrub
       potential_url = potential_url.strip
 
       internal_parse(potential_url)
