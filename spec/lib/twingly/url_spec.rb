@@ -503,4 +503,11 @@ describe Twingly::URL do
       it { is_expected.to eq(test_urls.sort) }
     end
   end
+
+  describe "#inspect" do
+    let(:url_object) { described_class.parse(url) }
+    subject { url_object.inspect }
+
+    it { is_expected.to include(url_object.to_s) }
+  end
 end

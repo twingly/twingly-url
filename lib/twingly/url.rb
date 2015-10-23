@@ -134,6 +134,10 @@ module Twingly
       addressable_uri.to_s
     end
 
+    def inspect
+      sprintf("#<%s:0x%x %s>", self.class.name, __id__, self.to_s)
+    end
+
     private
 
     attr_reader :addressable_uri, :public_suffix_domain
