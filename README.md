@@ -35,12 +35,11 @@ Note that this isn't a benchmark, we're using [ruby-prof] which will slow things
 
 ## Release workflow
 
-Build the gem.
+**Note**: Make sure you are logged in as [twingly][twingly-rubygems] at RubyGems.org.
 
-    gem build twingly-url.gemspec
+Build and [publish](http://guides.rubygems.org/publishing/) the gem.
 
-[Publish](http://guides.rubygems.org/publishing/) the gem.
+    bundle exec rake release
 
-    gem push twingly-url-x.y.z.gem
-
+[twingly-rubygems]: https://rubygems.org/profiles/twingly
 [ruby-prof]: http://ruby-prof.rubyforge.org/
