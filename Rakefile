@@ -3,7 +3,7 @@ namespace :profile do
 
   desc "Profile"
   task :normalize do |task|
-    require "twingly/url"
+    require_relative "lib/twingly/url"
 
     Profile.measure "normalizing a short URL", 1000 do
       Twingly::URL.parse('http://www.duh.se/').normalized
