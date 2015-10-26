@@ -1,3 +1,5 @@
+require "bundler/gem_tasks"
+
 namespace :profile do
   require_relative "profile/profile"
 
