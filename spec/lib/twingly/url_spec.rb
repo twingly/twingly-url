@@ -1,5 +1,7 @@
 require "spec_helper"
 
+require "twingly/url"
+
 def invalid_urls
   [
     "http://http",

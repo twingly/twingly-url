@@ -1,5 +1,7 @@
 require "spec_helper"
 
+require "twingly/url/utilities"
+
 describe Twingly::URL::Utilities do
   describe ".extract_valid_urls" do
     context "when given a string with URLs" do

@@ -1,3 +1,5 @@
+require_relative "../url"
+
 module Twingly
   class URL
     module Utilities
