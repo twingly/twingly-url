@@ -47,7 +47,7 @@ describe Twingly::URL do
 
     context "when given valid urls" do
       valid_urls.each do |valid_url|
-        it "does not ruin the url '#{valid_url}'" do
+        it "does not ruin the url \"#{valid_url}\"" do
           expect(described_class.parse(valid_url).to_s).to eq(valid_url)
         end
       end
@@ -169,13 +169,13 @@ describe Twingly::URL do
 
   describe "#valid?" do
     invalid_urls.each do |invalid_url|
-      it "returns false for an invalid URL (#{invalid_url})" do
+      it "returns false for an invalid URL \"#{invalid_url}\"" do
         expect(described_class.parse(invalid_url).valid?).to be false
       end
     end
 
     valid_urls.each do |valid_url|
-      it "returns true for the valid url '#{valid_url}'" do
+      it "returns true for the valid url \"#{valid_url}\"" do
         expect(described_class.parse(valid_url).valid?).to be true
       end
     end
