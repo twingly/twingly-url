@@ -1,4 +1,4 @@
-require "twingly/url"
+require_relative "../url"
 
 module Twingly
   class URL
