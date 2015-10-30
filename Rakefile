@@ -16,7 +16,7 @@ end
 begin
   require "rspec/core/rake_task"
 
-  spec_files = Dir.glob(File.join("**", "*_spec.rb"))
+  spec_files = Dir.glob(File.join("spec/**", "*_spec.rb"))
   spec_tasks = []
 
   namespace(:spec) do
