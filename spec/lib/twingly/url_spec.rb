@@ -21,6 +21,7 @@ def invalid_urls
     "blablahttp://blog.twingly.com/",
     "gopher://blog.twingly.com/",
     "\n",
+    "//www.twingly.com/",
   ]
 end
 

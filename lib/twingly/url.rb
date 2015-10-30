@@ -10,7 +10,7 @@ module Twingly
   class URL
     include Comparable
 
-    SCHEMES = %w(http https)
+    ACCEPTED_SCHEMES = /\Ahttps?\z/i
     ENDS_WITH_SLASH = /\/+$/
 
     def self.parse(potential_url)
@@ -127,7 +127,7 @@ module Twingly
     end
 
     def valid?
-      SCHEMES.include?(normalized_scheme)
+      !!(scheme =~ ACCEPTED_SCHEMES)
     end
 
     def <=>(other)
