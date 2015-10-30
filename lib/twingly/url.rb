@@ -100,7 +100,7 @@ module Twingly
     end
 
     def normalized_scheme
-      addressable_uri.scheme.downcase
+      scheme.downcase
     end
 
     def normalized_host
