@@ -1,3 +1,5 @@
+require "twingly/url"
+
 module Twingly
   class URL
     class NullURL
