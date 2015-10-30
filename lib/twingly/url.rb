@@ -24,20 +24,24 @@ module Twingly
     end
 
     def self.internal_parse(potential_url)
-      if potential_url.is_a?(Addressable::URI)
-        addressable_uri = potential_url
-      else
-        addressable_uri = Addressable::URI.heuristic_parse(potential_url)
-      end
-
+      addressable_uri = to_addressable_uri(potential_url)
       raise Twingly::Error::ParseError if addressable_uri.nil?
 
       public_suffix_domain = PublicSuffix.parse(addressable_uri.display_uri.host)
+      raise Twingly::Error::ParseError if public_suffix_domain.nil?
 
       self.new(addressable_uri, public_suffix_domain)
     rescue Addressable::URI::InvalidURIError, PublicSuffix::DomainInvalid => error
       error.extend(Twingly::URL::Error)
       raise
+    end
+
+    def self.to_addressable_uri(potential_url)
+     if potential_url.is_a?(Addressable::URI)
+        potential_url
+      else
+        Addressable::URI.heuristic_parse(potential_url)
+      end
     end
 
     def initialize(addressable_uri, public_suffix_domain)
@@ -123,7 +127,7 @@ module Twingly
     end
 
     def valid?
-      addressable_uri && public_suffix_domain && SCHEMES.include?(normalized_scheme)
+      SCHEMES.include?(normalized_scheme)
     end
 
     def <=>(other)
