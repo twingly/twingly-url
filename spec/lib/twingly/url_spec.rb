@@ -55,11 +55,11 @@ describe Twingly::URL do
     end
 
     context "when given bad input" do
-      let(:invalid_url) { "banan" }
-
-      it "returns a null URL" do
-        actual = described_class.parse(invalid_url)
-        expect(actual).to be_a(Twingly::URL::NullURL)
+      invalid_urls.each do |invalid_url|
+        it "returns a NullURL for \"#{invalid_url}\"" do
+          actual = described_class.parse(invalid_url)
+          expect(actual).to be_a(Twingly::URL::NullURL)
+        end
       end
     end
 
