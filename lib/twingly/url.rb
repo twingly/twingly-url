@@ -30,6 +30,9 @@ module Twingly
       public_suffix_domain = PublicSuffix.parse(addressable_uri.display_uri.host)
       raise Twingly::Error::ParseError if public_suffix_domain.nil?
 
+      scheme = addressable_uri.scheme
+      raise Twingly::URL::Error::ParseError unless scheme =~ ACCEPTED_SCHEMES
+
       self.new(addressable_uri, public_suffix_domain)
     rescue Addressable::URI::InvalidURIError, PublicSuffix::DomainInvalid => error
       error.extend(Twingly::URL::Error)
@@ -119,7 +122,7 @@ module Twingly
     end
 
     def valid?
-      !!(scheme =~ ACCEPTED_SCHEMES)
+      true
     end
 
     def <=>(other)
