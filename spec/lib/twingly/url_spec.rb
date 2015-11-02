@@ -105,6 +105,14 @@ describe Twingly::URL do
     end
   end
 
+  describe ".internal_parse" do
+    context "when given nil" do
+      it "raises an error" do
+        expect { described_class.internal_parse(nil) }.to raise_error(Twingly::URL::Error::ParseError)
+      end
+    end
+  end
+
   describe "#initialize" do
     context "when given input parameters of wrong types" do
       it "raises an error" do

@@ -25,10 +25,10 @@ module Twingly
 
     def self.internal_parse(potential_url)
       addressable_uri = to_addressable_uri(potential_url)
-      raise Twingly::Error::ParseError if addressable_uri.nil?
+      raise Twingly::URL::Error::ParseError if addressable_uri.nil?
 
       public_suffix_domain = PublicSuffix.parse(addressable_uri.display_uri.host)
-      raise Twingly::Error::ParseError if public_suffix_domain.nil?
+      raise Twingly::URL::Error::ParseError if public_suffix_domain.nil?
 
       scheme = addressable_uri.scheme
       raise Twingly::URL::Error::ParseError unless scheme =~ ACCEPTED_SCHEMES
