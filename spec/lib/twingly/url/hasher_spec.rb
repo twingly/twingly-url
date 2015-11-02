@@ -1,5 +1,7 @@
 require "spec_helper"
 
+require "twingly/url/hasher"
+
 describe Twingly::URL::Hasher do
   describe ".taskdb_hash" do
     it "returns a MD5 hexdigest" do

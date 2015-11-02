@@ -16,10 +16,21 @@ end
 begin
   require "rspec/core/rake_task"
 
-  task default: "spec"
+  spec_files = Dir.glob(File.join("spec/**", "*_spec.rb"))
+  spec_tasks = []
 
-  RSpec::Core::RakeTask.new(:spec) do |task|
-    task.pattern = "spec/lib/**/*_spec.rb"
+  namespace(:spec) do
+    spec_files.each do |spec_file|
+      task_name = File.basename(spec_file, ".rb").to_sym
+
+      spec_tasks << "spec:#{task_name}"
+
+      RSpec::Core::RakeTask.new(task_name) do |task|
+        task.pattern = spec_file
+      end
+    end
   end
+
+  task default: spec_tasks.shuffle
 rescue LoadError
 end
