@@ -23,6 +23,7 @@ def invalid_urls
     "blablahttp://blog.twingly.com/",
     "gopher://blog.twingly.com/",
     "\n",
+    "//www.twingly.com/",
   ]
 end
 
@@ -56,11 +57,11 @@ describe Twingly::URL do
     end
 
     context "when given bad input" do
-      let(:invalid_url) { "banan" }
-
-      it "returns a null URL" do
-        actual = described_class.parse(invalid_url)
-        expect(actual).to be_a(Twingly::URL::NullURL)
+      invalid_urls.each do |invalid_url|
+        it "returns a NullURL for \"#{invalid_url}\"" do
+          actual = described_class.parse(invalid_url)
+          expect(actual).to be_a(Twingly::URL::NullURL)
+        end
       end
     end
 
@@ -103,6 +104,14 @@ describe Twingly::URL do
       let(:expected) { "https://anniaksa.wordpress.com/2014/05/19/privy-digging-blogg100/" }
 
       it { is_expected.to eq(expected) }
+    end
+  end
+
+  describe ".internal_parse" do
+    context "when given nil" do
+      it "raises an error" do
+        expect { described_class.internal_parse(nil) }.to raise_error(Twingly::URL::Error::ParseError)
+      end
     end
   end
 
@@ -373,20 +382,6 @@ describe Twingly::URL do
 
   describe "#without_scheme" do
     subject { described_class.parse(url).without_scheme }
-
-    context "removes scheme from non HTTP(S) URLs" do
-      let(:url)      { "gopher://www.duh.se/" }
-      let(:expected) { "//www.duh.se/" }
-
-      it { is_expected.to eq(expected) }
-    end
-
-    context "removes scheme from non HTTP(S) URLs with parameter" do
-      let(:url)      { "ftp://ftp.example.com/?url=https://www.example.com/" }
-      let(:expected) { "//ftp.example.com/?url=https://www.example.com/" }
-
-      it { is_expected.to eq(expected) }
-    end
 
     context "removes scheme from mixed case HTTP URL" do
       let(:url)      { "HttP://www.duh.se/" }

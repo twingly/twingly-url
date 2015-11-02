@@ -10,7 +10,7 @@ module Twingly
   class URL
     include Comparable
 
-    SCHEMES = %w(http https)
+    ACCEPTED_SCHEMES = /\Ahttps?\z/i
     ENDS_WITH_SLASH = /\/+$/
 
     def self.parse(potential_url)
@@ -24,15 +24,14 @@ module Twingly
     end
 
     def self.internal_parse(potential_url)
-      if potential_url.is_a?(Addressable::URI)
-        addressable_uri = potential_url
-      else
-        addressable_uri = Addressable::URI.heuristic_parse(potential_url)
-      end
-
-      raise Twingly::Error::ParseError if addressable_uri.nil?
+      addressable_uri = to_addressable_uri(potential_url)
+      raise Twingly::URL::Error::ParseError if addressable_uri.nil?
 
       public_suffix_domain = PublicSuffix.parse(addressable_uri.display_uri.host)
+      raise Twingly::URL::Error::ParseError if public_suffix_domain.nil?
+
+      scheme = addressable_uri.scheme
+      raise Twingly::URL::Error::ParseError unless scheme =~ ACCEPTED_SCHEMES
 
       self.new(addressable_uri, public_suffix_domain)
     rescue Addressable::URI::InvalidURIError, PublicSuffix::DomainInvalid => error
@@ -100,7 +99,7 @@ module Twingly
     end
 
     def normalized_scheme
-      addressable_uri.scheme.downcase
+      scheme.downcase
     end
 
     def normalized_host
@@ -123,7 +122,7 @@ module Twingly
     end
 
     def valid?
-      addressable_uri && public_suffix_domain && SCHEMES.include?(normalized_scheme)
+      true
     end
 
     def <=>(other)
@@ -136,6 +135,15 @@ module Twingly
 
     def inspect
       sprintf("#<%s:0x%x %s>", self.class.name, __id__, self.to_s)
+    end
+
+    private_class_method \
+    def self.to_addressable_uri(potential_url)
+     if potential_url.is_a?(Addressable::URI)
+        potential_url
+      else
+        Addressable::URI.heuristic_parse(potential_url)
+      end
     end
 
     private
