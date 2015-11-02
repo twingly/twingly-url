@@ -105,20 +105,6 @@ describe Twingly::URL do
     end
   end
 
-  describe ".to_addressable_uri" do
-    let(:adressable_uri) { Addressable::URI.parse(test_url) }
-
-    context "when given Addressable::URI" do
-      subject { described_class.to_addressable_uri(adressable_uri) }
-      it { is_expected.to eq(adressable_uri) }
-    end
-
-    context "when given string" do
-      subject { described_class.to_addressable_uri(test_url) }
-      it { is_expected.to eq(adressable_uri) }
-    end
-  end
-
   describe "#initialize" do
     context "when given input parameters of wrong types" do
       it "raises an error" do

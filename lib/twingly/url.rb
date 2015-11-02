@@ -36,14 +36,6 @@ module Twingly
       raise
     end
 
-    def self.to_addressable_uri(potential_url)
-     if potential_url.is_a?(Addressable::URI)
-        potential_url
-      else
-        Addressable::URI.heuristic_parse(potential_url)
-      end
-    end
-
     def initialize(addressable_uri, public_suffix_domain)
       unless addressable_uri.is_a?(Addressable::URI)
         raise ArgumentError, "First parameter must be an Addressable::URI"
@@ -140,6 +132,15 @@ module Twingly
 
     def inspect
       sprintf("#<%s:0x%x %s>", self.class.name, __id__, self.to_s)
+    end
+
+    private_class_method \
+    def self.to_addressable_uri(potential_url)
+     if potential_url.is_a?(Addressable::URI)
+        potential_url
+      else
+        Addressable::URI.heuristic_parse(potential_url)
+      end
     end
 
     private
