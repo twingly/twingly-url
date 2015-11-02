@@ -35,11 +35,13 @@ Note that this isn't a benchmark, we're using [ruby-prof] which will slow things
 
 ## Release workflow
 
-**Note**: Make sure you are logged in as [twingly][twingly-rubygems] at RubyGems.org.
+* Bump the version in `lib/twingly/version.rb`.
 
-Build and [publish](http://guides.rubygems.org/publishing/) the gem.
+* Make sure you are logged in as [twingly][twingly-rubygems] at RubyGems.org.
 
-    bundle exec rake release
+* Build and [publish](http://guides.rubygems.org/publishing/) the gem.
+
+        bundle exec rake release
 
 [twingly-rubygems]: https://rubygems.org/profiles/twingly
 [ruby-prof]: http://ruby-prof.rubyforge.org/
