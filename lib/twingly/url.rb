@@ -1,4 +1,5 @@
 require "addressable/uri"
+require "addressable/idna/native"
 require "public_suffix"
 
 require_relative "url/null_url"

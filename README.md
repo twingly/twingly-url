@@ -19,6 +19,13 @@ Twingly URL tools.
 
     gem install twingly-url
 
+### Dependencies
+
+The gem requires libidn.
+
+    sudo apt-get install idn # Debian/Ubuntu
+    brew install libidn # OS X
+
 ## Tests
 
 Run tests with
