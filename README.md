@@ -23,7 +23,7 @@ Twingly URL tools.
 
 The gem requires libidn.
 
-    sudo apt-get install idn # Debian/Ubuntu
+    sudo apt-get install libidn11 # Ubuntu
     brew install libidn # OS X
 
 ## Tests
