@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "addressable", "~> 2"
   s.add_dependency "public_suffix", "~> 1.4"
+  s.add_dependency "idn-ruby", "~> 0.1"
 
   s.add_development_dependency "rake", "~> 10"
   s.add_development_dependency "rspec", "~> 3"

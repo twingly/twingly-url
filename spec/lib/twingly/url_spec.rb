@@ -24,6 +24,8 @@ def invalid_urls
     "gopher://blog.twingly.com/",
     "\n",
     "//www.twingly.com/",
+    "http://xn--t...-/",
+    "http://xn--...-"
   ]
 end
 
@@ -34,6 +36,7 @@ def valid_urls
     "hTTP://blog.twingly.com/",
     "https://blog.twingly.com",
     "http://3.bp.blogspot.com/_lRbEHeizXlQ/Sf4RdEqCqhI/AAAAAAAAAAw/Pl8nGPsyhXc/s1600-h/images[4].jpg",
+    "http://xn--zckp1cyg1.sblo.jp/",
   ]
 end
 
