@@ -25,7 +25,8 @@ def invalid_urls
     "\n",
     "//www.twingly.com/",
     "http://xn--t...-/",
-    "http://xn--...-"
+    "http://xn--...-",
+    "leather beltsbelts for menleather beltmens beltsleather belts for menmens beltbelt bucklesblack l...",
   ]
 end
 
@@ -37,6 +38,7 @@ def valid_urls
     "https://blog.twingly.com",
     "http://3.bp.blogspot.com/_lRbEHeizXlQ/Sf4RdEqCqhI/AAAAAAAAAAw/Pl8nGPsyhXc/s1600-h/images[4].jpg",
     "http://xn--zckp1cyg1.sblo.jp/",
+    "http://eleven.se/mason-pearson-pocket-bristle-nylon-dark-ruby-20683.html&gclid=CjwKEAiAvPGxBRCH3YCgpdbCtmYSJABqHRVw1ZLaelwjepCihWgKkoqgl2t7k0J6J8I1IFp3GYZmKxoCc-nw_wcB?gclid=CjwKEAiAvPGxBRCH3YCgpdbCtmYSJABqHRVw1ZLaelwjepCihWgKkoqgl2t7k0J6J8I1IFp3GYZmKxoCc-nw_wcB",
   ]
 end
 
