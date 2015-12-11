@@ -19,6 +19,8 @@ module Twingly
       IDN::Idna::IdnaError,
     ]
 
+    private_constant :ACCEPTED_SCHEMES, :ENDS_WITH_SLASH, :ERRORS
+
     class << self
       def parse(potential_url)
         potential_url = String(potential_url)
