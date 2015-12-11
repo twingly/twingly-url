@@ -23,10 +23,6 @@ module Twingly
 
     class << self
       def parse(potential_url)
-        potential_url = String(potential_url)
-        potential_url = potential_url.scrub
-        potential_url = potential_url.strip
-
         internal_parse(potential_url)
       rescue Twingly::URL::Error, Twingly::URL::Error::ParseError => error
         NullURL.new
@@ -48,7 +44,19 @@ module Twingly
         raise
       end
 
-      protected :new, :internal_parse
+      def to_addressable_uri(potential_url)
+       if potential_url.is_a?(Addressable::URI)
+          potential_url
+        else
+          potential_url = String(potential_url)
+          potential_url = potential_url.scrub
+          potential_url = potential_url.strip
+
+          Addressable::URI.heuristic_parse(potential_url)
+        end
+      end
+
+      protected :new, :internal_parse, :to_addressable_uri
     end
 
     def initialize(addressable_uri, public_suffix_domain)
@@ -139,15 +147,6 @@ module Twingly
 
     def inspect
       sprintf("#<%s:0x%x %s>", self.class.name, __id__, self.to_s)
-    end
-
-    private_class_method \
-    def self.to_addressable_uri(potential_url)
-     if potential_url.is_a?(Addressable::URI)
-        potential_url
-      else
-        Addressable::URI.heuristic_parse(potential_url)
-      end
     end
 
     private
