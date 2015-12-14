@@ -39,6 +39,8 @@ def valid_urls
     "http://3.bp.blogspot.com/_lRbEHeizXlQ/Sf4RdEqCqhI/AAAAAAAAAAw/Pl8nGPsyhXc/s1600-h/images[4].jpg",
     "http://xn--zckp1cyg1.sblo.jp/",
     "http://eleven.se/mason-pearson-pocket-bristle-nylon-dark-ruby-20683.html&gclid=CjwKEAiAvPGxBRCH3YCgpdbCtmYSJABqHRVw1ZLaelwjepCihWgKkoqgl2t7k0J6J8I1IFp3GYZmKxoCc-nw_wcB?gclid=CjwKEAiAvPGxBRCH3YCgpdbCtmYSJABqHRVw1ZLaelwjepCihWgKkoqgl2t7k0J6J8I1IFp3GYZmKxoCc-nw_wcB",
+    "http://xn--rksmrgs-5wao1o.josefsson.org/",
+    "http://räksmörgås.josefßon.org",
   ]
 end
 
