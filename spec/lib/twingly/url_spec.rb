@@ -121,7 +121,7 @@ describe Twingly::URL do
     end
   end
 
-  describe "#initialize" do
+  describe ".new" do
     context "when called from the outside" do
       it "raises an error" do
         expect { described_class.new("a", "b") }.
