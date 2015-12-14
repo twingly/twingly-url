@@ -113,17 +113,19 @@ describe Twingly::URL do
   end
 
   describe ".internal_parse" do
-    context "when given nil" do
+    context "when called from the outside" do
       it "raises an error" do
-        expect { described_class.internal_parse(nil) }.to raise_error(Twingly::URL::Error::ParseError)
+        expect { described_class.internal_parse("a") }.
+          to raise_error(NoMethodError, /private method `internal_parse' called for/)
       end
     end
   end
 
-  describe "#initialize" do
-    context "when given input parameters of wrong types" do
+  describe ".new" do
+    context "when called from the outside" do
       it "raises an error" do
-        expect { described_class.new("a", "b") }.to raise_error(ArgumentError)
+        expect { described_class.new("a", "b") }.
+          to raise_error(NoMethodError, /private method `new' called for/)
       end
     end
   end

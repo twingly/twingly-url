@@ -19,41 +19,47 @@ module Twingly
       IDN::Idna::IdnaError,
     ]
 
-    def self.parse(potential_url)
-      potential_url = String(potential_url)
-      potential_url = potential_url.scrub
-      potential_url = potential_url.strip
+    private_constant :ACCEPTED_SCHEMES, :ENDS_WITH_SLASH, :ERRORS
 
-      internal_parse(potential_url)
-    rescue Twingly::URL::Error, Twingly::URL::Error::ParseError => error
-      NullURL.new
-    end
+    class << self
+      def parse(potential_url)
+        internal_parse(potential_url)
+      rescue Twingly::URL::Error, Twingly::URL::Error::ParseError => error
+        NullURL.new
+      end
 
-    def self.internal_parse(potential_url)
-      addressable_uri = to_addressable_uri(potential_url)
-      raise Twingly::URL::Error::ParseError if addressable_uri.nil?
+      def internal_parse(potential_url)
+        addressable_uri = to_addressable_uri(potential_url)
+        raise Twingly::URL::Error::ParseError if addressable_uri.nil?
 
-      scheme = addressable_uri.scheme
-      raise Twingly::URL::Error::ParseError unless scheme =~ ACCEPTED_SCHEMES
+        scheme = addressable_uri.scheme
+        raise Twingly::URL::Error::ParseError unless scheme =~ ACCEPTED_SCHEMES
 
-      public_suffix_domain = PublicSuffix.parse(addressable_uri.display_uri.host)
-      raise Twingly::URL::Error::ParseError if public_suffix_domain.nil?
+        public_suffix_domain = PublicSuffix.parse(addressable_uri.display_uri.host)
+        raise Twingly::URL::Error::ParseError if public_suffix_domain.nil?
 
-      self.new(addressable_uri, public_suffix_domain)
-    rescue *ERRORS => error
-      error.extend(Twingly::URL::Error)
-      raise
+        new(addressable_uri, public_suffix_domain)
+      rescue *ERRORS => error
+        error.extend(Twingly::URL::Error)
+        raise
+      end
+
+      def to_addressable_uri(potential_url)
+       if potential_url.is_a?(Addressable::URI)
+          potential_url
+        else
+          potential_url = String(potential_url)
+          potential_url = potential_url.scrub
+          potential_url = potential_url.strip
+
+          Addressable::URI.heuristic_parse(potential_url)
+        end
+      end
+
+      private :new, :internal_parse, :to_addressable_uri
     end
 
     def initialize(addressable_uri, public_suffix_domain)
-      unless addressable_uri.is_a?(Addressable::URI)
-        raise ArgumentError, "First parameter must be an Addressable::URI"
-      end
-
-      unless public_suffix_domain.is_a?(PublicSuffix::Domain)
-        raise ArgumentError, "Second parameter must be a PublicSuffix::Domain"
-      end
-
       @addressable_uri      = addressable_uri
       @public_suffix_domain = public_suffix_domain
     end
@@ -101,7 +107,7 @@ module Twingly
       normalized_url.host   = normalized_host
       normalized_url.path   = normalized_path
 
-      self.class.internal_parse(normalized_url)
+      self.class.parse(normalized_url)
     end
 
     def normalized_scheme
@@ -141,15 +147,6 @@ module Twingly
 
     def inspect
       sprintf("#<%s:0x%x %s>", self.class.name, __id__, self.to_s)
-    end
-
-    private_class_method \
-    def self.to_addressable_uri(potential_url)
-     if potential_url.is_a?(Addressable::URI)
-        potential_url
-      else
-        Addressable::URI.heuristic_parse(potential_url)
-      end
     end
 
     private
