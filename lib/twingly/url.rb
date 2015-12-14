@@ -56,7 +56,7 @@ module Twingly
         end
       end
 
-      protected :new, :internal_parse, :to_addressable_uri
+      private :new, :internal_parse, :to_addressable_uri
     end
 
     def initialize(addressable_uri, public_suffix_domain)

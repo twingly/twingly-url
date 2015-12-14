@@ -116,7 +116,7 @@ describe Twingly::URL do
     context "when called from the outside" do
       it "raises an error" do
         expect { described_class.internal_parse("a") }.
-          to raise_error(NoMethodError, /protected method `internal_parse' called for/)
+          to raise_error(NoMethodError, /private method `internal_parse' called for/)
       end
     end
   end
@@ -125,7 +125,7 @@ describe Twingly::URL do
     context "when called from the outside" do
       it "raises an error" do
         expect { described_class.new("a", "b") }.
-          to raise_error(NoMethodError, /protected method `new' called for/)
+          to raise_error(NoMethodError, /private method `new' called for/)
       end
     end
   end
