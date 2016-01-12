@@ -4,6 +4,7 @@ require "public_suffix"
 
 require_relative "url/null_url"
 require_relative "url/error"
+require_relative "version"
 
 PublicSuffix::List.private_domains = false
 
