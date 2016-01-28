@@ -1,5 +1,7 @@
 require 'digest'
 
+require_relative "../url"
+
 module Twingly
   class URL
     module Hasher
