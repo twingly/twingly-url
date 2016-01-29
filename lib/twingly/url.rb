@@ -39,7 +39,7 @@ module Twingly
         raise Twingly::URL::Error::ParseError if public_suffix_domain.nil?
 
         raise Twingly::URL::Error::ParseError unless public_suffix_domain.sld
-
+        puts addressable_uri.origin
         new(addressable_uri, public_suffix_domain)
       rescue *ERRORS => error
         error.extend(Twingly::URL::Error)
@@ -67,35 +67,35 @@ module Twingly
     end
 
     def scheme
-      addressable_uri.scheme
+      addressable_uri.scheme.to_s
     end
 
     def trd
-      public_suffix_domain.trd
+      public_suffix_domain.trd.to_s
     end
 
     def sld
-      public_suffix_domain.sld
+      public_suffix_domain.sld.to_s
     end
 
     def tld
-      public_suffix_domain.tld
+      public_suffix_domain.tld.to_s
     end
 
     def domain
-      public_suffix_domain.domain
+      public_suffix_domain.domain.to_s
     end
 
     def host
-      addressable_uri.host
+      addressable_uri.host.to_s
     end
 
     def origin
-      addressable_uri.origin
+      addressable_uri.origin.to_s
     end
 
     def path
-      addressable_uri.path
+      addressable_uri.path.to_s
     end
 
     def without_scheme

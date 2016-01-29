@@ -148,6 +148,12 @@ describe Twingly::URL do
   describe "#trd" do
     subject { url.trd }
     it { is_expected.to eq("www.blog") }
+
+    context "when the url contains no trd" do
+      let(:test_url){ "http://twingly.com" }
+
+      it { is_expected.to eq("") }
+    end
   end
 
   describe "#sld" do
