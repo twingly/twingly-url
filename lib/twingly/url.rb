@@ -38,7 +38,7 @@ module Twingly
         public_suffix_domain = PublicSuffix.parse(addressable_uri.display_uri.host)
         raise Twingly::URL::Error::ParseError if public_suffix_domain.nil?
 
-        raise Twingly::URL::Error::ParseError unless public_suffix_domain.sld
+        raise Twingly::URL::Error::ParseError if public_suffix_domain.sld.nil?
 
         new(addressable_uri, public_suffix_domain)
       rescue *ERRORS => error
