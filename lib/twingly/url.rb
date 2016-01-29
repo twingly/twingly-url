@@ -39,7 +39,7 @@ module Twingly
         raise Twingly::URL::Error::ParseError if public_suffix_domain.nil?
 
         raise Twingly::URL::Error::ParseError unless public_suffix_domain.sld
-        puts addressable_uri.origin
+
         new(addressable_uri, public_suffix_domain)
       rescue *ERRORS => error
         error.extend(Twingly::URL::Error)
