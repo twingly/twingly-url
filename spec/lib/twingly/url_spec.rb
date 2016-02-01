@@ -27,6 +27,8 @@ def invalid_urls
     "http://xn--t...-/",
     "http://xn--...-",
     "leather beltsbelts for menleather beltmens beltsleather belts for menmens beltbelt bucklesblack l...",
+    "http://some_site.net%C2",
+    "http://+%D5d.some_site.net",
   ]
 end
 
