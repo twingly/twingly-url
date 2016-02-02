@@ -67,7 +67,7 @@ module Twingly
     end
 
     def scheme
-      addressable_uri.scheme.to_s
+      addressable_uri.scheme
     end
 
     def trd
@@ -75,27 +75,27 @@ module Twingly
     end
 
     def sld
-      public_suffix_domain.sld.to_s
+      public_suffix_domain.sld
     end
 
     def tld
-      public_suffix_domain.tld.to_s
+      public_suffix_domain.tld
     end
 
     def domain
-      public_suffix_domain.domain.to_s
+      public_suffix_domain.domain
     end
 
     def host
-      addressable_uri.host.to_s
+      addressable_uri.host
     end
 
     def origin
-      addressable_uri.origin.to_s
+      addressable_uri.origin
     end
 
     def path
-      addressable_uri.path.to_s
+      addressable_uri.path
     end
 
     def without_scheme
