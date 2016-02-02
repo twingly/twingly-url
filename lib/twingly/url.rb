@@ -70,7 +70,10 @@ module Twingly
         raise
       end
 
-      private :new, :internal_parse, :to_addressable_uri, :addressable_display_uri
+      private :new
+      private :internal_parse
+      private :to_addressable_uri
+      private :addressable_display_uri
     end
 
     def initialize(addressable_uri, public_suffix_domain)
