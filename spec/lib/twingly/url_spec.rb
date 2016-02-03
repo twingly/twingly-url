@@ -27,6 +27,14 @@ def invalid_urls
     "http://xn--t...-/",
     "http://xn--...-",
     "leather beltsbelts for menleather beltmens beltsleather belts for menmens beltbelt bucklesblack l...",
+    "https//.com",
+    "http://xxx@.com/",
+    "http://...com",
+    "http://.ly/xxx",
+    "http://.com.my/",
+    "http://.net",
+    "http://.com.",
+    "http://.gl/xxx",
     "http://some_site.net%C2",
     "http://+%D5d.some_site.net",
   ]
@@ -142,6 +150,12 @@ describe Twingly::URL do
   describe "#trd" do
     subject { url.trd }
     it { is_expected.to eq("www.blog") }
+
+    context "when the url contains no trd" do
+      let(:test_url){ "http://twingly.com" }
+
+      it { is_expected.to eq("") }
+    end
   end
 
   describe "#sld" do
