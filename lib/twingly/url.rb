@@ -36,7 +36,9 @@ module Twingly
         scheme = addressable_uri.scheme
         raise Twingly::URL::Error::ParseError unless scheme =~ ACCEPTED_SCHEMES
 
-        public_suffix_domain = PublicSuffix.parse(addressable_uri.display_uri.host)
+        display_uri = addressable_display_uri(addressable_uri)
+
+        public_suffix_domain = PublicSuffix.parse(display_uri.host)
         raise Twingly::URL::Error::ParseError if public_suffix_domain.nil?
 
         new(addressable_uri, public_suffix_domain)
@@ -57,7 +59,22 @@ module Twingly
         end
       end
 
-      private :new, :internal_parse, :to_addressable_uri
+      # Workaround for the following bug in addressable:
+      # https://github.com/sporkmonger/addressable/issues/224
+      def addressable_display_uri(addressable_uri)
+        addressable_uri.display_uri
+      rescue ArgumentError => error
+        if error.message.include?("invalid byte sequence in UTF-8")
+          raise Twingly::URL::Error::ParseError
+        end
+
+        raise
+      end
+
+      private :new
+      private :internal_parse
+      private :to_addressable_uri
+      private :addressable_display_uri
     end
 
     def initialize(addressable_uri, public_suffix_domain)
