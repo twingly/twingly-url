@@ -42,11 +42,11 @@ Note that this isn't a benchmark, we're using [ruby-prof] which will slow things
 
 ## Release workflow
 
-* Bump the version in `lib/twingly/version.rb`.
+* Bump the version in `lib/twingly/version.rb` in a commit, no need to push (the release task does that).
 
 * Make sure you are logged in as [twingly][twingly-rubygems] at RubyGems.org.
 
-* Build and [publish](http://guides.rubygems.org/publishing/) the gem.
+* Build and [publish](http://guides.rubygems.org/publishing/) the gem. This will create the proper tag in git, push the commit and tag and upload to RubyGems.
 
         bundle exec rake release
 
