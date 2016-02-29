@@ -3,6 +3,7 @@ sudo: false
 
 rvm:
   - 2.2
+  - 2.3.0
 
 cache: bundler
 
