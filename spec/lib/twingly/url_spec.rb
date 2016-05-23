@@ -483,25 +483,25 @@ describe Twingly::URL do
       it { is_expected.to eq("") }
     end
 
-    context "with username and password part in URL" do
+    context "with user and password part in URL" do
       let(:url) { "https://user:password@blog.twingly.com/" }
 
       it { is_expected.to eq("user:password") }
     end
 
-    context "with empty username and empty password in URL" do
+    context "with empty user and empty password in URL" do
       let(:url) { "https://:@blog.twingly.com/" }
 
       it { is_expected.to eq(":") }
     end
 
-    context "with username but empty password in URL" do
+    context "with user but empty password in URL" do
       let(:url) { "https://user:@blog.twingly.com/" }
 
       it { is_expected.to eq("user:") }
     end
 
-    context "with empty username but password in URL" do
+    context "with empty user but password in URL" do
       let(:url) { "https://:password@blog.twingly.com/" }
 
       it { is_expected.to eq(":password") }
@@ -517,25 +517,25 @@ describe Twingly::URL do
       it { is_expected.to eq("") }
     end
 
-    context "with username and password part in URL" do
+    context "with user and password part in URL" do
       let(:url) { "https://user:password@blog.twingly.com/" }
 
       it { is_expected.to eq("user") }
     end
 
-    context "with empty username and empty password in URL" do
+    context "with empty user and empty password in URL" do
       let(:url) { "https://:@blog.twingly.com/" }
 
       it { is_expected.to eq("") }
     end
 
-    context "with username but empty password in URL" do
+    context "with user but empty password in URL" do
       let(:url) { "https://user:@blog.twingly.com/" }
 
       it { is_expected.to eq("user") }
     end
 
-    context "with empty username but password in URL" do
+    context "with empty user but password in URL" do
       let(:url) { "https://:password@blog.twingly.com/" }
 
       it { is_expected.to eq("") }
@@ -551,25 +551,25 @@ describe Twingly::URL do
       it { is_expected.to eq("") }
     end
 
-    context "with username and password part in URL" do
+    context "with user and password part in URL" do
       let(:url) { "https://user:password@blog.twingly.com/" }
 
       it { is_expected.to eq("password") }
     end
 
-    context "with empty username and empty password in URL" do
+    context "with empty user and empty password in URL" do
       let(:url) { "https://:@blog.twingly.com/" }
 
       it { is_expected.to eq("") }
     end
 
-    context "with username but empty password in URL" do
+    context "with user but empty password in URL" do
       let(:url) { "https://user:@blog.twingly.com/" }
 
       it { is_expected.to eq("") }
     end
 
-    context "with empty username but password in URL" do
+    context "with empty user but password in URL" do
       let(:url) { "https://:password@blog.twingly.com/" }
 
       it { is_expected.to eq("password") }
