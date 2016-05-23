@@ -494,6 +494,18 @@ describe Twingly::URL do
 
       it { is_expected.to eq(":") }
     end
+
+    context "with username but empty password in URL" do
+      let(:url) { "https://user:@blog.twingly.com/" }
+
+      it { is_expected.to eq("user:") }
+    end
+
+    context "with empty username but password in URL" do
+      let(:url) { "https://:password@blog.twingly.com/" }
+
+      it { is_expected.to eq(":password") }
+    end
   end
 
   describe "#user" do
@@ -513,6 +525,18 @@ describe Twingly::URL do
 
     context "with empty username and empty password in URL" do
       let(:url) { "https://:@blog.twingly.com/" }
+
+      it { is_expected.to eq("") }
+    end
+
+    context "with username but empty password in URL" do
+      let(:url) { "https://user:@blog.twingly.com/" }
+
+      it { is_expected.to eq("user") }
+    end
+
+    context "with empty username but password in URL" do
+      let(:url) { "https://:password@blog.twingly.com/" }
 
       it { is_expected.to eq("") }
     end
@@ -537,6 +561,18 @@ describe Twingly::URL do
       let(:url) { "https://:@blog.twingly.com/" }
 
       it { is_expected.to eq("") }
+    end
+
+    context "with username but empty password in URL" do
+      let(:url) { "https://user:@blog.twingly.com/" }
+
+      it { is_expected.to eq("") }
+    end
+
+    context "with empty username but password in URL" do
+      let(:url) { "https://:password@blog.twingly.com/" }
+
+      it { is_expected.to eq("password") }
     end
   end
 
