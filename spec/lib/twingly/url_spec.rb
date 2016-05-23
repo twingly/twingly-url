@@ -51,6 +51,8 @@ def valid_urls
     "http://eleven.se/mason-pearson-pocket-bristle-nylon-dark-ruby-20683.html&gclid=CjwKEAiAvPGxBRCH3YCgpdbCtmYSJABqHRVw1ZLaelwjepCihWgKkoqgl2t7k0J6J8I1IFp3GYZmKxoCc-nw_wcB?gclid=CjwKEAiAvPGxBRCH3YCgpdbCtmYSJABqHRVw1ZLaelwjepCihWgKkoqgl2t7k0J6J8I1IFp3GYZmKxoCc-nw_wcB",
     "http://xn--rksmrgs-5wao1o.josefsson.org/",
     "http://räksmörgås.josefßon.org",
+    "http://user:password@blog.twingly.com/",
+    "http://:@blog.twingly.com/",
   ]
 end
 
@@ -469,6 +471,72 @@ describe Twingly::URL do
       let(:expected) { "//feedjira.herokuapp.com/?url=https://signalvnoise.com/posts.rss" }
 
       it { is_expected.to eq(expected) }
+    end
+  end
+
+  describe "#userinfo" do
+    subject { described_class.parse(url).userinfo }
+
+    context "without authorisation part in URL" do
+      let(:url) { "https://blog.twingly.com/" }
+
+      it { is_expected.to eq("") }
+    end
+
+    context "with username and password part in URL" do
+      let(:url) { "https://user:password@blog.twingly.com/" }
+
+      it { is_expected.to eq("user:password") }
+    end
+
+    context "with empty username and empty password in URL" do
+      let(:url) { "https://:@blog.twingly.com/" }
+
+      it { is_expected.to eq(":") }
+    end
+  end
+
+  describe "#user" do
+    subject { described_class.parse(url).user }
+
+    context "without authorisation part in URL" do
+      let(:url) { "https://blog.twingly.com/" }
+
+      it { is_expected.to eq("") }
+    end
+
+    context "with username and password part in URL" do
+      let(:url) { "https://user:password@blog.twingly.com/" }
+
+      it { is_expected.to eq("user") }
+    end
+
+    context "with empty username and empty password in URL" do
+      let(:url) { "https://:@blog.twingly.com/" }
+
+      it { is_expected.to eq("") }
+    end
+  end
+
+  describe "#password" do
+    subject { described_class.parse(url).password }
+
+    context "without authorisation part in URL" do
+      let(:url) { "https://blog.twingly.com/" }
+
+      it { is_expected.to eq("") }
+    end
+
+    context "with username and password part in URL" do
+      let(:url) { "https://user:password@blog.twingly.com/" }
+
+      it { is_expected.to eq("password") }
+    end
+
+    context "with empty username and empty password in URL" do
+      let(:url) { "https://:@blog.twingly.com/" }
+
+      it { is_expected.to eq("") }
     end
   end
 

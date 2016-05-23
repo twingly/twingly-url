@@ -153,6 +153,18 @@ module Twingly
       (path.empty?) ? "/" : path
     end
 
+    def userinfo
+      addressable_uri.userinfo.to_s
+    end
+
+    def user
+      addressable_uri.user.to_s
+    end
+
+    def password
+      addressable_uri.password.to_s
+    end
+
     def valid?
       true
     end

@@ -70,6 +70,21 @@ describe Twingly::URL::NullURL do
     it { is_expected.to eq("") }
   end
 
+  describe "#userinfo" do
+    subject { url.userinfo }
+    it { is_expected.to eq("") }
+  end
+
+  describe "#user" do
+    subject { url.user }
+    it { is_expected.to eq("") }
+  end
+
+  describe "#password" do
+    subject { url.password }
+    it { is_expected.to eq("") }
+  end
+
   context "when receiving call for non-existing method on Twingly::URL" do
     it "raises an error" do
       expect { url.method_does_not_exist }.to raise_error(NoMethodError)
