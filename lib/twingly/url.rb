@@ -14,13 +14,13 @@ module Twingly
 
     ACCEPTED_SCHEMES = /\Ahttps?\z/i
     ENDS_WITH_SLASH = /\/+$/
-    ERRORS = [
+    ERRORS_TO_EXTEND = [
       Addressable::URI::InvalidURIError,
       PublicSuffix::DomainInvalid,
       IDN::Idna::IdnaError,
     ]
 
-    private_constant :ACCEPTED_SCHEMES, :ENDS_WITH_SLASH, :ERRORS
+    private_constant :ACCEPTED_SCHEMES, :ENDS_WITH_SLASH, :ERRORS_TO_EXTEND
 
     class << self
       def parse(potential_url)
@@ -44,7 +44,7 @@ module Twingly
         raise Twingly::URL::Error::ParseError if public_suffix_domain.sld.nil?
 
         new(addressable_uri, public_suffix_domain)
-      rescue *ERRORS => error
+      rescue *ERRORS_TO_EXTEND => error
         error.extend(Twingly::URL::Error)
         raise
       end
