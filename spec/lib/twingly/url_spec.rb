@@ -37,6 +37,7 @@ def invalid_urls
     "http://.gl/xxx",
     "http://some_site.net%C2",
     "http://+%D5d.some_site.net",
+    "http://www.twingly.",
   ]
 end
 
