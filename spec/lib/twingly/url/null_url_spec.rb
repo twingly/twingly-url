@@ -36,7 +36,7 @@ describe Twingly::URL::NullURL do
   end
 
   describe "#ttld" do
-    subject { url.tld }
+    subject { url.ttld }
     it { is_expected.to eq("") }
   end
 
