@@ -21,7 +21,7 @@ Install the gem:
 
     gem install twingly-url
 
-Usage (this output was created with [`examples/url.rb`](examples/url.rb)):
+Usage (this output was created with [`examples/url.rb`][examples]):
 
 ```ruby
 require "twingly/url"
@@ -77,6 +77,8 @@ Note that this isn't a benchmark, we're using [ruby-prof] which will slow things
 
 ## Release workflow
 
+* Update the [examples] in this README if needed.
+
 * Bump the version in `lib/twingly/version.rb` in a commit, no need to push (the release task does that).
 
 * Make sure you are logged in as [twingly][twingly-rubygems] at RubyGems.org.
@@ -87,3 +89,4 @@ Note that this isn't a benchmark, we're using [ruby-prof] which will slow things
 
 [twingly-rubygems]: https://rubygems.org/profiles/twingly
 [ruby-prof]: http://ruby-prof.rubyforge.org/
+[examples]: examples/url.rb
