@@ -15,9 +15,44 @@ Twingly URL tools.
 * `twingly/url/utilities` - Utilities to work with URLs
     * `Twingly::URL::Utilities.extract_valid_urls` - Returns Array of valid `Twingly::URL`
 
-## Installation
+## Getting Started
+
+Install the gem:
 
     gem install twingly-url
+
+Usage (this output was created with [`examples/url.rb`](examples/url.rb)):
+
+```ruby
+require "twingly/url"
+
+url = Twingly::URL.parse("https://www.twingly.com/search")
+url.scheme              # => "https"
+url.trd                 # => "www"
+url.sld                 # => "twingly"
+url.tld                 # => "com"
+url.domain              # => "twingly.com"
+url.host                # => "www.twingly.com"
+url.origin              # => "https://www.twingly.com"
+url.path                # => "/search"
+url.without_scheme      # => "//www.twingly.com/search"
+url.valid?              # => "true"
+
+url = Twingly::URL.parse("https://admin:correcthorsebatterystaple@example.com/")
+url.scheme              # => "https"
+url.trd                 # => ""
+url.sld                 # => "example"
+url.tld                 # => "com"
+url.domain              # => "example.com"
+url.host                # => "example.com"
+url.origin              # => "https://example.com"
+url.path                # => "/"
+url.without_scheme      # => "//admin:correcthorsebatterystaple@example.com/"
+url.userinfo            # => "admin:correcthorsebatterystaple"
+url.user                # => "admin"
+url.password            # => "correcthorsebatterystaple"
+url.valid?              # => "true"
+```
 
 ### Dependencies
 
