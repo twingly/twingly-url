@@ -1,6 +1,6 @@
 require "twingly/url"
 
-url_as_string = "https://www.twingly.com/search"
+url_as_string = "http://www.twingly.co.uk/search"
 url = Twingly::URL.parse(url_as_string)
 
 puts "require \"twingly/url\""

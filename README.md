@@ -26,16 +26,16 @@ Usage (this output was created with [`examples/url.rb`](examples/url.rb)):
 ```ruby
 require "twingly/url"
 
-url = Twingly::URL.parse("https://www.twingly.com/search")
-url.scheme              # => "https"
+url = Twingly::URL.parse("http://www.twingly.co.uk/search")
+url.scheme              # => "http"
 url.trd                 # => "www"
 url.sld                 # => "twingly"
-url.tld                 # => "com"
-url.domain              # => "twingly.com"
-url.host                # => "www.twingly.com"
-url.origin              # => "https://www.twingly.com"
+url.tld                 # => "co.uk"
+url.domain              # => "twingly.co.uk"
+url.host                # => "www.twingly.co.uk"
+url.origin              # => "http://www.twingly.co.uk"
 url.path                # => "/search"
-url.without_scheme      # => "//www.twingly.com/search"
+url.without_scheme      # => "//www.twingly.co.uk/search"
 url.valid?              # => "true"
 
 url = Twingly::URL.parse("https://admin:correcthorsebatterystaple@example.com/")
