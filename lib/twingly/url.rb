@@ -100,6 +100,10 @@ module Twingly
       public_suffix_domain.tld
     end
 
+    def ttld
+      tld.split(".").last
+    end
+
     def domain
       public_suffix_domain.domain
     end

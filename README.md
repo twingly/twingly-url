@@ -30,7 +30,8 @@ url = Twingly::URL.parse("http://www.twingly.co.uk/search")
 url.scheme              # => "http"
 url.trd                 # => "www"
 url.sld                 # => "twingly"
-url.tld                 # => "co.uk"
+url.tld                 # => "uk"
+url.ttld                # => "co.uk"
 url.domain              # => "twingly.co.uk"
 url.host                # => "www.twingly.co.uk"
 url.origin              # => "http://www.twingly.co.uk"
@@ -43,6 +44,7 @@ url.scheme              # => "https"
 url.trd                 # => ""
 url.sld                 # => "example"
 url.tld                 # => "com"
+url.ttld                # => "com"
 url.domain              # => "example.com"
 url.host                # => "example.com"
 url.origin              # => "https://example.com"
@@ -77,7 +79,9 @@ Note that this isn't a benchmark, we're using [ruby-prof] which will slow things
 
 ## Release workflow
 
-* Update the [examples] in this README if needed.
+* Update the [examples] in this README if needed, generate the output with
+
+        ruby examples/url.rb
 
 * Bump the version in `lib/twingly/version.rb` in a commit, no need to push (the release task does that).
 

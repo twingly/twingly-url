@@ -35,6 +35,11 @@ describe Twingly::URL::NullURL do
     it { is_expected.to eq("") }
   end
 
+  describe "#ttld" do
+    subject { url.tld }
+    it { is_expected.to eq("") }
+  end
+
   describe "#domain" do
     subject { url.domain }
     it { is_expected.to eq("") }

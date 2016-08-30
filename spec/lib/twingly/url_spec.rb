@@ -171,6 +171,11 @@ describe Twingly::URL do
     it { is_expected.to eq("co.uk") }
   end
 
+  describe "#ttld" do
+    subject { url.ttld }
+    it { is_expected.to eq("uk") }
+  end
+
   describe "#domain" do
     subject { url.domain }
     it { is_expected.to eq("twingly.co.uk") }
