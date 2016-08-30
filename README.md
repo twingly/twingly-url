@@ -15,9 +15,44 @@ Twingly URL tools.
 * `twingly/url/utilities` - Utilities to work with URLs
     * `Twingly::URL::Utilities.extract_valid_urls` - Returns Array of valid `Twingly::URL`
 
-## Installation
+## Getting Started
+
+Install the gem:
 
     gem install twingly-url
+
+Usage (this output was created with [`examples/url.rb`][examples]):
+
+```ruby
+require "twingly/url"
+
+url = Twingly::URL.parse("http://www.twingly.co.uk/search")
+url.scheme              # => "http"
+url.trd                 # => "www"
+url.sld                 # => "twingly"
+url.tld                 # => "co.uk"
+url.domain              # => "twingly.co.uk"
+url.host                # => "www.twingly.co.uk"
+url.origin              # => "http://www.twingly.co.uk"
+url.path                # => "/search"
+url.without_scheme      # => "//www.twingly.co.uk/search"
+url.valid?              # => "true"
+
+url = Twingly::URL.parse("https://admin:correcthorsebatterystaple@example.com/")
+url.scheme              # => "https"
+url.trd                 # => ""
+url.sld                 # => "example"
+url.tld                 # => "com"
+url.domain              # => "example.com"
+url.host                # => "example.com"
+url.origin              # => "https://example.com"
+url.path                # => "/"
+url.without_scheme      # => "//admin:correcthorsebatterystaple@example.com/"
+url.userinfo            # => "admin:correcthorsebatterystaple"
+url.user                # => "admin"
+url.password            # => "correcthorsebatterystaple"
+url.valid?              # => "true"
+```
 
 ### Dependencies
 
@@ -42,6 +77,8 @@ Note that this isn't a benchmark, we're using [ruby-prof] which will slow things
 
 ## Release workflow
 
+* Update the [examples] in this README if needed.
+
 * Bump the version in `lib/twingly/version.rb` in a commit, no need to push (the release task does that).
 
 * Make sure you are logged in as [twingly][twingly-rubygems] at RubyGems.org.
@@ -52,3 +89,4 @@ Note that this isn't a benchmark, we're using [ruby-prof] which will slow things
 
 [twingly-rubygems]: https://rubygems.org/profiles/twingly
 [ruby-prof]: http://ruby-prof.rubyforge.org/
+[examples]: examples/url.rb
