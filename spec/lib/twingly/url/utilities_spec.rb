@@ -1,4 +1,4 @@
-require "spec_helper"
+SimpleCov.command_name(File.basename(__FILE__, ".rb"))
 
 require "twingly/url/utilities"
 

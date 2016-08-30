@@ -31,6 +31,18 @@ begin
     end
   end
 
-  task default: spec_tasks.shuffle
+  require "coveralls/rake/task"
+  Coveralls::RakeTask.new
+
+  desc "Run all tests with code coverage analysis"
+  task :default do
+    begin
+      spec_tasks.shuffle.each do |task_name|
+        Rake::Task[task_name].invoke
+      end
+    ensure
+      Rake::Task["coveralls:push"].invoke
+    end
+  end
 rescue LoadError
 end
