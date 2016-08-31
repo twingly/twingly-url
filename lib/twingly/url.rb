@@ -100,6 +100,10 @@ module Twingly
       public_suffix_domain.tld
     end
 
+    # Many ccTLDs have a second level[1] underneath their ccTLD, use this when
+    # you don't care about the second level.
+    #
+    # [1]: https://en.wikipedia.org/wiki/Second-level_domain
     def ttld
       tld.split(".").last
     end
