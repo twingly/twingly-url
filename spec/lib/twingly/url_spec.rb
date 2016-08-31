@@ -174,6 +174,12 @@ describe Twingly::URL do
   describe "#ttld" do
     subject { url.ttld }
     it { is_expected.to eq("uk") }
+
+    context "when the TLD is just one level" do
+      let(:test_url){ "http://twingly.com" }
+
+      it { is_expected.to eq("com") }
+    end
   end
 
   describe "#domain" do
