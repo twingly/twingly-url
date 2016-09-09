@@ -36,7 +36,7 @@ def invalid_urls
     "http://.com.",
     "http://.gl/xxx",
     "http://some_site.net%C2",
-    "http://+%D5d.some_site.net",
+    "http://+%D5d.some_site.net", # https://github.com/sporkmonger/addressable/issues/224
     "http://www.twingly.",
   ]
 end
@@ -54,6 +54,8 @@ def valid_urls
     "http://räksmörgås.josefßon.org",
     "http://user:password@blog.twingly.com/",
     "http://:@blog.twingly.com/",
+    "https://www.foo.ایران.ir/bar",
+    "https://www.foo.xn--mgba3a4f16a.ir/bar",
   ]
 end
 
@@ -238,6 +240,25 @@ describe Twingly::URL do
   end
 
   describe "#normalized" do
+    context "when given valid urls" do
+      valid_urls.each do |valid_url|
+        it "does not raise an error for \"#{valid_url}\"" do
+          expect {
+            described_class.parse(valid_url).normalized.to_s
+          }.not_to raise_error
+        end
+      end
+    end
+
+    context "when given bad input" do
+      invalid_urls.each do |invalid_url|
+        it "returns NullURL for \"#{invalid_url}\"" do
+          actual = described_class.parse(invalid_url).normalized
+          expect(actual).to be_a(Twingly::URL::NullURL)
+        end
+      end
+    end
+
     subject { described_class.parse(url).normalized.to_s }
 
     context "adds www if host is missing a subdomain" do

@@ -6,7 +6,12 @@ require_relative "url/null_url"
 require_relative "url/error"
 require_relative "version"
 
-PublicSuffix::List.private_domains = false
+PublicSuffix::List.default = PublicSuffix::List.parse(
+  File.read(PublicSuffix::List::DEFAULT_LIST_PATH), private_domains: false)
+PublicSuffix::List.default.indexes.keys.
+  map { |name| Addressable::IDNA.to_ascii(name) }.
+  select { |name| name =~ /xn\-\-/ }.
+  each { |name| PublicSuffix::List.default << PublicSuffix::Rule.factory(name) }
 
 module Twingly
   class URL
@@ -36,9 +41,11 @@ module Twingly
         scheme = addressable_uri.scheme
         raise Twingly::URL::Error::ParseError unless scheme =~ ACCEPTED_SCHEMES
 
-        display_uri = addressable_display_uri(addressable_uri)
+        # URLs that can't be normalized should not be valid
+        try_addressable_normalize(addressable_uri)
 
-        public_suffix_domain = PublicSuffix.parse(display_uri.host)
+        host = addressable_uri.host
+        public_suffix_domain = PublicSuffix.parse(host, default_rule: nil)
         raise Twingly::URL::Error::ParseError if public_suffix_domain.nil?
 
         raise Twingly::URL::Error::ParseError if public_suffix_domain.sld.nil?
@@ -63,8 +70,8 @@ module Twingly
 
       # Workaround for the following bug in addressable:
       # https://github.com/sporkmonger/addressable/issues/224
-      def addressable_display_uri(addressable_uri)
-        addressable_uri.display_uri
+      def try_addressable_normalize(addressable_uri)
+        addressable_uri.normalize
       rescue ArgumentError => error
         if error.message.include?("invalid byte sequence in UTF-8")
           raise Twingly::URL::Error::ParseError
@@ -76,7 +83,7 @@ module Twingly
       private :new
       private :internal_parse
       private :to_addressable_uri
-      private :addressable_display_uri
+      private :try_addressable_normalize
     end
 
     def initialize(addressable_uri, public_suffix_domain)
