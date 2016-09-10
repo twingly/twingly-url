@@ -11,7 +11,9 @@ PublicSuffix::List.default = PublicSuffix::List.parse(
 PublicSuffix::List.default.indexes.keys.
   map { |name| Addressable::IDNA.to_ascii(name) }.
   select { |name| name =~ /xn\-\-/ }.
-  each { |name| PublicSuffix::List.default << PublicSuffix::Rule.factory(name) }
+  each { |name| PublicSuffix::List.default.add(PublicSuffix::Rule.factory(name), reindex: false) }
+
+PublicSuffix::List.default.reindex!
 
 module Twingly
   class URL
