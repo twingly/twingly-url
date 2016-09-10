@@ -261,6 +261,25 @@ describe Twingly::URL do
 
     subject { described_class.parse(url).normalized.to_s }
 
+    context "with URL that has an internationalized TLD" do
+      let(:test_url) { "https://www.foo.ایران.ir/bar" }
+      let(:normalized_url) { described_class.parse(url).normalized }
+
+      # FIXME: add tests for all parts
+
+      describe "#tld" do
+        subject { normalized_url.tld }
+
+        it { is_expected.to eq("xn--mgba3a4f16a.ir") }
+      end
+
+      describe "#ttld" do
+        subject { normalized_url.ttld }
+
+        it { is_expected.to eq("ir") }
+      end
+    end
+
     context "adds www if host is missing a subdomain" do
       let(:url)      { "http://twingly.com/" }
       let(:expected) { "http://www.twingly.com/" }

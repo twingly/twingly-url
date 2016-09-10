@@ -8,8 +8,8 @@ require_relative "version"
 
 PublicSuffix::List.default = PublicSuffix::List.parse(
   File.read(PublicSuffix::List::DEFAULT_LIST_PATH), private_domains: false)
-PublicSuffix::List.default.indexes.keys.
-  map { |name| Addressable::IDNA.to_ascii(name) }.
+PublicSuffix::List.default.
+  map { |rule| Addressable::IDNA.to_ascii(rule.value) }.
   select { |name| name =~ /xn\-\-/ }.
   each { |name| PublicSuffix::List.default.add(PublicSuffix::Rule.factory(name), reindex: false) }
 
