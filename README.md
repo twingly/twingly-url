@@ -67,7 +67,7 @@ The gem requires libidn.
 
 To inspect the [Public Suffix List], this handy can be used (also works in projects that use `twingly-url` as an depenency).
 
-    open `bundle show public_suffix`/data/list.txt
+    open $(bundle show public_suffix)/data/list.txt
 
 [Public Suffix List]: https://github.com/weppos/publicsuffix-ruby
 
