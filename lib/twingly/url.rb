@@ -8,10 +8,15 @@ require_relative "version"
 
 PublicSuffix::List.default = PublicSuffix::List.parse(
   File.read(PublicSuffix::List::DEFAULT_LIST_PATH), private_domains: false)
+
+# Add ASCII form of all internationalized domain names to the public suffix list
 PublicSuffix::List.default.
   map { |rule| Addressable::IDNA.to_ascii(rule.value) }.
   select { |name| name =~ /xn\-\-/ }.
-  each { |name| PublicSuffix::List.default.add(PublicSuffix::Rule.factory(name), reindex: false) }
+  each do |name|
+    new_rule = PublicSuffix::Rule.factory(name)
+    PublicSuffix::List.default.add(new_rule, reindex: false)
+  end
 
 PublicSuffix::List.default.reindex!
 
