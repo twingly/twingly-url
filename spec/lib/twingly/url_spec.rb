@@ -243,9 +243,8 @@ describe Twingly::URL do
     context "when given valid urls" do
       valid_urls.each do |valid_url|
         it "does not raise an error for \"#{valid_url}\"" do
-          expect {
-            described_class.parse(valid_url).normalized.to_s
-          }.not_to raise_error
+          actual = described_class.parse(valid_url).normalized
+          expect(actual).to be_a(Twingly::URL)
         end
       end
     end
