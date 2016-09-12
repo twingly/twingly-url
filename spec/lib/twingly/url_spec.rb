@@ -42,6 +42,9 @@ def invalid_urls
     # https://github.com/sporkmonger/addressable/issues/224
     "http://some_site.net%C2",
     "http://+%D5d.some_site.net",
+
+    # Triggers IDN::Idna::IdnaError: Output would be too large or too small (5)
+    "http://AcinusFallumTrompetumNullunCreditumVisumEstAtCuadLongumEtCefallumEst.com",
   ]
 end
 
