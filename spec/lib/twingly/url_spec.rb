@@ -35,9 +35,13 @@ def invalid_urls
     "http://.net",
     "http://.com.",
     "http://.gl/xxx",
-    "http://some_site.net%C2",
-    "http://+%D5d.some_site.net", # https://github.com/sporkmonger/addressable/issues/224
     "http://www.twingly.",
+
+    # Test that we can handle upstream bug in Addressable, references:
+    # https://github.com/twingly/twingly-url/issues/62
+    # https://github.com/sporkmonger/addressable/issues/224
+    "http://some_site.net%C2",
+    "http://+%D5d.some_site.net",
   ]
 end
 
