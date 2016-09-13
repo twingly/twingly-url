@@ -12,7 +12,11 @@ PublicSuffix::List.default = PublicSuffix::List.parse(
 # Add ASCII form of all internationalized domain names to the public suffix list
 PublicSuffix::List.default.
   map { |rule| Addressable::IDNA.to_ascii(rule.value) }.
-  select { |name| name =~ /xn\-\-/ }.
+  select do |name|
+    PublicSuffix::Domain.name_to_labels(name).any? do |label|
+      label =~ /\Axn\-\-/i
+    end
+  end.
   each do |name|
     new_rule = PublicSuffix::Rule.factory(name)
     PublicSuffix::List.default.add(new_rule, reindex: false)

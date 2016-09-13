@@ -178,6 +178,12 @@ describe Twingly::URL do
   describe "#tld" do
     subject { url.tld }
     it { is_expected.to eq("co.uk") }
+
+    context "punycoded TLD with multiple levels" do
+      let(:test_url) { "https://foo.sande.xn--mre-og-romsdal-qqb.no/bar" }
+
+      it { is_expected.to eq("sande.xn--mre-og-romsdal-qqb.no") }
+    end
   end
 
   describe "#ttld" do
