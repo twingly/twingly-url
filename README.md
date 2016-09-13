@@ -65,7 +65,7 @@ The gem requires libidn.
 
 ## Development
 
-To inspect the [Public Suffix List], this handy can be used (also works in projects that use `twingly-url` as an depenency).
+To inspect the [Public Suffix List], this handy command can be used (also works in projects that use `twingly-url` as an depenency).
 
     open $(bundle show public_suffix)/data/list.txt
 
