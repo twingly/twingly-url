@@ -273,22 +273,53 @@ describe Twingly::URL do
 
     subject { described_class.parse(url).normalized.to_s }
 
-    context "with URL that has an internationalized TLD" do
+    context "with URL that has an internationalized TLD in Unicode" do
       let(:test_url) { "https://www.foo.ایران.ir/bar" }
       let(:normalized_url) { described_class.parse(url).normalized }
 
-      # FIXME: add tests for all parts
+      describe "#scheme" do
+        subject { normalized_url.scheme }
+        it { is_expected.to eq("https") }
+      end
+
+      describe "#trd" do
+        subject { normalized_url.trd }
+        it { is_expected.to eq("www") }
+      end
+
+      describe "#sld" do
+        subject { normalized_url.sld }
+        it { is_expected.to eq("foo") }
+      end
 
       describe "#tld" do
         subject { normalized_url.tld }
-
         it { is_expected.to eq("xn--mgba3a4f16a.ir") }
       end
 
       describe "#ttld" do
         subject { normalized_url.ttld }
-
         it { is_expected.to eq("ir") }
+      end
+
+      describe "#domain" do
+        subject { normalized_url.domain }
+        it { is_expected.to eq("foo.xn--mgba3a4f16a.ir") }
+      end
+
+      describe "#host" do
+        subject { normalized_url.host }
+        it { is_expected.to eq("www.foo.xn--mgba3a4f16a.ir") }
+      end
+
+      describe "#origin" do
+        subject { normalized_url.origin }
+        it { is_expected.to eq("https://www.foo.xn--mgba3a4f16a.ir") }
+      end
+
+      describe "#path" do
+        subject { normalized_url.path }
+        it { is_expected.to eq("/bar") }
       end
     end
 
