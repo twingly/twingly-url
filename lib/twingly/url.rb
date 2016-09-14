@@ -2,33 +2,17 @@ require "addressable/uri"
 require "addressable/idna/native"
 require "public_suffix"
 
+require_relative "public_suffix_list"
 require_relative "url/null_url"
 require_relative "url/error"
 require_relative "version"
-
-PublicSuffix::List.default = PublicSuffix::List.parse(
-  File.read(PublicSuffix::List::DEFAULT_LIST_PATH), private_domains: false)
-
-# Add ASCII form of all internationalized domain names to the public suffix list
-PublicSuffix::List.default.
-  map { |rule| Addressable::IDNA.to_ascii(rule.value) }.
-  select do |name|
-    PublicSuffix::Domain.name_to_labels(name).any? do |label|
-      label =~ /\Axn\-\-/i
-    end
-  end.
-  each do |name|
-    new_rule = PublicSuffix::Rule.factory(name)
-    PublicSuffix::List.default.add(new_rule, reindex: false)
-  end
-
-PublicSuffix::List.default.reindex!
 
 module Twingly
   class URL
     include Comparable
 
     ACCEPTED_SCHEMES = /\Ahttps?\z/i
+    CUSTOM_PSL = PublicSuffixList.with_punycoded_names
     ENDS_WITH_SLASH = /\/+$/
     ERRORS_TO_EXTEND = [
       Addressable::URI::InvalidURIError,
@@ -36,7 +20,10 @@ module Twingly
       IDN::Idna::IdnaError,
     ]
 
-    private_constant :ACCEPTED_SCHEMES, :ENDS_WITH_SLASH, :ERRORS_TO_EXTEND
+    private_constant :ACCEPTED_SCHEMES
+    private_constant :CUSTOM_PSL
+    private_constant :ENDS_WITH_SLASH
+    private_constant :ERRORS_TO_EXTEND
 
     class << self
       def parse(potential_url)
@@ -56,7 +43,8 @@ module Twingly
         try_addressable_normalize(addressable_uri)
 
         host = addressable_uri.host
-        public_suffix_domain = PublicSuffix.parse(host, default_rule: nil)
+        public_suffix_domain = PublicSuffix.parse(host, list: CUSTOM_PSL,
+          default_rule: nil)
         raise Twingly::URL::Error::ParseError if public_suffix_domain.nil?
 
         raise Twingly::URL::Error::ParseError if public_suffix_domain.sld.nil?
