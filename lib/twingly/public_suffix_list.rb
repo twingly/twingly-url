@@ -21,12 +21,14 @@ module Twingly
       list
     end
 
-    private_class_method def self.punycoded_names(list)
+    private_class_method \
+    def self.punycoded_names(list)
       names = list.map { |rule| Addressable::IDNA.to_ascii(rule.value) }
       names.select { |name| punycoded_name?(name) }
     end
 
-    private_class_method def self.punycoded_name?(name)
+    private_class_method \
+    def self.punycoded_name?(name)
       PublicSuffix::Domain.name_to_labels(name).any? do |label|
         label =~ ACE_PREFIX
       end
