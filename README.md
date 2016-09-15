@@ -37,6 +37,9 @@ url.host                # => "www.twingly.co.uk"
 url.origin              # => "http://www.twingly.co.uk"
 url.path                # => "/search"
 url.without_scheme      # => "//www.twingly.co.uk/search"
+url.userinfo            # => ""
+url.user                # => ""
+url.password            # => ""
 url.valid?              # => "true"
 
 url = Twingly::URL.parse("http://räksmörgås.макдональдс.рф/foo")
@@ -50,6 +53,9 @@ url.host                # => "räksmörgås.макдональдс.рф"
 url.origin              # => "http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai"
 url.path                # => "/foo"
 url.without_scheme      # => "//räksmörgås.макдональдс.рф/foo"
+url.userinfo            # => ""
+url.user                # => ""
+url.password            # => ""
 url.valid?              # => "true"
 
 url = Twingly::URL.parse("http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai/foo")
@@ -63,6 +69,9 @@ url.host                # => "xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai"
 url.origin              # => "http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai"
 url.path                # => "/foo"
 url.without_scheme      # => "//xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai/foo"
+url.userinfo            # => ""
+url.user                # => ""
+url.password            # => ""
 url.valid?              # => "true"
 
 url = Twingly::URL.parse("https://admin:correcthorsebatterystaple@example.com/")
