@@ -35,9 +35,16 @@ def invalid_urls
     "http://.net",
     "http://.com.",
     "http://.gl/xxx",
+    "http://www.twingly.",
+
+    # Test that we can handle upstream bug in Addressable, references:
+    # https://github.com/twingly/twingly-url/issues/62
+    # https://github.com/sporkmonger/addressable/issues/224
     "http://some_site.net%C2",
     "http://+%D5d.some_site.net",
-    "http://www.twingly.",
+
+    # Triggers IDN::Idna::IdnaError: Output would be too large or too small (5)
+    "http://AcinusFallumTrompetumNullunCreditumVisumEstAtCuadLongumEtCefallumEst.com",
   ]
 end
 
@@ -54,10 +61,20 @@ def valid_urls
     "http://räksmörgås.josefßon.org",
     "http://user:password@blog.twingly.com/",
     "http://:@blog.twingly.com/",
+    "https://www.foo.ایران.ir/bar",
+    "https://www.foo.xn--mgba3a4f16a.ir/bar",
   ]
 end
 
 describe Twingly::URL do
+  let(:unicode_idn_test_url) do
+    "http://räksmörgås.макдональдс.рф/foo"
+  end
+
+  let(:ascii_idn_test_url) do
+    "http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai/foo"
+  end
+
   let(:test_url) do
     "http://www.blog.twingly.co.uk/2015/07/01/language-detection-changes/"
   end
@@ -156,19 +173,59 @@ describe Twingly::URL do
 
     context "when the url contains no trd" do
       let(:test_url){ "http://twingly.com" }
-
       it { is_expected.to eq("") }
+    end
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("räksmörgås") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("xn--rksmrgs-5wao1o") }
+      end
     end
   end
 
   describe "#sld" do
     subject { url.sld }
     it { is_expected.to eq("twingly") }
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("макдональдс") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("xn--80aalb1aicli8a5i") }
+      end
+    end
   end
 
   describe "#tld" do
     subject { url.tld }
     it { is_expected.to eq("co.uk") }
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("рф") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("xn--p1ai") }
+      end
+
+      describe "punycoded TLD with multiple levels" do
+        let(:test_url) { "https://foo.sande.xn--mre-og-romsdal-qqb.no/bar" }
+        it { is_expected.to eq("sande.xn--mre-og-romsdal-qqb.no") }
+      end
+    end
   end
 
   describe "#ttld" do
@@ -180,21 +237,69 @@ describe Twingly::URL do
 
       it { is_expected.to eq("com") }
     end
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("рф") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("xn--p1ai") }
+      end
+    end
   end
 
   describe "#domain" do
     subject { url.domain }
     it { is_expected.to eq("twingly.co.uk") }
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("макдональдс.рф") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("xn--80aalb1aicli8a5i.xn--p1ai") }
+      end
+    end
   end
 
   describe "#host" do
     subject { url.host }
     it { is_expected.to eq("www.blog.twingly.co.uk") }
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("räksmörgås.макдональдс.рф") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai") }
+      end
+    end
   end
 
   describe "#origin" do
     subject { url.origin }
     it { is_expected.to eq("http://www.blog.twingly.co.uk") }
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai") }
+      end
+    end
   end
 
   describe "#path" do
@@ -238,7 +343,75 @@ describe Twingly::URL do
   end
 
   describe "#normalized" do
+    context "when given valid urls" do
+      valid_urls.each do |valid_url|
+        it "does not raise an error for \"#{valid_url}\"" do
+          actual = described_class.parse(valid_url).normalized
+          expect(actual).to be_a(Twingly::URL)
+        end
+      end
+    end
+
+    context "when given bad input" do
+      invalid_urls.each do |invalid_url|
+        it "returns NullURL for \"#{invalid_url}\"" do
+          actual = described_class.parse(invalid_url).normalized
+          expect(actual).to be_a(Twingly::URL::NullURL)
+        end
+      end
+    end
+
     subject { described_class.parse(url).normalized.to_s }
+
+    context "with URL that has an internationalized TLD in Unicode" do
+      let(:test_url) { "https://www.foo.ایران.ir/bar" }
+      let(:normalized_url) { described_class.parse(url).normalized }
+
+      describe "#scheme" do
+        subject { normalized_url.scheme }
+        it { is_expected.to eq("https") }
+      end
+
+      describe "#trd" do
+        subject { normalized_url.trd }
+        it { is_expected.to eq("www") }
+      end
+
+      describe "#sld" do
+        subject { normalized_url.sld }
+        it { is_expected.to eq("foo") }
+      end
+
+      describe "#tld" do
+        subject { normalized_url.tld }
+        it { is_expected.to eq("xn--mgba3a4f16a.ir") }
+      end
+
+      describe "#ttld" do
+        subject { normalized_url.ttld }
+        it { is_expected.to eq("ir") }
+      end
+
+      describe "#domain" do
+        subject { normalized_url.domain }
+        it { is_expected.to eq("foo.xn--mgba3a4f16a.ir") }
+      end
+
+      describe "#host" do
+        subject { normalized_url.host }
+        it { is_expected.to eq("www.foo.xn--mgba3a4f16a.ir") }
+      end
+
+      describe "#origin" do
+        subject { normalized_url.origin }
+        it { is_expected.to eq("https://www.foo.xn--mgba3a4f16a.ir") }
+      end
+
+      describe "#path" do
+        subject { normalized_url.path }
+        it { is_expected.to eq("/bar") }
+      end
+    end
 
     context "adds www if host is missing a subdomain" do
       let(:url)      { "http://twingly.com/" }
