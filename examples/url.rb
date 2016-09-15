@@ -33,6 +33,8 @@ def print_url_details(url_as_string)
   puts "url.normalized.password       # => \"#{url.normalized.password}\""
   puts "url.valid?                    # => \"#{url.valid?}\""
   puts "url.normalized.valid?         # => \"#{url.normalized.valid?}\""
+  puts "url.to_s                      # => \"#{url.to_s}\""
+  puts "url.normalized.to_s           # => \"#{url.normalized.to_s}\""
 end
 
 puts "require \"twingly/url\""

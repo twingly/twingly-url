@@ -55,6 +55,8 @@ url.password                  # => ""
 url.normalized.password       # => ""
 url.valid?                    # => "true"
 url.normalized.valid?         # => "true"
+url.to_s                      # => "http://www.twingly.co.uk/search"
+url.normalized.to_s           # => "http://www.twingly.co.uk/search"
 
 url = Twingly::URL.parse("http://räksmörgås.макдональдс.рф/foo")
 url.scheme                    # => "http"
@@ -85,6 +87,8 @@ url.password                  # => ""
 url.normalized.password       # => ""
 url.valid?                    # => "true"
 url.normalized.valid?         # => "true"
+url.to_s                      # => "http://räksmörgås.макдональдс.рф/foo"
+url.normalized.to_s           # => "http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai/foo"
 
 url = Twingly::URL.parse("http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai/foo")
 url.scheme                    # => "http"
@@ -115,6 +119,8 @@ url.password                  # => ""
 url.normalized.password       # => ""
 url.valid?                    # => "true"
 url.normalized.valid?         # => "true"
+url.to_s                      # => "http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai/foo"
+url.normalized.to_s           # => "http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai/foo"
 
 url = Twingly::URL.parse("https://admin:correcthorsebatterystaple@example.com/")
 url.scheme                    # => "https"
@@ -145,6 +151,8 @@ url.password                  # => "correcthorsebatterystaple"
 url.normalized.password       # => "correcthorsebatterystaple"
 url.valid?                    # => "true"
 url.normalized.valid?         # => "true"
+url.to_s                      # => "https://admin:correcthorsebatterystaple@example.com/"
+url.normalized.to_s           # => "https://admin:correcthorsebatterystaple@www.example.com/"
 ```
 
 ### Dependencies
