@@ -67,6 +67,14 @@ def valid_urls
 end
 
 describe Twingly::URL do
+  let(:unicode_idn_test_url) do
+    "http://räksmörgås.макдональдс.рф/foo"
+  end
+
+  let(:ascii_idn_test_url) do
+    "http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai/foo"
+  end
+
   let(:test_url) do
     "http://www.blog.twingly.co.uk/2015/07/01/language-detection-changes/"
   end
@@ -165,24 +173,58 @@ describe Twingly::URL do
 
     context "when the url contains no trd" do
       let(:test_url){ "http://twingly.com" }
-
       it { is_expected.to eq("") }
+    end
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("räksmörgås") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("xn--rksmrgs-5wao1o") }
+      end
     end
   end
 
   describe "#sld" do
     subject { url.sld }
     it { is_expected.to eq("twingly") }
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("макдональдс") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("xn--80aalb1aicli8a5i") }
+      end
+    end
   end
 
   describe "#tld" do
     subject { url.tld }
     it { is_expected.to eq("co.uk") }
 
-    context "punycoded TLD with multiple levels" do
-      let(:test_url) { "https://foo.sande.xn--mre-og-romsdal-qqb.no/bar" }
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("рф") }
+      end
 
-      it { is_expected.to eq("sande.xn--mre-og-romsdal-qqb.no") }
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("xn--p1ai") }
+      end
+
+      describe "punycoded TLD with multiple levels" do
+        let(:test_url) { "https://foo.sande.xn--mre-og-romsdal-qqb.no/bar" }
+        it { is_expected.to eq("sande.xn--mre-og-romsdal-qqb.no") }
+      end
     end
   end
 
@@ -195,21 +237,69 @@ describe Twingly::URL do
 
       it { is_expected.to eq("com") }
     end
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("рф") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("xn--p1ai") }
+      end
+    end
   end
 
   describe "#domain" do
     subject { url.domain }
     it { is_expected.to eq("twingly.co.uk") }
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("макдональдс.рф") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("xn--80aalb1aicli8a5i.xn--p1ai") }
+      end
+    end
   end
 
   describe "#host" do
     subject { url.host }
     it { is_expected.to eq("www.blog.twingly.co.uk") }
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("räksmörgås.макдональдс.рф") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai") }
+      end
+    end
   end
 
   describe "#origin" do
     subject { url.origin }
     it { is_expected.to eq("http://www.blog.twingly.co.uk") }
+
+    context "internationalized domain name" do
+      describe "given in Unicode" do
+        let(:test_url) { unicode_idn_test_url }
+        it { is_expected.to eq("http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai") }
+      end
+
+      describe "given in ASCII" do
+        let(:test_url) { ascii_idn_test_url }
+        it { is_expected.to eq("http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai") }
+      end
+    end
   end
 
   describe "#path" do

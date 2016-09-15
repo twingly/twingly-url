@@ -39,6 +39,32 @@ url.path                # => "/search"
 url.without_scheme      # => "//www.twingly.co.uk/search"
 url.valid?              # => "true"
 
+url = Twingly::URL.parse("http://räksmörgås.макдональдс.рф/foo")
+url.scheme              # => "http"
+url.trd                 # => "räksmörgås"
+url.sld                 # => "макдональдс"
+url.tld                 # => "рф"
+url.ttld                # => "рф"
+url.domain              # => "макдональдс.рф"
+url.host                # => "räksmörgås.макдональдс.рф"
+url.origin              # => "http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai"
+url.path                # => "/foo"
+url.without_scheme      # => "//räksmörgås.макдональдс.рф/foo"
+url.valid?              # => "true"
+
+url = Twingly::URL.parse("http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai/foo")
+url.scheme              # => "http"
+url.trd                 # => "xn--rksmrgs-5wao1o"
+url.sld                 # => "xn--80aalb1aicli8a5i"
+url.tld                 # => "xn--p1ai"
+url.ttld                # => "xn--p1ai"
+url.domain              # => "xn--80aalb1aicli8a5i.xn--p1ai"
+url.host                # => "xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai"
+url.origin              # => "http://xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai"
+url.path                # => "/foo"
+url.without_scheme      # => "//xn--rksmrgs-5wao1o.xn--80aalb1aicli8a5i.xn--p1ai/foo"
+url.valid?              # => "true"
+
 url = Twingly::URL.parse("https://admin:correcthorsebatterystaple@example.com/")
 url.scheme              # => "https"
 url.trd                 # => ""
