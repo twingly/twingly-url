@@ -1,12 +1,23 @@
 # Change Log
 
-## [Unreleased](https://github.com/twingly/twingly-url/tree/HEAD)
-
-[Full Changelog](https://github.com/twingly/twingly-url/compare/v4.2.0...HEAD)
+## [v5.0.0](https://github.com/twingly/twingly-url/tree/v5.0.0) (2016-09-16)
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v4.2.0...v5.0.0)
 
 **Implemented enhancements:**
 
 - License file [\#91](https://github.com/twingly/twingly-url/issues/91)
+- Use PublicSuffix 2.0 [\#85](https://github.com/twingly/twingly-url/issues/85)
+- Changelog [\#33](https://github.com/twingly/twingly-url/issues/33)
+
+**Fixed bugs:**
+
+- NormalizedURL\#to\_s returns punycode, other instance methods does not [\#89](https://github.com/twingly/twingly-url/issues/89)
+
+**Merged pull requests:**
+
+- DRY up to urls example [\#95](https://github.com/twingly/twingly-url/pull/95) ([jage](https://github.com/jage))
+- Add changelog [\#93](https://github.com/twingly/twingly-url/pull/93) ([dentarg](https://github.com/dentarg))
+- Ensure normalized IDNA domains return ASCII strings [\#90](https://github.com/twingly/twingly-url/pull/90) ([dentarg](https://github.com/dentarg))
 
 ## [v4.2.0](https://github.com/twingly/twingly-url/tree/v4.2.0) (2016-08-31)
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v4.1.0...v4.2.0)
