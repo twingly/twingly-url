@@ -1,5 +1,16 @@
 # Change Log
 
+## [v5.0.1](https://github.com/twingly/twingly-url/tree/v5.0.1) (2016-09-19)
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v5.0.0...v5.0.1)
+
+**Fixed bugs:**
+
+- "ArgumentError: invalid byte sequence in US-ASCII" when parsing the public suffix list [\#98](https://github.com/twingly/twingly-url/issues/98)
+
+**Merged pull requests:**
+
+- Make sure we always read PSL data as UTF-8 [\#99](https://github.com/twingly/twingly-url/pull/99) ([dentarg](https://github.com/dentarg))
+
 ## [v5.0.0](https://github.com/twingly/twingly-url/tree/v5.0.0) (2016-09-16)
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v4.2.0...v5.0.0)
 
