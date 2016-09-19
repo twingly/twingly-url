@@ -1,3 +1,4 @@
+require "addressable/idna"
 require "public_suffix"
 
 module Twingly
@@ -7,8 +8,9 @@ module Twingly
     private_constant :ACE_PREFIX
 
     # Extend the PSL with ASCII form of all internationalized domain names
-    def self.with_punycoded_names
-      list_data = File.read(PublicSuffix::List::DEFAULT_LIST_PATH)
+    def self.with_punycoded_names(encoding: Encoding::UTF_8)
+      list_path = PublicSuffix::List::DEFAULT_LIST_PATH
+      list_data = File.read(list_path, encoding: encoding)
       list = PublicSuffix::List.parse(list_data, private_domains: false)
 
       punycoded_names(list).each do |punycoded_name|
