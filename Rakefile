@@ -1,10 +1,9 @@
 require "bundler/gem_tasks"
 
 namespace :profile do
-  require_relative "profile/profile"
-
   desc "Profile"
   task :normalize do |task|
+    require_relative "profile/profile"
     require_relative "lib/twingly/url"
 
     Profile.measure "normalizing a short URL", 1000 do
