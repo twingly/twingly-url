@@ -14,4 +14,7 @@ notifications:
       secure: "Scevf1Onn0h3uNLsJUPx+dyBf878/iMVWW04+GZrThA5609BQwukk1yz7dKI2fOhlwziUo878nnp2UcJ8lxT+C+3g8QG+XYZp4hI4xnRqE38oO+mwLcAPzCTemQC3+6lYY+Yv9Ux9rGZo2WHcMFHNlCPoDhIArY8qm7+BKJu1pw="
     on_success: never
     on_failure: change
-    template: '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
+    template:
+    - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}
+      (<a href="%{build_url}">Details</a>/<a href="%{compare_url}">Change view</a>)'
+    format: html
