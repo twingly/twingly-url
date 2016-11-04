@@ -2,10 +2,10 @@ require "addressable/uri"
 require "addressable/idna/native"
 require "public_suffix"
 
-require_relative "public_suffix_list"
-require_relative "url/null_url"
-require_relative "url/error"
-require_relative "version"
+require "twingly/public_suffix_list"
+require "twingly/url/null_url"
+require "twingly/url/error"
+require "twingly/version"
 
 module Twingly
   class URL

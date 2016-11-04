@@ -1,6 +1,6 @@
 require 'digest'
 
-require_relative "../url"
+require "twingly/url"
 
 module Twingly
   class URL
