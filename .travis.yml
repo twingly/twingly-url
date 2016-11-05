@@ -8,11 +8,13 @@ rvm:
   - 2.3.1
   - ruby-2.4.0-preview2
   - ruby-2.4.0-preview2-clang
+  - jruby-head
   - ruby-head
   - ruby-head-clang
 
 matrix:
   allow_failures:
+    - rvm: jruby-head
     - rvm: ruby-2.4.0-preview2
     - rvm: ruby-2.4.0-preview2-clang
     - rvm: ruby-head
