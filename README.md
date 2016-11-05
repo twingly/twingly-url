@@ -180,7 +180,9 @@ Run tests with
 
 You can get some profiling by running
 
-    bundle exec rake profile:normalize
+    cd profile/
+    bundle
+    bundle exec rake
 
 Note that this isn't a benchmark, we're using [ruby-prof] which will slow things down.
 
