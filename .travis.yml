@@ -6,6 +6,21 @@ rvm:
   - jruby-9.1.5.0
   - 2.2.5
   - 2.3.1
+  - ruby-2.4.0-preview2
+  - ruby-2.4.0-preview2-clang
+  - ruby-head
+  - ruby-head-clang
+
+matrix:
+  allow_failures:
+    - rvm: ruby-2.4.0-preview2
+    - rvm: ruby-2.4.0-preview2-clang
+    - rvm: ruby-head
+    - rvm: ruby-head-clang
+  fast_finish: true
+
+before_install:
+  - gem update bundler
 
 cache: bundler
 
