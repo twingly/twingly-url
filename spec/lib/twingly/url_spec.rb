@@ -114,16 +114,6 @@ describe Twingly::URL do
       end
     end
 
-    context "IDNA 2003 vs IDNA 2008" do
-      describe "if you normalize a URL with the domain \"straße.de\"" do
-        let(:test_url) { "http://straße.de" }
-
-        it "the domain of the normalized URL should be \"xn--strae-oqa.de\"" do
-          expect(subject.normalized.domain).to eq("xn--strae-oqa.de")
-        end
-      end
-    end
-
     context "when given badly encoded input" do
       let(:badly_encoded_url) { "http://abc.se/öあ\x81b\xE3" }
       let(:expected)          { "http://abc.se/öあ\uFFFDb\uFFFD" }
@@ -384,6 +374,15 @@ describe Twingly::URL do
     end
 
     subject { described_class.parse(url).normalized.to_s }
+
+    context "when given IDN URL with the domain \"straße.de\"" do
+      let(:test_url) { "http://straße.de" }
+      let(:normalized_url) { described_class.parse(url).normalized }
+
+      it "does conform to the IDNA2008 protocol" do
+        expect(normalized_url.domain).to eq("xn--strae-oqa.de")
+      end
+    end
 
     context "with URL that has an internationalized TLD in Unicode" do
       let(:test_url) { "https://www.foo.ایران.ir/bar" }
