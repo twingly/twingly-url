@@ -59,7 +59,6 @@ module Twingly
         else
           potential_url = String(potential_url)
           potential_url = potential_url.scrub
-          potential_url = potential_url.strip
 
           Addressable::URI.heuristic_parse(potential_url)
         end
