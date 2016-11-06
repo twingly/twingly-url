@@ -2,15 +2,19 @@ language: ruby
 sudo: false
 
 rvm:
+  - jruby-9.0.5.0
+  - jruby-9.1.5.0
   - 2.2.5
   - 2.3.1
   - ruby-2.4.0-preview2
   - ruby-2.4.0-preview2-clang
+  - jruby-head
   - ruby-head
   - ruby-head-clang
 
 matrix:
   allow_failures:
+    - rvm: jruby-head
     - rvm: ruby-2.4.0-preview2
     - rvm: ruby-2.4.0-preview2-clang
     - rvm: ruby-head

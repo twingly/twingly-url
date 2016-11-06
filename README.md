@@ -157,10 +157,7 @@ url.normalized.to_s           # => "https://admin:correcthorsebatterystaple@www.
 
 ### Dependencies
 
-The gem requires libidn.
-
-    sudo apt-get install libidn11 # Ubuntu
-    brew install libidn # OS X
+Only the gems listed in the [Gem Specification](https://github.com/twingly/twingly-url/blob/master/twingly-url.gemspec).
 
 ## Development
 
