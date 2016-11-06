@@ -35,6 +35,7 @@ def invalid_urls
     "http://.net",
     "http://.com.",
     "http://.gl/xxx",
+    "http://.twingly.com/",
     "http://www.twingly.",
 
     # Test that we can handle upstream bug in Addressable, references:
@@ -42,9 +43,6 @@ def invalid_urls
     # https://github.com/sporkmonger/addressable/issues/224
     "http://some_site.net%C2",
     "http://+%D5d.some_site.net",
-
-    # Triggers IDN::Idna::IdnaError: Output would be too large or too small (5)
-    "http://AcinusFallumTrompetumNullunCreditumVisumEstAtCuadLongumEtCefallumEst.com",
   ]
 end
 
@@ -63,6 +61,21 @@ def valid_urls
     "http://:@blog.twingly.com/",
     "https://www.foo.ایران.ir/bar",
     "https://www.foo.xn--mgba3a4f16a.ir/bar",
+
+    # The following URL triggers
+    #
+    #   IDN::Idna::IdnaError: Output would be too large or too small (5)
+    #
+    # when used with Addressable and libidn (IDNA 2003)
+    # but considered valid with the pure Ruby IDNA solution in Addressable.
+    #
+    # This inconsistency has as been reported at
+    # https://github.com/sporkmonger/addressable/issues/239
+    #
+    # Long names like this will probably not resolv, see comments at
+    # https://github.com/twingly/twingly-url/issues/66#issuecomment-246349029
+    # but for now as addressable considers them valid, we do the same.
+    "http://AcinusFallumTrompetumNullunCreditumVisumEstAtCuadLongumEtCefallumEst.com",
   ]
 end
 
@@ -362,6 +375,15 @@ describe Twingly::URL do
     end
 
     subject { described_class.parse(url).normalized.to_s }
+
+    context "when given IDN URL with the domain \"straße.de\"" do
+      let(:test_url) { "http://straße.de" }
+      let(:normalized_url) { described_class.parse(url).normalized }
+
+      it "does conform to the IDNA2008 protocol" do
+        expect(normalized_url.domain).to eq("xn--strae-oqa.de")
+      end
+    end
 
     context "with URL that has an internationalized TLD in Unicode" do
       let(:test_url) { "https://www.foo.ایران.ir/bar" }

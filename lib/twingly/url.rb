@@ -1,5 +1,4 @@
 require "addressable/uri"
-require "addressable/idna/native"
 require "public_suffix"
 
 require_relative "public_suffix_list"
@@ -17,7 +16,6 @@ module Twingly
     ERRORS_TO_EXTEND = [
       Addressable::URI::InvalidURIError,
       PublicSuffix::DomainInvalid,
-      IDN::Idna::IdnaError,
     ]
 
     private_constant :ACCEPTED_SCHEMES
