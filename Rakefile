@@ -1,16 +1,5 @@
+# Bundler rake tasks to handle gem releases
 require "bundler/gem_tasks"
-
-namespace :profile do
-  desc "Profile"
-  task :normalize do |task|
-    require_relative "profile/profile"
-    require_relative "lib/twingly/url"
-
-    Profile.measure "normalizing a short URL", 1000 do
-      Twingly::URL.parse('http://www.duh.se/').normalized
-    end
-  end
-end
 
 begin
   require "rspec/core/rake_task"

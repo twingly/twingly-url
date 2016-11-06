@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rake", "~> 10"
   s.add_development_dependency "rspec", "~> 3"
-  s.add_development_dependency "ruby-prof", "~> 0" unless RUBY_PLATFORM == "java"
   s.add_development_dependency "pry"
 
   s.files        = Dir.glob("{lib}/**/*") + %w(README.md)
