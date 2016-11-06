@@ -35,6 +35,7 @@ def invalid_urls
     "http://.net",
     "http://.com.",
     "http://.gl/xxx",
+    "http://.twingly.com/",
     "http://www.twingly.",
 
     # Test that we can handle upstream bug in Addressable, references:
