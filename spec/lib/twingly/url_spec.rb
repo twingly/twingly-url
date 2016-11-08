@@ -61,20 +61,6 @@ def valid_urls
     "http://:@blog.twingly.com/",
     "https://www.foo.ایران.ir/bar",
     "https://www.foo.xn--mgba3a4f16a.ir/bar",
-
-    # The following URL triggers
-    #
-    #   IDN::Idna::IdnaError: Output would be too large or too small (5)
-    #
-    # when used with Addressable and libidn (IDNA 2003)
-    # but considered valid with the pure Ruby IDNA solution in Addressable.
-    #
-    # This inconsistency has as been reported at
-    # https://github.com/sporkmonger/addressable/issues/239
-    #
-    # Long names like this will probably not resolv, see comments at
-    # https://github.com/twingly/twingly-url/issues/66#issuecomment-246349029
-    # but for now as addressable considers them valid, we do the same.
     "http://AcinusFallumTrompetumNullunCreditumVisumEstAtCuadLongumEtCefallumEst.com",
   ]
 end
