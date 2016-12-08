@@ -3,11 +3,11 @@ sudo: false
 
 rvm:
   - jruby-9.0.5.0
-  - jruby-9.1.5.0
-  - 2.2.5
-  - 2.3.1
-  - ruby-2.4.0-preview2
-  - ruby-2.4.0-preview2-clang
+  - jruby-9.1.6.0
+  - 2.2.6
+  - 2.3.3
+  - ruby-2.4.0-preview3
+  - ruby-2.4.0-preview3-clang
   - jruby-head
   - ruby-head
   - ruby-head-clang
@@ -15,8 +15,8 @@ rvm:
 matrix:
   allow_failures:
     - rvm: jruby-head
-    - rvm: ruby-2.4.0-preview2
-    - rvm: ruby-2.4.0-preview2-clang
+    - rvm: ruby-2.4.0-preview3
+    - rvm: ruby-2.4.0-preview3-clang
     - rvm: ruby-head
     - rvm: ruby-head-clang
   fast_finish: true
