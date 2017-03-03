@@ -1,5 +1,26 @@
 # Change Log
 
+## [v5.1.0](https://github.com/twingly/twingly-url/tree/v5.1.0) (2017-03-03)
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v5.0.1...v5.1.0)
+
+**Implemented enhancements:**
+
+- Release a new version \(without idn-ruby\) [\#110](https://github.com/twingly/twingly-url/issues/110)
+- Unfortunate require in Rakefile \(profile task\), affect specs [\#92](https://github.com/twingly/twingly-url/issues/92)
+- JRuby compatibility \(drop libidn requirement\) [\#66](https://github.com/twingly/twingly-url/issues/66)
+
+**Fixed bugs:**
+
+- Dependencies not locked correctly [\#104](https://github.com/twingly/twingly-url/issues/104)
+- twingly-url doesn't support IDNA2008, only IDNA2003 \(libidn\) [\#101](https://github.com/twingly/twingly-url/issues/101)
+
+**Merged pull requests:**
+
+- Test the latest Ruby releases [\#108](https://github.com/twingly/twingly-url/pull/108) ([dentarg](https://github.com/dentarg))
+- Depend on addressable 2.5.0 and public\_suffix 2.0.3 [\#107](https://github.com/twingly/twingly-url/pull/107) ([dentarg](https://github.com/dentarg))
+- Remove ruby-prof from dev dependencies [\#105](https://github.com/twingly/twingly-url/pull/105) ([dentarg](https://github.com/dentarg))
+- Drop libidn [\#102](https://github.com/twingly/twingly-url/pull/102) ([dentarg](https://github.com/dentarg))
+
 ## [v5.0.1](https://github.com/twingly/twingly-url/tree/v5.0.1) (2016-09-19)
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v5.0.0...v5.0.1)
 
