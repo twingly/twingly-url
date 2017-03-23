@@ -1,3 +1,4 @@
+require "addressable/idna"
 require "addressable/uri"
 require "public_suffix"
 
@@ -14,6 +15,7 @@ module Twingly
     CUSTOM_PSL = PublicSuffixList.with_punycoded_names
     ENDS_WITH_SLASH = /\/+$/
     ERRORS_TO_EXTEND = [
+      Addressable::IDNA::PunycodeBigOutput,
       Addressable::URI::InvalidURIError,
       PublicSuffix::DomainInvalid,
     ]
