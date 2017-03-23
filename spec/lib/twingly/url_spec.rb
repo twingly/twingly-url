@@ -43,6 +43,9 @@ def invalid_urls
     # https://github.com/sporkmonger/addressable/issues/224
     "http://some_site.net%C2",
     "http://+%D5d.some_site.net",
+
+    # Triggers Addressable::IDNA::PunycodeBigOutput
+    "http://40world-many.ru&amp;passwd=pUXFGc0LS5&amp;subject=%D0%B1%D0%B0%D0%BB%D0%B0%D0%BD%D1%81%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0+%D0%BA%D0%B0%D1%80%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE+%D0%B2%D0%B0%D0%BB%D0%B0&amp;commit=Predict&amp;complex=true&amp;complex=false&amp;membrane=false&amp;coil=false&amp;msa_control=all&amp;secStructPred=true&amp;secStructPred=false&amp;falseRate=5&amp;output=opnone&amp;modeller=&amp;seqalign=yes&amp;database=PfamA&amp;eval=0.01&amp;iterations=5&amp;domssea=yes&amp;secpro=yes&amp;pp=yes",
   ]
 end
 
