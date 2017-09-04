@@ -87,6 +87,25 @@ describe Twingly::URL do
 
     it { is_expected.to be_a(Twingly::URL) }
 
+    context "when re-reraising errors" do
+      let(:some_exception) { Exception }
+
+      before do
+        allow(described_class)
+          .to receive(:internal_parse)
+          .and_raise(some_exception)
+      end
+
+      it "always tags the error" do
+        expect { subject }.to raise_error do |error|
+          aggregate_failures do
+            expect(error).to be_instance_of(some_exception)
+            expect(error).to be_kind_of(Twingly::URL::Error)
+          end
+        end
+      end
+    end
+
     context "when given valid urls" do
       valid_urls.each do |valid_url|
         it "does not ruin the url \"#{valid_url}\"" do

@@ -30,6 +30,9 @@ module Twingly
         internal_parse(potential_url)
       rescue Twingly::URL::Error, Twingly::URL::Error::ParseError => error
         NullURL.new
+      rescue Exception => error
+        error.extend(Twingly::URL::Error)
+        raise
       end
 
       def internal_parse(potential_url)
