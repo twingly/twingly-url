@@ -157,10 +157,7 @@ url.normalized.to_s           # => "https://admin:correcthorsebatterystaple@www.
 
 ### Dependencies
 
-The gem requires libidn.
-
-    sudo apt-get install libidn11 # Ubuntu
-    brew install libidn # OS X
+Only the gems listed in the [Gem Specification](https://github.com/twingly/twingly-url/blob/master/twingly-url.gemspec).
 
 ## Development
 
@@ -180,7 +177,9 @@ Run tests with
 
 You can get some profiling by running
 
-    bundle exec rake profile:normalize
+    cd profile/
+    bundle
+    bundle exec rake
 
 Note that this isn't a benchmark, we're using [ruby-prof] which will slow things down.
 

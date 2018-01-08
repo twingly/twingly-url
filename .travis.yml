@@ -2,8 +2,22 @@ language: ruby
 sudo: false
 
 rvm:
-  - 2.2.5
-  - 2.3.1
+  - jruby-9.0.5.0
+  - jruby-9.1.14.0
+  - 2.2.8
+  - 2.3.5
+  - 2.4.2
+  - jruby-head
+  - ruby-head
+
+matrix:
+  allow_failures:
+    - rvm: jruby-head
+    - rvm: ruby-head
+  fast_finish: true
+
+before_install:
+  - gem install bundler
 
 cache: bundler
 
@@ -14,4 +28,7 @@ notifications:
       secure: "Scevf1Onn0h3uNLsJUPx+dyBf878/iMVWW04+GZrThA5609BQwukk1yz7dKI2fOhlwziUo878nnp2UcJ8lxT+C+3g8QG+XYZp4hI4xnRqE38oO+mwLcAPzCTemQC3+6lYY+Yv9Ux9rGZo2WHcMFHNlCPoDhIArY8qm7+BKJu1pw="
     on_success: never
     on_failure: change
-    template: '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
+    template:
+    - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}
+      (<a href="%{build_url}">Details</a>/<a href="%{compare_url}">Change view</a>)'
+    format: html

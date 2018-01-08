@@ -1,5 +1,5 @@
+require "addressable/idna"
 require "addressable/uri"
-require "addressable/idna/native"
 require "public_suffix"
 
 require "twingly/public_suffix_list"
@@ -15,9 +15,9 @@ module Twingly
     CUSTOM_PSL = PublicSuffixList.with_punycoded_names
     ENDS_WITH_SLASH = /\/+$/
     ERRORS_TO_EXTEND = [
+      Addressable::IDNA::PunycodeBigOutput,
       Addressable::URI::InvalidURIError,
       PublicSuffix::DomainInvalid,
-      IDN::Idna::IdnaError,
     ]
 
     private_constant :ACCEPTED_SCHEMES
@@ -30,6 +30,9 @@ module Twingly
         internal_parse(potential_url)
       rescue Twingly::URL::Error, Twingly::URL::Error::ParseError => error
         NullURL.new
+      rescue Exception => error
+        error.extend(Twingly::URL::Error)
+        raise
       end
 
       def internal_parse(potential_url)
@@ -61,7 +64,6 @@ module Twingly
         else
           potential_url = String(potential_url)
           potential_url = potential_url.scrub
-          potential_url = potential_url.strip
 
           Addressable::URI.heuristic_parse(potential_url)
         end

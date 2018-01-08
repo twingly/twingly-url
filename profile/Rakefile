@@ -1,0 +1,13 @@
+require "twingly/url"
+require_relative "profile"
+
+namespace :profile do
+  desc "Profile"
+  task :normalize do |task|
+    Profile.measure "normalizing a short URL", 1000 do
+      Twingly::URL.parse('http://www.duh.se/').normalized
+    end
+  end
+end
+
+task default: "profile:normalize"

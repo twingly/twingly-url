@@ -35,6 +35,7 @@ def invalid_urls
     "http://.net",
     "http://.com.",
     "http://.gl/xxx",
+    "http://.twingly.com/",
     "http://www.twingly.",
 
     # Test that we can handle upstream bug in Addressable, references:
@@ -43,8 +44,8 @@ def invalid_urls
     "http://some_site.net%C2",
     "http://+%D5d.some_site.net",
 
-    # Triggers IDN::Idna::IdnaError: Output would be too large or too small (5)
-    "http://AcinusFallumTrompetumNullunCreditumVisumEstAtCuadLongumEtCefallumEst.com",
+    # Triggers Addressable::IDNA::PunycodeBigOutput
+    "http://40world-many.ru&amp;passwd=pUXFGc0LS5&amp;subject=%D0%B1%D0%B0%D0%BB%D0%B0%D0%BD%D1%81%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0+%D0%BA%D0%B0%D1%80%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE+%D0%B2%D0%B0%D0%BB%D0%B0&amp;commit=Predict&amp;complex=true&amp;complex=false&amp;membrane=false&amp;coil=false&amp;msa_control=all&amp;secStructPred=true&amp;secStructPred=false&amp;falseRate=5&amp;output=opnone&amp;modeller=&amp;seqalign=yes&amp;database=PfamA&amp;eval=0.01&amp;iterations=5&amp;domssea=yes&amp;secpro=yes&amp;pp=yes",
   ]
 end
 
@@ -63,6 +64,7 @@ def valid_urls
     "http://:@blog.twingly.com/",
     "https://www.foo.ایران.ir/bar",
     "https://www.foo.xn--mgba3a4f16a.ir/bar",
+    "http://AcinusFallumTrompetumNullunCreditumVisumEstAtCuadLongumEtCefallumEst.com",
   ]
 end
 
@@ -84,6 +86,25 @@ describe Twingly::URL do
     subject { url }
 
     it { is_expected.to be_a(Twingly::URL) }
+
+    context "when re-reraising errors" do
+      let(:some_exception) { Exception }
+
+      before do
+        allow(described_class)
+          .to receive(:internal_parse)
+          .and_raise(some_exception)
+      end
+
+      it "always tags the error" do
+        expect { subject }.to raise_error do |error|
+          aggregate_failures do
+            expect(error).to be_instance_of(some_exception)
+            expect(error).to be_kind_of(Twingly::URL::Error)
+          end
+        end
+      end
+    end
 
     context "when given valid urls" do
       valid_urls.each do |valid_url|
@@ -362,6 +383,15 @@ describe Twingly::URL do
     end
 
     subject { described_class.parse(url).normalized.to_s }
+
+    context "when given IDN URL with the domain \"straße.de\"" do
+      let(:test_url) { "http://straße.de" }
+      let(:normalized_url) { described_class.parse(url).normalized }
+
+      it "does conform to the IDNA2008 protocol" do
+        expect(normalized_url.domain).to eq("xn--strae-oqa.de")
+      end
+    end
 
     context "with URL that has an internationalized TLD in Unicode" do
       let(:test_url) { "https://www.foo.ایران.ir/bar" }
