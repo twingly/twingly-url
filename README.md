@@ -183,6 +183,14 @@ You can get some profiling by running
 
 Note that this isn't a benchmark, we're using [ruby-prof] which will slow things down.
 
+### Code coverage
+
+[SimpleCov](https://github.com/colszowka/simplecov) is used to generate a code coverage report on every test run. Open it in your browser with:
+
+    open tmp/coverage/index.html
+
+When the tests run on Travis CI, the coverage report is sent to [Coveralls](https://coveralls.io/).
+
 ## Release workflow
 
 * Update the [examples] in this README if needed, generate the output with
