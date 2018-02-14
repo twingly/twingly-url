@@ -15,17 +15,15 @@ module Twingly
 
       punycoded_names(list).each do |punycoded_name|
         new_rule = PublicSuffix::Rule.factory(punycoded_name)
-        list.add(new_rule, reindex: false)
+        list.add(new_rule)
       end
-
-      list.reindex!
 
       list
     end
 
     private_class_method \
     def self.punycoded_names(list)
-      names = list.map { |rule| Addressable::IDNA.to_ascii(rule.value) }
+      names = list.each.map { |rule| Addressable::IDNA.to_ascii(rule.value) }
       names.select { |name| punycoded_name?(name) }
     end
 
