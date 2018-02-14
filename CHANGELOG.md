@@ -1,5 +1,24 @@
 # Change Log
 
+## [v5.1.1](https://github.com/twingly/twingly-url/tree/v5.1.1) (2018-02-14)
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v5.1.0...v5.1.1)
+
+**Implemented enhancements:**
+
+- Rework exceptions [\#31](https://github.com/twingly/twingly-url/issues/31)
+
+**Merged pull requests:**
+
+- Allow future patch versions of dependencies [\#118](https://github.com/twingly/twingly-url/pull/118) ([dentarg](https://github.com/dentarg))
+- Update PublicSuffix and Addressable [\#117](https://github.com/twingly/twingly-url/pull/117) ([roback](https://github.com/roback))
+- Use latest rubies on Travis CI [\#116](https://github.com/twingly/twingly-url/pull/116) ([dentarg](https://github.com/dentarg))
+- Use latest rubies on Travis CI [\#115](https://github.com/twingly/twingly-url/pull/115) ([walro](https://github.com/walro))
+- Use latest rubies on Travis CI [\#114](https://github.com/twingly/twingly-url/pull/114) ([dentarg](https://github.com/dentarg))
+- Do not blow up on Addressable::IDNA::PunycodeBigOutput [\#113](https://github.com/twingly/twingly-url/pull/113) ([dentarg](https://github.com/dentarg))
+- Bump Ruby versions tested on Travis CI [\#111](https://github.com/twingly/twingly-url/pull/111) ([dentarg](https://github.com/dentarg))
+- Tag exceptions [\#106](https://github.com/twingly/twingly-url/pull/106) ([dentarg](https://github.com/dentarg))
+- Switch to logical requires [\#103](https://github.com/twingly/twingly-url/pull/103) ([dentarg](https://github.com/dentarg))
+
 ## [v5.1.0](https://github.com/twingly/twingly-url/tree/v5.1.0) (2017-03-03)
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v5.0.1...v5.1.0)
 
