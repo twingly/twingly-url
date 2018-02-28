@@ -1,4 +1,4 @@
-require "addressable/idna"
+require "addressable/idna/pure"
 require "addressable/uri"
 require "public_suffix"
 
