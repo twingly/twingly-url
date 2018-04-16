@@ -59,7 +59,7 @@ module Twingly
       end
 
       def to_addressable_uri(potential_url)
-       if potential_url.is_a?(Addressable::URI)
+        if potential_url.is_a?(Addressable::URI)
           potential_url
         else
           potential_url = String(potential_url)
