@@ -22,8 +22,10 @@ describe Twingly::URL::Hasher do
   end
 
   describe ".autopingdb_hash" do
+    let(:expected) { -3105991861312135623 }
+
     it "returns a SHA256 64-bit signed, native endian digest" do
-      expect(Twingly::URL::Hasher.autopingdb_hash("http://blog.twingly.com/")).to eq -3105991861312135623
+      expect(Twingly::URL::Hasher.autopingdb_hash("http://blog.twingly.com/")).to eq expected
     end
   end
 
