@@ -1,6 +1,6 @@
 require "spec_helper"
 
-require "twingly/url/null_url"
+require "twingly/url"
 
 describe Twingly::URL::NullURL do
   let(:url) { described_class.new }
