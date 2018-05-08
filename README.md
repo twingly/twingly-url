@@ -11,7 +11,6 @@ Twingly URL tools.
     * `Twingly::URL::Hasher.blogstream_hash(url)` - MD5 hexdigest
     * `Twingly::URL::Hasher.documentdb_hash(url)` - SHA256 unsigned long, native endian digest
     * `Twingly::URL::Hasher.autopingdb_hash(url)` - SHA256 64-bit signed, native endian digest
-    * `Twingly::URL::Hasher.pingloggerdb_hash(url)` - SHA256 64-bit unsigned, native endian digest
 * `twingly/url/utilities` - Utilities to work with URLs
     * `Twingly::URL::Utilities.extract_valid_urls` - Returns Array of valid `Twingly::URL`
 

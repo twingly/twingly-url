@@ -28,10 +28,4 @@ describe Twingly::URL::Hasher do
       expect(Twingly::URL::Hasher.autopingdb_hash("http://blog.twingly.com/")).to eq expected
     end
   end
-
-  describe ".pingloggerdb_hash" do
-    it "returns a SHA256 64-bit unsigned, native endian digest" do
-      expect(Twingly::URL::Hasher.pingloggerdb_hash("http://blog.twingly.com/")).to eq 15340752212397415993
-    end
-  end
 end
