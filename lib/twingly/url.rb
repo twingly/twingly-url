@@ -19,11 +19,13 @@ module Twingly
       Addressable::URI::InvalidURIError,
       PublicSuffix::DomainInvalid,
     ]
+    NBSP = "\u00a0"
 
     private_constant :ACCEPTED_SCHEMES
     private_constant :CUSTOM_PSL
     private_constant :ENDS_WITH_SLASH
     private_constant :ERRORS_TO_EXTEND
+    private_constant :NBSP
 
     class << self
       def parse(potential_url)
@@ -35,7 +37,8 @@ module Twingly
         raise
       end
 
-      def internal_parse(potential_url)
+      def internal_parse(input)
+        potential_url   = clean_input(input)
         addressable_uri = to_addressable_uri(potential_url)
         raise Twingly::URL::Error::ParseError if addressable_uri.nil?
 
@@ -58,13 +61,25 @@ module Twingly
         raise
       end
 
+      def clean_input(input)
+        input = String(input)
+        input = input.scrub
+        input = strip_nbsp(input)
+      end
+
+      def strip_nbsp(input)
+        return input unless input.encoding == Encoding::UTF_8
+
+        input = input.sub(/\A#{NBSP}/, "")
+        input = input.sub(/#{NBSP}\z/, "")
+
+        input
+      end
+
       def to_addressable_uri(potential_url)
         if potential_url.is_a?(Addressable::URI)
           potential_url
         else
-          potential_url = String(potential_url)
-          potential_url = potential_url.scrub
-
           Addressable::URI.heuristic_parse(potential_url)
         end
       end
@@ -83,6 +98,8 @@ module Twingly
 
       private :new
       private :internal_parse
+      private :clean_input
+      private :strip_nbsp
       private :to_addressable_uri
       private :try_addressable_normalize
     end

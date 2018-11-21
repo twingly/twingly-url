@@ -163,6 +163,14 @@ describe Twingly::URL do
 
       it { is_expected.to eq(expected) }
     end
+
+    context "with url containing non-breaking space" do
+      let(:nbsp)     { "\u00a0" }
+      let(:test_url) { "#{nbsp}https://www.example.com/#{nbsp}" }
+      let(:expected) { "https://www.example.com/" }
+
+      it { is_expected.to eq(expected) }
+    end
   end
 
   describe ".internal_parse" do
