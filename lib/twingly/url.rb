@@ -19,7 +19,7 @@ module Twingly
       Addressable::URI::InvalidURIError,
       PublicSuffix::DomainInvalid,
     ]
-    NBSP = "\u00a0"
+    NBSP = "\u00A0"
 
     private_constant :ACCEPTED_SCHEMES
     private_constant :CUSTOM_PSL
