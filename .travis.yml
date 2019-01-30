@@ -1,7 +1,6 @@
 language: ruby
 sudo: false
 rvm:
-  - jruby-9.0.5.0
   - jruby-9.1.14.0
   - 2.4.2
   - 2.5.3
