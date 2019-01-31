@@ -25,6 +25,7 @@ module Twingly
 
     private_constant :ACCEPTED_SCHEMES
     private_constant :CUSTOM_PSL
+    private_constant :STARTS_WITH_WWW
     private_constant :ENDS_WITH_SLASH
     private_constant :ERRORS_TO_EXTEND
 
