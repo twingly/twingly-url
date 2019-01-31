@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "addressable/idna/pure"
 require "addressable/uri"
 require "public_suffix"
@@ -11,14 +13,14 @@ module Twingly
   class URL
     include Comparable
 
-    ACCEPTED_SCHEMES = /\Ahttps?\z/i
+    ACCEPTED_SCHEMES = /\Ahttps?\z/i.freeze
     CUSTOM_PSL = PublicSuffixList.with_punycoded_names
-    ENDS_WITH_SLASH = /\/+$/
+    ENDS_WITH_SLASH = /\/+$/.freeze
     ERRORS_TO_EXTEND = [
       Addressable::IDNA::PunycodeBigOutput,
       Addressable::URI::InvalidURIError,
       PublicSuffix::DomainInvalid,
-    ]
+    ].freeze
 
     private_constant :ACCEPTED_SCHEMES
     private_constant :CUSTOM_PSL

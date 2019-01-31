@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 require "twingly/url"
@@ -134,7 +136,7 @@ describe Twingly::URL do
     end
 
     context "when given ASCII input" do
-      let(:ascii_url) { "http://www.twingly.com/öあ".force_encoding("ASCII-8BIT") }
+      let(:ascii_url) { "http://www.twingly.com/öあ".dup.force_encoding("ASCII-8BIT") }
       let(:expected)  { "http://www.twingly.com/öあ" }
       let(:actual)    { described_class.parse(ascii_url).to_s }
 
