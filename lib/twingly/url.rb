@@ -16,6 +16,7 @@ module Twingly
     ACCEPTED_SCHEMES = /\Ahttps?\z/i.freeze
     CUSTOM_PSL = PublicSuffixList.with_punycoded_names
     ENDS_WITH_SLASH = /\/+$/.freeze
+    STARTS_WITH_WWW = /\Awww\./i.freeze
     ERRORS_TO_EXTEND = [
       Addressable::IDNA::PunycodeBigOutput,
       Addressable::URI::InvalidURIError,
@@ -205,7 +206,7 @@ module Twingly
 
     def normalize_blogspot(host, domain)
       if domain.sld.downcase == "blogspot"
-        host.sub(/\Awww\./i, "").sub(/#{domain.tld}\z/i, "com")
+        host.sub(STARTS_WITH_WWW, "").sub(/#{domain.tld}\z/i, "com")
       else
         host
       end
