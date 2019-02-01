@@ -24,6 +24,14 @@ module Twingly
         self.to_s <=> other.to_s
       end
 
+      def eql?(other)
+        self.hash == other.hash
+      end
+
+      def hash
+        "".hash
+      end
+
       def to_s
         ""
       end

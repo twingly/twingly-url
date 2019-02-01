@@ -97,4 +97,12 @@ describe Twingly::URL::NullURL do
       expect { url.method_does_not_exist }.to raise_error(NoMethodError)
     end
   end
+
+  describe "uniqueness" do
+    context "a list with multiple NullURLs should only have one unique item" do
+      subject(:list) { 10.times.map { described_class.new }.uniq }
+
+      it { is_expected.to eq([described_class.new]) }
+    end
+  end
 end
