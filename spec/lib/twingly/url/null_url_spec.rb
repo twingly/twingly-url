@@ -104,5 +104,14 @@ describe Twingly::URL::NullURL do
 
       it { is_expected.to eq([described_class.new]) }
     end
+
+    context "an object and its string representation" do
+      let(:a) { described_class.new }
+      let(:b) { described_class.new.to_s }
+
+      it "should be two unique objects" do
+        expect([a,b].uniq).to eq([a,b])
+      end
+    end
   end
 end

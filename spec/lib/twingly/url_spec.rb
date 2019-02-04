@@ -875,6 +875,16 @@ describe Twingly::URL do
         expect([a,b].uniq).to eq([a])
       end
     end
+
+    context "an object and its string representation" do
+      let(:url) { "https://www.twingy.com/" }
+      let(:a) { described_class.parse(url) }
+      let(:b) { described_class.parse(url).to_s }
+
+      it "should be two unique objects" do
+        expect([a,b].uniq).to eq([a,b])
+      end
+    end
   end
 
   describe "#inspect" do

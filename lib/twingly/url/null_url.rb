@@ -25,6 +25,8 @@ module Twingly
       end
 
       def eql?(other)
+        return false unless other.is_a?(self.class)
+
         self.hash == other.hash
       end
 
