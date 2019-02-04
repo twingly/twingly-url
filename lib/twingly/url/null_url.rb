@@ -29,7 +29,7 @@ module Twingly
       end
 
       def hash
-        "".hash
+        self.to_s.hash
       end
 
       def to_s

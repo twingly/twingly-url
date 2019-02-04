@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "digest"
-
 require "addressable/idna/pure"
 require "addressable/uri"
 require "public_suffix"
@@ -24,11 +22,6 @@ module Twingly
       Addressable::URI::InvalidURIError,
       PublicSuffix::DomainInvalid,
     ].freeze
-
-    # Instantiate digest classes in a thread-safe manner
-    # This is important since we don't know how people will
-    # use this gem (if they require it in a thread safe way)
-    SHA256_DIGEST = Digest(:SHA256)
 
     private_constant :ACCEPTED_SCHEMES
     private_constant :CUSTOM_PSL
@@ -205,7 +198,7 @@ module Twingly
     end
 
     def hash
-      SHA256_DIGEST.digest(self.to_s).unpack1("q")
+      self.to_s.hash
     end
 
     def to_s
