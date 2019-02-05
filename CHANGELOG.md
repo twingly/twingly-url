@@ -1,5 +1,23 @@
 # Change Log
 
+## [Unreleased](https://github.com/twingly/twingly-url/tree/HEAD)
+
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v5.1.1...HEAD)
+
+**Fixed bugs:**
+
+- Array\#uniq does not remove equal Twingly::URLs [\#123](https://github.com/twingly/twingly-url/issues/123)
+- uninitialized constant Addressable::IDNA::PunycodeBigOutput \(NameError\) [\#119](https://github.com/twingly/twingly-url/issues/119)
+
+**Merged pull requests:**
+
+- Implement uniqueness \(hash equality\) [\#129](https://github.com/twingly/twingly-url/pull/129) ([jage](https://github.com/jage))
+- Freeze string literals and mutable constants [\#128](https://github.com/twingly/twingly-url/pull/128) ([jage](https://github.com/jage))
+- Support: Ruby 2.6, 2.5, 2.4, drop 2.2, 2.3 [\#127](https://github.com/twingly/twingly-url/pull/127) ([jage](https://github.com/jage))
+- Remove Twingly::URL::Hasher.pingloggerdb\_hash [\#124](https://github.com/twingly/twingly-url/pull/124) ([walro](https://github.com/walro))
+- Fix various warnings [\#122](https://github.com/twingly/twingly-url/pull/122) ([walro](https://github.com/walro))
+- Load the pure-Ruby IDNA implementation from Addressable [\#120](https://github.com/twingly/twingly-url/pull/120) ([dentarg](https://github.com/dentarg))
+
 ## [v5.1.1](https://github.com/twingly/twingly-url/tree/v5.1.1) (2018-02-14)
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v5.1.0...v5.1.1)
 
