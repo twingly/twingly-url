@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "addressable/idna/pure"
 require "addressable/uri"
 require "public_suffix"
@@ -11,18 +13,20 @@ module Twingly
   class URL
     include Comparable
 
-    ACCEPTED_SCHEMES = /\Ahttps?\z/i
+    ACCEPTED_SCHEMES = /\Ahttps?\z/i.freeze
     CUSTOM_PSL = PublicSuffixList.with_punycoded_names
-    ENDS_WITH_SLASH = /\/+$/
+    ENDS_WITH_SLASH = /\/+$/.freeze
+    STARTS_WITH_WWW = /\Awww\./i.freeze
     ERRORS_TO_EXTEND = [
       Addressable::IDNA::PunycodeBigOutput,
       Addressable::URI::InvalidURIError,
       PublicSuffix::DomainInvalid,
-    ]
+    ].freeze
     NBSP = "\u00A0"
 
     private_constant :ACCEPTED_SCHEMES
     private_constant :CUSTOM_PSL
+    private_constant :STARTS_WITH_WWW
     private_constant :ENDS_WITH_SLASH
     private_constant :ERRORS_TO_EXTEND
     private_constant :NBSP
@@ -206,6 +210,16 @@ module Twingly
       self.to_s <=> other.to_s
     end
 
+    def eql?(other)
+      return false unless other.is_a?(self.class)
+
+      self.hash == other.hash
+    end
+
+    def hash
+      self.to_s.hash
+    end
+
     def to_s
       addressable_uri.to_s
     end
@@ -220,7 +234,7 @@ module Twingly
 
     def normalize_blogspot(host, domain)
       if domain.sld.downcase == "blogspot"
-        host.sub(/\Awww\./i, "").sub(/#{domain.tld}\z/i, "com")
+        host.sub(STARTS_WITH_WWW, "").sub(/#{domain.tld}\z/i, "com")
       else
         host
       end
