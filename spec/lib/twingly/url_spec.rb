@@ -874,6 +874,11 @@ describe Twingly::URL do
       it "should be one unique URL" do
         expect([a,b].uniq).to eq([a])
       end
+
+      describe ".eql?" do
+        subject { a.eql?(b) }
+        it { is_expected.to eq(true) }
+      end
     end
 
     context "an object and its string representation" do
@@ -883,6 +888,11 @@ describe Twingly::URL do
 
       it "should be two unique objects" do
         expect([a,b].uniq).to eq([a,b])
+      end
+
+      describe "#eql?" do
+        subject { a.eql?(b) }
+        it { is_expected.to eq(false) }
       end
     end
   end

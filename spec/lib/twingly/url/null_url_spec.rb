@@ -112,6 +112,11 @@ describe Twingly::URL::NullURL do
       it "should be two unique objects" do
         expect([a,b].uniq).to eq([a,b])
       end
+
+      describe "#eql?" do
+        subject { a.eql?(b) }
+        it { is_expected.to eq(false) }
+      end
     end
   end
 end
