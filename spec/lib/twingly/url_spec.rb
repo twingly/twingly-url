@@ -70,6 +70,16 @@ def valid_urls
   ]
 end
 
+def leading_and_trailing_whitespace
+  {
+    "non-breaking space and space" => "\u00A0\u0020",
+    "non-breaking space" => "\u00A0",
+    "non-breaking space, space, non-breaking space" => "\u00A0\u0020\u00A0",
+    "space and non-breaking space" => "\u0020\u00A0",
+    "space, non-breaking space and space" => "\u0020\u00A0\u0020",
+  }
+end
+
 describe Twingly::URL do
   let(:unicode_idn_test_url) do
     "http://räksmörgås.макдональдс.рф/foo"
@@ -166,12 +176,13 @@ describe Twingly::URL do
       it { is_expected.to eq(expected) }
     end
 
-    context "with url containing starting and trailing non-breaking space" do
-      let(:nbsp)     { "\u00A0" }
-      let(:test_url) { "#{nbsp}https://www.example.com/#{nbsp}" }
-      let(:expected) { "https://www.example.com/" }
+    leading_and_trailing_whitespace.each do |whitespace_name, whitespace|
+      context "with url containing starting and trailing: #{whitespace_name}" do
+        let(:test_url) { "#{whitespace}https://www.example.com/#{whitespace}" }
+        let(:expected) { "https://www.example.com/" }
 
-      it { is_expected.to eq(expected) }
+        it { is_expected.to eq(expected) }
+      end
     end
   end
 
