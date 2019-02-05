@@ -53,7 +53,7 @@ module Twingly
 
       def internal_parse(input)
         potential_url   = clean_input(input)
-        addressable_uri = to_addressable_uri(potential_url)
+        addressable_uri = Addressable::URI.heuristic_parse(potential_url)
         raise Twingly::URL::Error::ParseError if addressable_uri.nil?
 
         scheme = addressable_uri.scheme
@@ -87,14 +87,6 @@ module Twingly
         input.gsub(LEADING_AND_TRAILING_WHITESPACE, "")
       end
 
-      def to_addressable_uri(potential_url)
-        if potential_url.is_a?(Addressable::URI)
-          potential_url
-        else
-          Addressable::URI.heuristic_parse(potential_url)
-        end
-      end
-
       # Workaround for the following bug in addressable:
       # https://github.com/sporkmonger/addressable/issues/224
       def try_addressable_normalize(addressable_uri)
@@ -111,7 +103,6 @@ module Twingly
       private :internal_parse
       private :clean_input
       private :strip_whitespace
-      private :to_addressable_uri
       private :try_addressable_normalize
     end
 
