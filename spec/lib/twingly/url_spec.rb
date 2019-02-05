@@ -155,14 +155,14 @@ describe Twingly::URL do
       end
     end
 
-    context "with url containing starting and trailing new lines" do
+    context "with url containing leading and trailing new lines" do
       let(:test_url) { "\nhttp://www.twingly.com/blog-data/\r\n" }
       let(:expected) { "http://www.twingly.com/blog-data/" }
 
       it { is_expected.to eq(expected) }
     end
 
-    context "with url containing starting and trailing whitespaces" do
+    context "with url containing leading and trailing whitespaces" do
       let(:test_url) { "   http://www.twingly.com/blog-data/     " }
       let(:expected) { "http://www.twingly.com/blog-data/" }
 
@@ -177,7 +177,7 @@ describe Twingly::URL do
     end
 
     leading_and_trailing_whitespace.each do |whitespace_name, whitespace|
-      context "with url containing starting and trailing: #{whitespace_name}" do
+      context "with url containing leading and trailing: #{whitespace_name}" do
         let(:test_url) { "#{whitespace}https://www.example.com/#{whitespace}" }
         let(:expected) { "https://www.example.com/" }
 
