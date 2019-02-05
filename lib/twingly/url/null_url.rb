@@ -24,6 +24,16 @@ module Twingly
         self.to_s <=> other.to_s
       end
 
+      def eql?(other)
+        return false unless other.is_a?(self.class)
+
+        self.hash == other.hash
+      end
+
+      def hash
+        self.to_s.hash
+      end
+
       def to_s
         ""
       end
