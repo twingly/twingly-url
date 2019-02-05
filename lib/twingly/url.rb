@@ -22,12 +22,24 @@ module Twingly
       Addressable::URI::InvalidURIError,
       PublicSuffix::DomainInvalid,
     ].freeze
+    NBSP = "\u00A0"
+    SPACE = "\u0020"
+    WHITESPACE_CHARS = [
+      NBSP,
+      SPACE,
+    ].join.freeze
+    LEADING_AND_TRAILING_WHITESPACE =
+      /\A[#{WHITESPACE_CHARS}]+|[#{WHITESPACE_CHARS}]+\z/.freeze
 
     private_constant :ACCEPTED_SCHEMES
     private_constant :CUSTOM_PSL
     private_constant :STARTS_WITH_WWW
     private_constant :ENDS_WITH_SLASH
     private_constant :ERRORS_TO_EXTEND
+    private_constant :NBSP
+    private_constant :SPACE
+    private_constant :WHITESPACE_CHARS
+    private_constant :LEADING_AND_TRAILING_WHITESPACE
 
     class << self
       def parse(potential_url)
@@ -39,8 +51,9 @@ module Twingly
         raise
       end
 
-      def internal_parse(potential_url)
-        addressable_uri = to_addressable_uri(potential_url)
+      def internal_parse(input)
+        potential_url   = clean_input(input)
+        addressable_uri = Addressable::URI.heuristic_parse(potential_url)
         raise Twingly::URL::Error::ParseError if addressable_uri.nil?
 
         scheme = addressable_uri.scheme
@@ -62,15 +75,16 @@ module Twingly
         raise
       end
 
-      def to_addressable_uri(potential_url)
-        if potential_url.is_a?(Addressable::URI)
-          potential_url
-        else
-          potential_url = String(potential_url)
-          potential_url = potential_url.scrub
+      def clean_input(input)
+        input = String(input)
+        input = input.scrub
+        input = strip_whitespace(input)
+      end
 
-          Addressable::URI.heuristic_parse(potential_url)
-        end
+      def strip_whitespace(input)
+        return input unless input.encoding == Encoding::UTF_8
+
+        input.gsub(LEADING_AND_TRAILING_WHITESPACE, "")
       end
 
       # Workaround for the following bug in addressable:
@@ -87,7 +101,8 @@ module Twingly
 
       private :new
       private :internal_parse
-      private :to_addressable_uri
+      private :clean_input
+      private :strip_whitespace
       private :try_addressable_normalize
     end
 
