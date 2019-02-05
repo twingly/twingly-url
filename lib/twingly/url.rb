@@ -23,6 +23,13 @@ module Twingly
       PublicSuffix::DomainInvalid,
     ].freeze
     NBSP = "\u00A0"
+    SPACE = "\u0020"
+    WHITESPACE_CHARS = [
+      NBSP,
+      SPACE,
+    ].join.freeze
+    LEADING_AND_TRAILING_WHITESPACE =
+      /\A[#{WHITESPACE_CHARS}]+|[#{WHITESPACE_CHARS}]+\z/.freeze
 
     private_constant :ACCEPTED_SCHEMES
     private_constant :CUSTOM_PSL
@@ -30,6 +37,9 @@ module Twingly
     private_constant :ENDS_WITH_SLASH
     private_constant :ERRORS_TO_EXTEND
     private_constant :NBSP
+    private_constant :SPACE
+    private_constant :WHITESPACE_CHARS
+    private_constant :LEADING_AND_TRAILING_WHITESPACE
 
     class << self
       def parse(potential_url)
@@ -68,16 +78,13 @@ module Twingly
       def clean_input(input)
         input = String(input)
         input = input.scrub
-        input = strip_nbsp(input)
+        input = strip_whitespace(input)
       end
 
-      def strip_nbsp(input)
+      def strip_whitespace(input)
         return input unless input.encoding == Encoding::UTF_8
 
-        input = input.sub(/\A#{NBSP}/, "")
-        input = input.sub(/#{NBSP}\z/, "")
-
-        input
+        input.gsub(LEADING_AND_TRAILING_WHITESPACE, "")
       end
 
       def to_addressable_uri(potential_url)
@@ -103,7 +110,7 @@ module Twingly
       private :new
       private :internal_parse
       private :clean_input
-      private :strip_nbsp
+      private :strip_whitespace
       private :to_addressable_uri
       private :try_addressable_normalize
     end
