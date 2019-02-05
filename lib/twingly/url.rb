@@ -28,7 +28,8 @@ module Twingly
       NBSP,
       SPACE,
     ].join.freeze
-    WHITESPACE = /\A[#{WHITESPACE_CHARS}]+|[#{WHITESPACE_CHARS}]+\z/.freeze
+    LEADING_AND_TRAILING_WHITESPACE =
+      /\A[#{WHITESPACE_CHARS}]+|[#{WHITESPACE_CHARS}]+\z/.freeze
 
     private_constant :ACCEPTED_SCHEMES
     private_constant :CUSTOM_PSL
@@ -38,7 +39,7 @@ module Twingly
     private_constant :NBSP
     private_constant :SPACE
     private_constant :WHITESPACE_CHARS
-    private_constant :WHITESPACE
+    private_constant :LEADING_AND_TRAILING_WHITESPACE
 
     class << self
       def parse(potential_url)
@@ -83,7 +84,7 @@ module Twingly
       def strip_whitespace(input)
         return input unless input.encoding == Encoding::UTF_8
 
-        input.gsub(WHITESPACE, "")
+        input.gsub(LEADING_AND_TRAILING_WHITESPACE, "")
       end
 
       def to_addressable_uri(potential_url)
