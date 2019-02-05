@@ -27,7 +27,7 @@ module Twingly
     WHITESPACE = [
       NBSP,
       SPACE,
-    ].join
+    ].join.freeze
 
     private_constant :ACCEPTED_SCHEMES
     private_constant :CUSTOM_PSL
