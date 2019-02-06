@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/twingly/twingly-url/tree/HEAD)
-
-[Full Changelog](https://github.com/twingly/twingly-url/compare/v5.1.1...HEAD)
+## [v6.0.0](https://github.com/twingly/twingly-url/tree/v6.0.0) (2019-02-06)
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v5.1.1...v6.0.0)
 
 **Fixed bugs:**
 
@@ -11,9 +10,11 @@
 
 **Merged pull requests:**
 
+- Strip input from both space and non-breaking space [\#131](https://github.com/twingly/twingly-url/pull/131) ([dentarg](https://github.com/dentarg))
 - Implement uniqueness \(hash equality\) [\#129](https://github.com/twingly/twingly-url/pull/129) ([jage](https://github.com/jage))
 - Freeze string literals and mutable constants [\#128](https://github.com/twingly/twingly-url/pull/128) ([jage](https://github.com/jage))
 - Support: Ruby 2.6, 2.5, 2.4, drop 2.2, 2.3 [\#127](https://github.com/twingly/twingly-url/pull/127) ([jage](https://github.com/jage))
+- Strip URLs of leading and trailing non-breaking space \(and space, but we already did\) [\#126](https://github.com/twingly/twingly-url/pull/126) ([dentarg](https://github.com/dentarg))
 - Remove Twingly::URL::Hasher.pingloggerdb\_hash [\#124](https://github.com/twingly/twingly-url/pull/124) ([walro](https://github.com/walro))
 - Fix various warnings [\#122](https://github.com/twingly/twingly-url/pull/122) ([walro](https://github.com/walro))
 - Load the pure-Ruby IDNA implementation from Addressable [\#120](https://github.com/twingly/twingly-url/pull/120) ([dentarg](https://github.com/dentarg))
