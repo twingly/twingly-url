@@ -2,6 +2,6 @@
 
 module Twingly
   class URL
-    VERSION = "5.1.1"
+    VERSION = "6.0.0"
   end
 end
