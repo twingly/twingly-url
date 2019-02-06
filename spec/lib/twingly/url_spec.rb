@@ -55,7 +55,6 @@ def valid_urls
   [
     "http://blog.twingly.com/",
     "http://blOg.tWingly.coM/",
-    "hTTP://blog.twingly.com/",
     "https://blog.twingly.com",
     "http://3.bp.blogspot.com/_lRbEHeizXlQ/Sf4RdEqCqhI/AAAAAAAAAAw/Pl8nGPsyhXc/s1600-h/images[4].jpg",
     "http://xn--zckp1cyg1.sblo.jp/",
@@ -133,6 +132,13 @@ describe Twingly::URL do
           expect(actual).to be_a(Twingly::URL::NullURL)
         end
       end
+    end
+
+    context "downcases the protocol" do
+      let(:test_url) { "HTTPS://www.twingly.com/" }
+      let(:expected) { "https://www.twingly.com/" }
+
+      it { is_expected.to eq(expected) }
     end
 
     context "when given badly encoded input" do
