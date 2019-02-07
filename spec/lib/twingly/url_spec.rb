@@ -55,7 +55,6 @@ def valid_urls
   [
     "http://blog.twingly.com/",
     "http://blOg.tWingly.coM/",
-    "hTTP://blog.twingly.com/",
     "https://blog.twingly.com",
     "http://3.bp.blogspot.com/_lRbEHeizXlQ/Sf4RdEqCqhI/AAAAAAAAAAw/Pl8nGPsyhXc/s1600-h/images[4].jpg",
     "http://xn--zckp1cyg1.sblo.jp/",
@@ -132,6 +131,15 @@ describe Twingly::URL do
           actual = described_class.parse(invalid_url)
           expect(actual).to be_a(Twingly::URL::NullURL)
         end
+      end
+    end
+
+    context "when given URL with uppercase scheme" do
+      let(:test_url) { "HTTPS://www.twingly.com/" }
+      let(:expected) { "https://www.twingly.com/" }
+
+      it "downcases the scheme part" do
+        expect(subject).to eq(expected)
       end
     end
 
@@ -524,7 +532,7 @@ describe Twingly::URL do
       it { is_expected.to eq(expected) }
     end
 
-    context "is able to normalize a url without protocol" do
+    context "is able to normalize a url without the scheme part" do
       let(:url)      { "www.twingly.com/" }
       let(:expected) { "http://www.twingly.com/" }
 
@@ -564,7 +572,7 @@ describe Twingly::URL do
       it { is_expected.to eq(expected) }
     end
 
-    context "downcases the protocol" do
+    context "downcases the scheme part" do
       let(:url)      { "HTTPS://www.twingly.com/" }
       let(:expected) { "https://www.twingly.com/" }
 
