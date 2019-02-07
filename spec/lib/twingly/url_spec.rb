@@ -532,7 +532,7 @@ describe Twingly::URL do
       it { is_expected.to eq(expected) }
     end
 
-    context "is able to normalize a url without protocol" do
+    context "is able to normalize a url without the scheme part" do
       let(:url)      { "www.twingly.com/" }
       let(:expected) { "http://www.twingly.com/" }
 
@@ -572,7 +572,7 @@ describe Twingly::URL do
       it { is_expected.to eq(expected) }
     end
 
-    context "downcases the protocol" do
+    context "downcases the scheme part" do
       let(:url)      { "HTTPS://www.twingly.com/" }
       let(:expected) { "https://www.twingly.com/" }
 
