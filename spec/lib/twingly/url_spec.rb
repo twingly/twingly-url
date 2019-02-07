@@ -134,11 +134,13 @@ describe Twingly::URL do
       end
     end
 
-    context "downcases the protocol" do
+    context "when given URL with uppercase scheme" do
       let(:test_url) { "HTTPS://www.twingly.com/" }
       let(:expected) { "https://www.twingly.com/" }
 
-      it { is_expected.to eq(expected) }
+      it "downcases the scheme part" do
+        expect(subject).to eq(expected)
+      end
     end
 
     context "when given badly encoded input" do
