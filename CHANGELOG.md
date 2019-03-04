@@ -1,5 +1,20 @@
 # Change Log
 
+## [v6.0.1](https://github.com/twingly/twingly-url/tree/v6.0.1) (2019-03-04)
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v6.0.0...v6.0.1)
+
+**Implemented enhancements:**
+
+- Update addressable to 2.6 [\#132](https://github.com/twingly/twingly-url/issues/132)
+
+**Fixed bugs:**
+
+- Update addressable to 2.6 [\#132](https://github.com/twingly/twingly-url/issues/132)
+
+**Merged pull requests:**
+
+- Accept that parsing downcases the scheme part, allow Addressable 2.6 [\#133](https://github.com/twingly/twingly-url/pull/133) ([dentarg](https://github.com/dentarg))
+
 ## [v6.0.0](https://github.com/twingly/twingly-url/tree/v6.0.0) (2019-02-06)
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v5.1.1...v6.0.0)
 
