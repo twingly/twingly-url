@@ -174,13 +174,13 @@ Run tests with
 
 ### Profiling
 
-You can get some profiling by running
+There's some profiling tasks available through Rake
 
     cd profile/
-    bundle
-    bundle exec rake
+    bundle # Install dependencies
+    bundle exec rake -T # Show available tasks
 
-Note that this isn't a benchmark, we're using [ruby-prof] which will slow things down.
+Note that this isn't a benchmark, we're using [ruby-prof] and [memory_profiler] which will slow things down.
 
 ## Release workflow
 
@@ -202,4 +202,5 @@ Note that this isn't a benchmark, we're using [ruby-prof] which will slow things
 
 [twingly-rubygems]: https://rubygems.org/profiles/twingly
 [ruby-prof]: http://ruby-prof.rubyforge.org/
+[memory_profiler]: https://github.com/SamSaffron/memory_profiler
 [examples]: examples/url.rb

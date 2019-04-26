@@ -4,4 +4,5 @@ source "https://rubygems.org/"
 
 gem "rake"
 gem "ruby-prof"
+gem "memory_profiler"
 gem "twingly-url", path: "../"
