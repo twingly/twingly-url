@@ -4,10 +4,19 @@ require "twingly/url"
 require_relative "profile"
 
 namespace :profile do
-  desc "Profile"
+  desc "Profile Twingly::URL.parse and #normalized (file reports)"
   task :normalize do |task|
     Profile.measure "normalizing a short URL", 1000 do
       Twingly::URL.parse('http://www.duh.se/').normalized
+    end
+  end
+end
+
+namespace :memory_profile do
+  desc "Memory Profile Twingly::URL.parse (stdout report)"
+  task :parse do |task|
+    MemoryProfile.measure "parsing an URL", 1000 do
+      Twingly::URL.parse('http://www.twingly.com/')
     end
   end
 end
