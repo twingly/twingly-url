@@ -70,12 +70,15 @@ def valid_urls
 end
 
 def leading_and_trailing_whitespace
+  non_breaking_space = "\u00A0"
+  space              = "\u0020"
+
   {
-    "non-breaking space and space" => "\u00A0\u0020",
-    "non-breaking space" => "\u00A0",
-    "non-breaking space, space, non-breaking space" => "\u00A0\u0020\u00A0",
-    "space and non-breaking space" => "\u0020\u00A0",
-    "space, non-breaking space and space" => "\u0020\u00A0\u0020",
+    "non-breaking space and space"                  => [non_breaking_space, space].join,
+    "non-breaking space"                            => [non_breaking_space].join,
+    "non-breaking space, space, non-breaking space" => [non_breaking_space, space, non_breaking_space].join,
+    "space and non-breaking space"                  => [space, non_breaking_space].join,
+    "space, non-breaking space and space"           => [space, non_breaking_space, space].join,
   }
 end
 
