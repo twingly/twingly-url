@@ -22,9 +22,13 @@ module Twingly
       Addressable::URI::InvalidURIError,
       PublicSuffix::DomainInvalid,
     ].freeze
+    CARRIAGE_RETURN = "\u000D"
+    LINE_FEED = "\u000A"
     NBSP = "\u00A0"
     SPACE = "\u0020"
     WHITESPACE_CHARS = [
+      CARRIAGE_RETURN,
+      LINE_FEED,
       NBSP,
       SPACE,
     ].join.freeze

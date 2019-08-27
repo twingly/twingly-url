@@ -70,6 +70,8 @@ def valid_urls
 end
 
 def leading_and_trailing_whitespace
+  line_feed          = "\u000A"
+  carriage_return    = "\u000D"
   non_breaking_space = "\u00A0"
   space              = "\u0020"
 
@@ -79,6 +81,19 @@ def leading_and_trailing_whitespace
     "non-breaking space, space, non-breaking space" => [non_breaking_space, space, non_breaking_space].join,
     "space and non-breaking space"                  => [space, non_breaking_space].join,
     "space, non-breaking space and space"           => [space, non_breaking_space, space].join,
+
+    "non-breaking space and line-feed"              => [non_breaking_space, line_feed].join,
+    "line-feed and non-breaking space"              => [line_feed, non_breaking_space].join,
+    "space and line-feed"                           => [space, line_feed].join,
+    "line-feed and space"                           => [line_feed, space].join,
+
+    "non-breaking space and carriage-return"        => [non_breaking_space, carriage_return].join,
+    "carriage-return and non-breaking space"        => [carriage_return, non_breaking_space].join,
+    "space and carriage-return"                     => [space, carriage_return].join,
+    "carriage-return and space"                     => [carriage_return, space].join,
+
+    "carriage-return and line-feed"                 => [carriage_return, line_feed].join,
+    "line-feed and carriage-return"                 => [line_feed, carriage_return].join,
   }
 end
 
