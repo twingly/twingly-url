@@ -1,5 +1,22 @@
 # Change Log
 
+## [v6.0.2](https://github.com/twingly/twingly-url/tree/v6.0.2) (2019-08-28)
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v6.0.1...v6.0.2)
+
+**Implemented enhancements:**
+
+- Make CI test gem installation [\#109](https://github.com/twingly/twingly-url/issues/109)
+
+**Fixed bugs:**
+
+- Handle some common representations of newlines [\#138](https://github.com/twingly/twingly-url/pull/138) ([dentarg](https://github.com/dentarg))
+
+**Merged pull requests:**
+
+- Add a memory profiler task [\#137](https://github.com/twingly/twingly-url/pull/137) ([jage](https://github.com/jage))
+- Test gem install on TravisCI [\#136](https://github.com/twingly/twingly-url/pull/136) ([roback](https://github.com/roback))
+- Sign in to RubyGems.org before trying to publish [\#134](https://github.com/twingly/twingly-url/pull/134) ([dentarg](https://github.com/dentarg))
+
 ## [v6.0.1](https://github.com/twingly/twingly-url/tree/v6.0.1) (2019-03-04)
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v6.0.0...v6.0.1)
 
