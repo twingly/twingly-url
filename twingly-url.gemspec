@@ -12,10 +12,10 @@ Gem::Specification.new do |s|
   s.summary     = "Ruby library for URL handling"
   s.description = "Twingly URL tools"
   s.license     = "MIT"
-  s.required_ruby_version = "~> 2.4"
+  s.required_ruby_version = "~> 2.5"
 
   s.add_dependency "addressable", "~> 2.6"
-  s.add_dependency "public_suffix", "~> 3.0.1"
+  s.add_dependency "public_suffix", ">= 3.0.1", "< 5.0"
 
   s.add_development_dependency "rake", "~> 12"
   s.add_development_dependency "rspec", "~> 3"
