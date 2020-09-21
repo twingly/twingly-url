@@ -1,6 +1,21 @@
-# Change Log
+# Changelog
+
+## [v6.0.3](https://github.com/twingly/twingly-url/tree/v6.0.3) (2020-09-21)
+
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v6.0.2...v6.0.3)
+
+**Fixed bugs:**
+
+- Cannot published gem using "rake release" [\#139](https://github.com/twingly/twingly-url/issues/139)
+
+**Merged pull requests:**
+
+- Update to Ruby 2.7 and drop support for Ruby 2.4 [\#145](https://github.com/twingly/twingly-url/pull/145) ([Pontus4](https://github.com/Pontus4))
+- Bump rake version \(10 -\> 12\) [\#142](https://github.com/twingly/twingly-url/pull/142) ([dentarg](https://github.com/dentarg))
+- Test with latest Ruby versions on Travis [\#140](https://github.com/twingly/twingly-url/pull/140) ([roback](https://github.com/roback))
 
 ## [v6.0.2](https://github.com/twingly/twingly-url/tree/v6.0.2) (2019-08-28)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v6.0.1...v6.0.2)
 
 **Implemented enhancements:**
@@ -18,13 +33,10 @@
 - Sign in to RubyGems.org before trying to publish [\#134](https://github.com/twingly/twingly-url/pull/134) ([dentarg](https://github.com/dentarg))
 
 ## [v6.0.1](https://github.com/twingly/twingly-url/tree/v6.0.1) (2019-03-04)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v6.0.0...v6.0.1)
 
 **Implemented enhancements:**
-
-- Update addressable to 2.6 [\#132](https://github.com/twingly/twingly-url/issues/132)
-
-**Fixed bugs:**
 
 - Update addressable to 2.6 [\#132](https://github.com/twingly/twingly-url/issues/132)
 
@@ -33,6 +45,7 @@
 - Accept that parsing downcases the scheme part, allow Addressable 2.6 [\#133](https://github.com/twingly/twingly-url/pull/133) ([dentarg](https://github.com/dentarg))
 
 ## [v6.0.0](https://github.com/twingly/twingly-url/tree/v6.0.0) (2019-02-06)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v5.1.1...v6.0.0)
 
 **Fixed bugs:**
@@ -52,6 +65,7 @@
 - Load the pure-Ruby IDNA implementation from Addressable [\#120](https://github.com/twingly/twingly-url/pull/120) ([dentarg](https://github.com/dentarg))
 
 ## [v5.1.1](https://github.com/twingly/twingly-url/tree/v5.1.1) (2018-02-14)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v5.1.0...v5.1.1)
 
 **Implemented enhancements:**
@@ -71,6 +85,7 @@
 - Switch to logical requires [\#103](https://github.com/twingly/twingly-url/pull/103) ([dentarg](https://github.com/dentarg))
 
 ## [v5.1.0](https://github.com/twingly/twingly-url/tree/v5.1.0) (2017-03-03)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v5.0.1...v5.1.0)
 
 **Implemented enhancements:**
@@ -92,6 +107,7 @@
 - Drop libidn [\#102](https://github.com/twingly/twingly-url/pull/102) ([dentarg](https://github.com/dentarg))
 
 ## [v5.0.1](https://github.com/twingly/twingly-url/tree/v5.0.1) (2016-09-19)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v5.0.0...v5.0.1)
 
 **Fixed bugs:**
@@ -103,6 +119,7 @@
 - Make sure we always read PSL data as UTF-8 [\#99](https://github.com/twingly/twingly-url/pull/99) ([dentarg](https://github.com/dentarg))
 
 ## [v5.0.0](https://github.com/twingly/twingly-url/tree/v5.0.0) (2016-09-16)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v4.2.0...v5.0.0)
 
 **Implemented enhancements:**
@@ -122,6 +139,7 @@
 - Ensure normalized IDNA domains return ASCII strings [\#90](https://github.com/twingly/twingly-url/pull/90) ([dentarg](https://github.com/dentarg))
 
 ## [v4.2.0](https://github.com/twingly/twingly-url/tree/v4.2.0) (2016-08-31)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v4.1.0...v4.2.0)
 
 **Merged pull requests:**
@@ -130,6 +148,7 @@
 - Add example usage to README [\#86](https://github.com/twingly/twingly-url/pull/86) ([dentarg](https://github.com/dentarg))
 
 ## [v4.1.0](https://github.com/twingly/twingly-url/tree/v4.1.0) (2016-05-23)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v4.0.0...v4.1.0)
 
 **Closed issues:**
@@ -141,6 +160,7 @@
 - Expose userinfo, user and password [\#84](https://github.com/twingly/twingly-url/pull/84) ([jage](https://github.com/jage))
 
 ## [v4.0.0](https://github.com/twingly/twingly-url/tree/v4.0.0) (2016-02-03)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v3.0.2...v4.0.0)
 
 **Implemented enhancements:**
@@ -159,6 +179,7 @@
 - Make things private [\#69](https://github.com/twingly/twingly-url/pull/69) ([dentarg](https://github.com/dentarg))
 
 ## [v3.0.2](https://github.com/twingly/twingly-url/tree/v3.0.2) (2015-11-11)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v3.0.1...v3.0.2)
 
 **Fixed bugs:**
@@ -170,6 +191,7 @@
 - Rescue IDN::Idna::IdnaError [\#65](https://github.com/twingly/twingly-url/pull/65) ([dentarg](https://github.com/dentarg))
 
 ## [v3.0.1](https://github.com/twingly/twingly-url/tree/v3.0.1) (2015-11-11)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v3.0.0...v3.0.1)
 
 **Fixed bugs:**
@@ -179,8 +201,10 @@
 **Merged pull requests:**
 
 - Improve punycode handling with libidn [\#63](https://github.com/twingly/twingly-url/pull/63) ([walro](https://github.com/walro))
+- Work with Twingly::URL objects instead of strings [\#42](https://github.com/twingly/twingly-url/pull/42) ([twingly-mob](https://github.com/twingly-mob))
 
 ## [v3.0.0](https://github.com/twingly/twingly-url/tree/v3.0.0) (2015-11-02)
+
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v2.0.0...v3.0.0)
 
 **Implemented enhancements:**
@@ -200,6 +224,9 @@
 - Refactor requires [\#57](https://github.com/twingly/twingly-url/pull/57) ([dentarg](https://github.com/dentarg))
 
 ## [v2.0.0](https://github.com/twingly/twingly-url/tree/v2.0.0) (2015-10-26)
+
+[Full Changelog](https://github.com/twingly/twingly-url/compare/d7cecadd542ce5e7709833e1874d39d644d4d11f...v2.0.0)
+
 **Implemented enhancements:**
 
 - Move lib/version.rb to lib/twingly/version.rb [\#50](https://github.com/twingly/twingly-url/issues/50)
@@ -220,9 +247,7 @@
 - normalize method can't handle URLs with punycoded TLD [\#28](https://github.com/twingly/twingly-url/issues/28)
 - Shoulda-context does not seem to work with Ruby 2.2 [\#26](https://github.com/twingly/twingly-url/issues/26)
 - Digest is not threadsafe [\#20](https://github.com/twingly/twingly-url/issues/20)
-- Should normalize IDN properly [\#17](https://github.com/twingly/twingly-url/issues/17)
 - Blogspot.com normalization error [\#13](https://github.com/twingly/twingly-url/issues/13)
-- Discrepancy with .NET normalization [\#12](https://github.com/twingly/twingly-url/issues/12)
 - Crashes if only a protocol is provided [\#10](https://github.com/twingly/twingly-url/issues/10)
 - Can not handle urls with international characters [\#2](https://github.com/twingly/twingly-url/issues/2)
 - Add tests [\#1](https://github.com/twingly/twingly-url/issues/1)
@@ -240,7 +265,6 @@
 
 - Move version.rb to correct subdir [\#51](https://github.com/twingly/twingly-url/pull/51) ([jage](https://github.com/jage))
 - Implement prettier \#inspect [\#47](https://github.com/twingly/twingly-url/pull/47) ([jage](https://github.com/jage))
-- Work with Twingly::URL objects instead of strings [\#42](https://github.com/twingly/twingly-url/pull/42) ([twingly-mob](https://github.com/twingly-mob))
 - New .extract\_url method which does not normalize [\#41](https://github.com/twingly/twingly-url/pull/41) ([twingly-mob](https://github.com/twingly-mob))
 - Sync known behaviour with .NET [\#37](https://github.com/twingly/twingly-url/pull/37) ([roback](https://github.com/roback))
 - Change from minitest to rspec [\#36](https://github.com/twingly/twingly-url/pull/36) ([roback](https://github.com/roback))
@@ -256,4 +280,4 @@
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
