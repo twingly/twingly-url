@@ -196,7 +196,7 @@ Note that this isn't a benchmark, we're using [ruby-prof] and [memory_profiler] 
 
         bundle exec rake release
 
-* Update the changelog with [GitHub Changelog Generator](https://github.com/skywinder/github-changelog-generator/) (`gem install github_changelog_generator` if you don't have it, set `CHANGELOG_GITHUB_TOKEN` to a personal access token to avoid rate limiting by GitHub). This command will update `CHANGELOG.md`. You need to commit and push manually.
+* Update the changelog with [GitHub Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) (`gem install github_changelog_generator` if you don't have it, set `CHANGELOG_GITHUB_TOKEN` to a personal access token to avoid rate limiting by GitHub). This command will update `CHANGELOG.md`. You need to commit and push manually.
 
         github_changelog_generator
 
