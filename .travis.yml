@@ -2,13 +2,13 @@ language: ruby
 sudo: false
 matrix:
   include:
-    - rvm: jruby-9.2.9.0
-    - rvm: 2.5.7
-    - rvm: 2.6.5
+    - rvm: jruby-9.2.11.1
+    - rvm: 2.5.8
+    - rvm: 2.6.6
     - rvm: jruby-head
     - rvm: ruby-head
-    - rvm: 2.7.1
-    - rvm: 2.7.1
+    - rvm: 2.7.2
+    - rvm: 2.7.2
       install: true # This skips 'bundle install'
       script: gem build *.gemspec && gem install *.gem
   allow_failures:
