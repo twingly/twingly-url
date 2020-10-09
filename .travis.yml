@@ -1,5 +1,4 @@
 language: ruby
-sudo: false
 matrix:
   include:
     - rvm: jruby-9.2.11.1
