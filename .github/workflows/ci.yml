@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { ruby: 2.5.8 }
+          - { ruby: 2.6.6 }
+          - { ruby: 2.7.2 }
+          - { ruby: head, allow-failure: true }
+          - { ruby: jruby-9.2.13.0 }
+          - { ruby: jruby-head, allow-failure: true }
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Ruby ${{ matrix.ruby }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+
+    - name: Run tests
+      run: bundle exec rake
+      continue-on-error: ${{ matrix.allow-failure || false }}
