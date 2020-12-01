@@ -1,6 +1,6 @@
 # Twingly::URL
 
-[![Build Status](https://travis-ci.org/twingly/twingly-url.svg?branch=master)](https://travis-ci.org/twingly/twingly-url)
+[![GitHub Build Status](https://github.com/twingly/twingly-url/workflows/CI/badge.svg)](https://github.com/twingly/twingly-url/actions)
 
 Twingly URL tools.
 
