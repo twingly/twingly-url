@@ -1,6 +1,6 @@
 # Twingly::URL
 
-[![GitHub Build Status](https://github.com/twingly/twingly-url/workflows/CI/badge.svg)](https://github.com/twingly/twingly-url/actions)
+[![GitHub Build Status](https://github.com/twingly/twingly-url/workflows/CI/badge.svg?branch=master)](https://github.com/twingly/twingly-url/actions)
 
 Twingly URL tools.
 
