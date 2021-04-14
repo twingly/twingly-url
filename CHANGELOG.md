@@ -1,5 +1,20 @@
 # Changelog
 
+## [v6.0.4](https://github.com/twingly/twingly-url/tree/v6.0.4) (2021-04-14)
+
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v6.0.3...v6.0.4)
+
+**Implemented enhancements:**
+
+- Ruby 2.7 support [\#144](https://github.com/twingly/twingly-url/issues/144)
+
+**Merged pull requests:**
+
+- Run CI on Ruby 3.0.0 [\#150](https://github.com/twingly/twingly-url/pull/150) ([walro](https://github.com/walro))
+- Add version constraint for Pry [\#149](https://github.com/twingly/twingly-url/pull/149) ([walro](https://github.com/walro))
+- Run CI on GitHub actions [\#148](https://github.com/twingly/twingly-url/pull/148) ([walro](https://github.com/walro))
+- Test with more recent Rubies [\#146](https://github.com/twingly/twingly-url/pull/146) ([walro](https://github.com/walro))
+
 ## [v6.0.3](https://github.com/twingly/twingly-url/tree/v6.0.3) (2020-09-21)
 
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v6.0.2...v6.0.3)
@@ -201,7 +216,6 @@
 **Merged pull requests:**
 
 - Improve punycode handling with libidn [\#63](https://github.com/twingly/twingly-url/pull/63) ([walro](https://github.com/walro))
-- Work with Twingly::URL objects instead of strings [\#42](https://github.com/twingly/twingly-url/pull/42) ([twingly-mob](https://github.com/twingly-mob))
 
 ## [v3.0.0](https://github.com/twingly/twingly-url/tree/v3.0.0) (2015-11-02)
 
@@ -265,6 +279,7 @@
 
 - Move version.rb to correct subdir [\#51](https://github.com/twingly/twingly-url/pull/51) ([jage](https://github.com/jage))
 - Implement prettier \#inspect [\#47](https://github.com/twingly/twingly-url/pull/47) ([jage](https://github.com/jage))
+- Work with Twingly::URL objects instead of strings [\#42](https://github.com/twingly/twingly-url/pull/42) ([twingly-mob](https://github.com/twingly-mob))
 - New .extract\_url method which does not normalize [\#41](https://github.com/twingly/twingly-url/pull/41) ([twingly-mob](https://github.com/twingly-mob))
 - Sync known behaviour with .NET [\#37](https://github.com/twingly/twingly-url/pull/37) ([roback](https://github.com/roback))
 - Change from minitest to rspec [\#36](https://github.com/twingly/twingly-url/pull/36) ([roback](https://github.com/roback))
