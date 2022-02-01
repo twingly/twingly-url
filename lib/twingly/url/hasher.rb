@@ -19,10 +19,6 @@ module Twingly
         MD5_DIGEST.hexdigest(url)[0..29].upcase
       end
 
-      def blogstream_hash(url)
-        MD5_DIGEST.hexdigest(url)[0..29].upcase
-      end
-
       def documentdb_hash(url)
         SHA256_DIGEST.digest(url).unpack("L!")[0]
       end
