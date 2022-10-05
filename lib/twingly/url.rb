@@ -22,6 +22,8 @@ module Twingly
       Addressable::URI::InvalidURIError,
       PublicSuffix::DomainInvalid,
     ].freeze
+    DOT = "."
+    HYPHEN = "-"
     CARRIAGE_RETURN = "\u000D"
     LINE_FEED = "\u000A"
     NBSP = "\u00A0"
@@ -34,16 +36,20 @@ module Twingly
     ].join.freeze
     LEADING_AND_TRAILING_WHITESPACE =
       /\A[#{WHITESPACE_CHARS}]+|[#{WHITESPACE_CHARS}]+\z/.freeze
+    LETTERS_DIGITS_HYPHEN = /\A[a-zA-Z0-9-]+\z/.freeze
 
     private_constant :ACCEPTED_SCHEMES
     private_constant :CUSTOM_PSL
     private_constant :STARTS_WITH_WWW
     private_constant :ENDS_WITH_SLASH
     private_constant :ERRORS_TO_EXTEND
+    private_constant :DOT
+    private_constant :HYPHEN
     private_constant :NBSP
     private_constant :SPACE
     private_constant :WHITESPACE_CHARS
     private_constant :LEADING_AND_TRAILING_WHITESPACE
+    private_constant :LETTERS_DIGITS_HYPHEN
 
     class << self
       def parse(potential_url)
@@ -91,10 +97,9 @@ module Twingly
         input.gsub(LEADING_AND_TRAILING_WHITESPACE, "")
       end
 
-      # Workaround for the following bug in addressable:
-      # https://github.com/sporkmonger/addressable/issues/224
       def try_addressable_normalize(addressable_uri)
-        addressable_uri.normalize
+        ascii_host = addressable_uri.normalize.host
+        raise Twingly::URL::Error::ParseError unless valid_hostname?(ascii_host)
       rescue ArgumentError => error
         if error.message.include?("invalid byte sequence in UTF-8")
           raise Twingly::URL::Error::ParseError
@@ -103,11 +108,27 @@ module Twingly
         raise
       end
 
+      def valid_hostname?(hostname)
+        # No need to check the TLD, the public suffix list does that
+        labels = hostname.split(DOT)[0...-1].map(&:to_s)
+
+        labels.all? { |label| valid_label?(label) }
+      end
+
+      def valid_label?(label)
+        return false if label.start_with?(HYPHEN)
+        return false if label.end_with?(HYPHEN)
+
+        label.match?(LETTERS_DIGITS_HYPHEN)
+      end
+
       private :new
       private :internal_parse
       private :clean_input
       private :strip_whitespace
       private :try_addressable_normalize
+      private :valid_hostname?
+      private :valid_label?
     end
 
     def initialize(addressable_uri, public_suffix_domain)

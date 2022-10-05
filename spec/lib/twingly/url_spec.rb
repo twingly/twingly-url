@@ -39,6 +39,7 @@ def invalid_urls
     "http://.gl/xxx",
     "http://.twingly.com/",
     "http://www.twingly.",
+    "http://www..twingly..com/",
 
     # Test that we can handle upstream bug in Addressable, references:
     # https://github.com/twingly/twingly-url/issues/62
@@ -562,12 +563,6 @@ describe Twingly::URL do
       let(:expected) { "" }
 
       it { is_expected.to eq(expected) }
-    end
-
-    context "oddly enough, does not alter URLs with consecutive dots" do
-      let(:url) { "http://www..twingly..com/" }
-
-      it { is_expected.to eq(url) }
     end
 
     context "does not add www. to blogspot URLs" do
