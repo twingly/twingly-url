@@ -40,10 +40,12 @@ def invalid_urls
     "http://.twingly.com/",
     "http://www.twingly.",
     "http://www..twingly..com/",
-
-    # Test that we can handle upstream bug in Addressable, references:
-    # https://github.com/twingly/twingly-url/issues/62
-    # https://github.com/sporkmonger/addressable/issues/224
+    "http:// shouldfail.com",
+    "http://-a.b.co",
+    "http://a.b-.co",
+    "http://.www.foo.bar./",
+    "http://club].no/",
+    "http://www,google.com",
     "http://some_site.net%C2",
     "http://+%D5d.some_site.net",
 
