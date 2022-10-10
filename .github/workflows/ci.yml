@@ -6,22 +6,22 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { ruby: 2.7.6 }
-          - { ruby: 3.0.4 }
-          - { ruby: 3.1.2 }
+          - { ruby: '2.7' }
+          - { ruby: '3.0' }
+          - { ruby: '3.1' }
           - { ruby: head, allow-failure: true }
-          - { ruby: jruby-9.3.4.0 }
+          - { ruby: jruby-9.3 }
           - { ruby: jruby-head, allow-failure: true }
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Setup Ruby ${{ matrix.ruby }}
       uses: ruby/setup-ruby@v1
