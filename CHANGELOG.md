@@ -1,5 +1,29 @@
 # Changelog
 
+## [v7.0.0](https://github.com/twingly/twingly-url/tree/v7.0.0) (2022-10-14)
+
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v6.0.4...v7.0.0)
+
+**Implemented enhancements:**
+
+- Remove `Twingly::URL::Hasher.blogstream_hash` [\#152](https://github.com/twingly/twingly-url/issues/152)
+- Normalize URL with multiple consecutive dots [\#125](https://github.com/twingly/twingly-url/issues/125)
+
+**Fixed bugs:**
+
+- Bug in normalized\_host in Addressable \(ArgumentError: invalid byte sequence in UTF-8\) [\#62](https://github.com/twingly/twingly-url/issues/62)
+
+**Merged pull requests:**
+
+- Add more invalid URLs to specs [\#159](https://github.com/twingly/twingly-url/pull/159) ([dentarg](https://github.com/dentarg))
+- Validate the normalized hostname [\#158](https://github.com/twingly/twingly-url/pull/158) ([dentarg](https://github.com/dentarg))
+- Require Ruby \>= 2.6 [\#157](https://github.com/twingly/twingly-url/pull/157) ([Pontus4](https://github.com/Pontus4))
+- CI housekeeping [\#156](https://github.com/twingly/twingly-url/pull/156) ([dentarg](https://github.com/dentarg))
+- Allow use of `public_suffix` 5 [\#155](https://github.com/twingly/twingly-url/pull/155) ([dentarg](https://github.com/dentarg))
+- Test with latest Rubies [\#154](https://github.com/twingly/twingly-url/pull/154) ([roback](https://github.com/roback))
+- Remove `Twingly::URL::Hasher.blogstream_hash` [\#153](https://github.com/twingly/twingly-url/pull/153) ([Chrizpy](https://github.com/Chrizpy))
+- Run CI on latest Rubies [\#151](https://github.com/twingly/twingly-url/pull/151) ([walro](https://github.com/walro))
+
 ## [v6.0.4](https://github.com/twingly/twingly-url/tree/v6.0.4) (2021-04-14)
 
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v6.0.3...v6.0.4)
