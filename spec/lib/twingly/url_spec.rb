@@ -12,6 +12,7 @@ def invalid_urls
     "http:",
     "htttp",
     "http://",
+    "http:X",
     "a",
     "1",
     "?",
