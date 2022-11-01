@@ -109,6 +109,8 @@ module Twingly
       end
 
       def valid_hostname?(hostname)
+        return false if hostname.nil?
+
         # No need to check the TLD, the public suffix list does that
         labels = hostname.split(DOT)[0...-1].map(&:to_s)
 
