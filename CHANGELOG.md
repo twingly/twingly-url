@@ -1,5 +1,13 @@
 # Changelog
 
+## [v7.0.1](https://github.com/twingly/twingly-url/tree/v7.0.1) (2022-11-01)
+
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v7.0.0...v7.0.1)
+
+**Merged pull requests:**
+
+- Add missing nil guard in `valid_hostname?` [\#160](https://github.com/twingly/twingly-url/pull/160) ([dentarg](https://github.com/dentarg))
+
 ## [v7.0.0](https://github.com/twingly/twingly-url/tree/v7.0.0) (2022-10-14)
 
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v6.0.4...v7.0.0)
