@@ -22,10 +22,18 @@ describe Twingly::PublicSuffixList do
 
     context "when the list data is read as US-ASCII" do
       let(:encoding) { Encoding::US_ASCII }
+      # https://github.com/ruby/ruby/commit/571d21fd4a2e877f49b4ff918832bda9a5e8f91c
+      let(:expected_error) do
+        if RUBY_VERSION >= "3.2.0"
+          Encoding::CompatibilityError
+        else
+          ArgumentError
+        end
+      end
 
       it "parsing the data will fail" do
         expect { subject }.
-          to raise_error(ArgumentError, "invalid byte sequence in US-ASCII")
+          to raise_error(expected_error, "invalid byte sequence in US-ASCII")
       end
     end
   end
