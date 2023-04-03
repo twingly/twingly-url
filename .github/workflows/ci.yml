@@ -16,6 +16,7 @@ jobs:
           - { ruby: '2.7' }
           - { ruby: '3.0' }
           - { ruby: '3.1' }
+          - { ruby: '3.2' }
           - { ruby: head, allow-failure: true }
           - { ruby: jruby-9.3 }
           - { ruby: jruby-head, allow-failure: true }
