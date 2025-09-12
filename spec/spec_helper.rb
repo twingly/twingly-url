@@ -10,6 +10,7 @@ RSpec.configure do |config|
   end
 
   config.order = :random
+  config.filter_run_when_matching :focus
 
   Kernel.srand config.seed
 end
