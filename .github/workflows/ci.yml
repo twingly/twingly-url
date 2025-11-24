@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
@@ -17,13 +17,15 @@ jobs:
           - { ruby: '3.0' }
           - { ruby: '3.1' }
           - { ruby: '3.2' }
+          - { ruby: '3.3' }
+          - { ruby: '3.4' }
           - { ruby: head, allow-failure: true }
-          - { ruby: jruby-9.3 }
+          - { ruby: jruby-10.0 }
           - { ruby: jruby-head, allow-failure: true }
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
 
     - name: Setup Ruby ${{ matrix.ruby }}
       uses: ruby/setup-ruby@v1
