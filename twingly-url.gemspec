@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.add_dependency "addressable", "~> 2.6"
   s.add_dependency "public_suffix", ">= 3.0.1", "< 8"
 
-  s.add_development_dependency "rake", "~> 12"
+  s.add_development_dependency "rake"
   s.add_development_dependency "rspec", "~> 3"
   s.add_development_dependency "pry", "~> 0"
 
