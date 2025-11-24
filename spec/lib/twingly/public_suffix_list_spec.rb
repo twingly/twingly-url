@@ -24,7 +24,7 @@ describe Twingly::PublicSuffixList do
       let(:encoding) { Encoding::US_ASCII }
       # https://github.com/ruby/ruby/commit/571d21fd4a2e877f49b4ff918832bda9a5e8f91c
       let(:expected_error) do
-        if RUBY_VERSION >= "3.2.0"
+        if RUBY_VERSION >= "3.2.0" && RUBY_ENGINE != "jruby"
           Encoding::CompatibilityError
         else
           ArgumentError
