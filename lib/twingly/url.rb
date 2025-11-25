@@ -73,11 +73,7 @@ module Twingly
         try_addressable_normalize(addressable_uri)
 
         host = addressable_uri.host
-        public_suffix_domain = PublicSuffix.parse(host, list: CUSTOM_PSL,
-          default_rule: nil)
-        raise Twingly::URL::Error::ParseError if public_suffix_domain.nil?
-
-        raise Twingly::URL::Error::ParseError if public_suffix_domain.sld.nil?
+        public_suffix_domain = get_public_suffix_domain(addressable_uri.host)
 
         new(addressable_uri, public_suffix_domain)
       rescue *ERRORS_TO_EXTEND => error
@@ -124,6 +120,13 @@ module Twingly
         label.match?(LETTERS_DIGITS_HYPHEN)
       end
 
+      def get_public_suffix_domain(host)
+        public_suffix_domain = PublicSuffix.parse(host, list: CUSTOM_PSL, default_rule: nil)
+        raise Twingly::URL::Error::ParseError if public_suffix_domain.nil?
+        raise Twingly::URL::Error::ParseError if public_suffix_domain.sld.nil?
+        public_suffix_domain
+      end
+
       private :new
       private :internal_parse
       private :clean_input
@@ -131,6 +134,7 @@ module Twingly
       private :try_addressable_normalize
       private :valid_hostname?
       private :valid_label?
+      private :get_public_suffix_domain
     end
 
     def initialize(addressable_uri, public_suffix_domain)
@@ -189,7 +193,8 @@ module Twingly
       normalized_url.host   = normalized_host
       normalized_url.path   = normalized_path
 
-      self.class.parse(normalized_url)
+      public_suffix_domain = self.class.send(:get_public_suffix_domain, normalized_url.host)
+      self.class.send(:new, normalized_url, public_suffix_domain)
     end
 
     def normalized_scheme
