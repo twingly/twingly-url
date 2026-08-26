@@ -46,7 +46,7 @@ RSpec.describe Twingly::URL::Extended do
     end
 
     it "returns both original url, normalized url, urlhash and legacy_urlhash" do
-      expect(described_class.normalize_and_calculate_urlhash(url)).to have_attributes(url:,
+      expect(described_class.normalize_and_calculate_urlhash(url)).to have_attributes(url: url,
                                                                  normalized_url: "//www.example.com/",
                                                                  urlhash:        "1119909257551956256",
                                                                  legacy_urlhash: "14653629529287702089")
