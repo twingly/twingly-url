@@ -117,8 +117,10 @@ module Twingly
         nil
       end
 
-      def self.normalize_and_calculate_urlhash(url)
+      def self.normalize_and_calculate_urlhash(url, percent_encode: false)
         return empty_result if url.to_s.strip.empty?
+
+        url = canonicalize_percent_encoding(url.to_s) if percent_encode
 
         twingly_url = if url.is_a?(Extended)
                         url
@@ -149,8 +151,15 @@ module Twingly
         Twingly::URL::Hasher.documentdb_hash(url).to_s
       end
 
+      def self.canonicalize_percent_encoding(url)
+        Addressable::URI.parse(url).normalize.to_s
+      rescue StandardError
+        url
+      end
+
       private_class_method :empty_result
       private_class_method :calculate_urlhash
+      private_class_method :canonicalize_percent_encoding
     end
   end
 end
