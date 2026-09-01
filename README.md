@@ -12,6 +12,9 @@ Twingly URL tools.
     * `Twingly::URL::Hasher.autopingdb_hash(url)` - SHA256 64-bit signed, native endian digest
 * `twingly/url/utilities` - Utilities to work with URLs
     * `Twingly::URL::Utilities.extract_valid_urls` - Returns Array of valid `Twingly::URL`
+* `twingly/url/extended` - Extended normalization and hashing, stripping blacklisted query and matrix parameters as well as the fragment.
+    * `Twingly::URL::Extended.parse` - Like `Twingly::URL.parse`, with the extended normalization
+    * `Twingly::URL::Extended.normalize_and_calculate_urlhash(url)` - Returns a `HashResult` struct with `url` (original URL minus blacklisted parameters), `normalized_url` (scheme-less), `urlhash` (`documentdb_hash` of the normalized URL, as a `String`) and `legacy_urlhash` (same digest with the scheme kept)
 
 ## Getting Started
 
