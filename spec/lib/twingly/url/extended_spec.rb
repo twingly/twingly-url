@@ -188,6 +188,106 @@ RSpec.describe Twingly::URL::Extended do
         expect(repeated.to_h).to eq(from_instance.to_h)
       end
     end
+
+    context "with percent_encode: true" do
+      let(:raw_spelling)     { "https://example.com/päge?id=1" }
+      let(:encoded_spelling) { "https://example.com/p%C3%A4ge?id=1" }
+
+      it "converges raw and percent-encoded spellings of the same URL" do
+        raw     = described_class.normalize_and_calculate_urlhash(raw_spelling, percent_encode: true)
+        encoded = described_class.normalize_and_calculate_urlhash(encoded_spelling, percent_encode: true)
+
+        expect(raw.to_h).to eq(encoded.to_h)
+        expect(raw.normalized_url).to eq("//www.example.com/p%C3%A4ge?id=1")
+      end
+
+      it "does not converge the spellings when the option is off" do
+        raw     = described_class.normalize_and_calculate_urlhash(raw_spelling)
+        encoded = described_class.normalize_and_calculate_urlhash(encoded_spelling)
+
+        expect(raw.urlhash).not_to eq(encoded.urlhash)
+      end
+
+      it "converges lowercase and uppercase hex spellings" do
+        lower = described_class.normalize_and_calculate_urlhash("https://example.com/p%c3%a4ge?id=1", percent_encode: true)
+        upper = described_class.normalize_and_calculate_urlhash("https://example.com/p%C3%A4ge?id=1", percent_encode: true)
+
+        expect(lower.to_h).to eq(upper.to_h)
+      end
+
+      it "strips a blacklisted matrix parameter whose name is percent-encoded" do
+        hidden = described_class.normalize_and_calculate_urlhash("https://example.com/path;%6Asessionid=ABC?id=1", percent_encode: true)
+        plain  = described_class.normalize_and_calculate_urlhash("https://example.com/path?id=1", percent_encode: true)
+
+        expect(hidden.to_h).to eq(plain.to_h)
+      end
+
+      it "is a no-op for an already canonical URL" do
+        url = "https://example.com/p%C3%A4ge;jsessionid=X?id=1"
+
+        with_option    = described_class.normalize_and_calculate_urlhash(url, percent_encode: true)
+        without_option = described_class.normalize_and_calculate_urlhash(url)
+
+        expect(with_option.to_h).to eq(without_option.to_h)
+      end
+
+      it "keeps percent-encoded reserved characters encoded" do
+        url = "https://example.com/login?next=https%3A%2F%2Fexample.com%2Faccount"
+
+        result = described_class.normalize_and_calculate_urlhash(url, percent_encode: true)
+
+        expect(result.normalized_url).to eq("//www.example.com/login?next=https%3A%2F%2Fexample.com%2Faccount")
+      end
+
+      it "is idempotent over its own url output" do
+        first  = described_class.normalize_and_calculate_urlhash("https://example.com/päge;jsessionid=X?utm_source=y&id=1", percent_encode: true)
+        second = described_class.normalize_and_calculate_urlhash(first.url, percent_encode: true)
+
+        expect(second.to_h).to eq(first.to_h)
+      end
+
+      it "returns the same result for an already parsed Extended instance as for the string" do
+        parsed = described_class.parse(raw_spelling)
+
+        from_instance = described_class.normalize_and_calculate_urlhash(parsed, percent_encode: true)
+        from_string   = described_class.normalize_and_calculate_urlhash(raw_spelling, percent_encode: true)
+
+        expect(from_instance.to_h).to eq(from_string.to_h)
+      end
+
+      context "with an invalid URL" do
+        it "still returns a result where all attributes are set to nil" do
+          result = described_class.normalize_and_calculate_urlhash("http:// example.com? hello # there", percent_encode: true)
+
+          expect(result).to have_attributes(url:            nil,
+                                            normalized_url: nil,
+                                            urlhash:        nil,
+                                            legacy_urlhash: nil)
+        end
+      end
+
+      it "leaves every blacklisted parameter name unchanged by canonicalization" do
+        names = described_class::BLACKLISTED_QUERY_PARAMETERS + described_class::BLACKLISTED_MATRIX_PARAMETERS
+
+        names.each do |name|
+          url = "https://example.com/;#{name}=v?#{name}=v"
+
+          expect(described_class.send(:canonicalize_percent_encoding, url)).to eq(url)
+        end
+      end
+
+      it "decodes a fully percent-encoded spelling of every blacklisted parameter name back to the name itself" do
+        names = described_class::BLACKLISTED_QUERY_PARAMETERS + described_class::BLACKLISTED_MATRIX_PARAMETERS
+
+        names.each do |name|
+          encoded_name = name.each_char.map { |char| format("%%%02X", char.ord) }.join
+
+          canonical = described_class.send(:canonicalize_percent_encoding, "https://example.com/;#{encoded_name}=v?#{encoded_name}=v")
+
+          expect(canonical).to eq("https://example.com/;#{name}=v?#{name}=v")
+        end
+      end
+    end
   end
 
   describe ".parse" do
