@@ -13,7 +13,7 @@ module Twingly
       # This way the urlhashes here will be the same as the one we have in Elasticsearch
       PROTOCOL_EXPRESSION = /\Ahttps?:/i
 
-      HashResult = Struct.new(:url, :normalized_url, :urlhash, :legacy_urlhash)
+      HashResult = Struct.new(:url, :addressable_normalized_url, :normalized_url, :urlhash, :legacy_urlhash)
 
       # These parameters are just used for tracking, and should therefore not be included in the normalized URL
       # See https://en.wikipedia.org/wiki/UTM_parameters
@@ -44,7 +44,9 @@ module Twingly
 
       # Taken from twingly-url, with the addition of normalizing the query and fragment components
       # See https://github.com/twingly/twingly-url/blob/e20f5fce077d93e89ef8520961be453c90cfec8c/lib/twingly/url.rb#L185-L193
-      def normalized # rubocop:disable Metrics/AbcSize
+      def normalized(addressable_normalize: false) # rubocop:disable Metrics/AbcSize
+        return addressable_normalized.normalized if addressable_normalize
+
         normalized_url = addressable_uri.dup
 
         normalized_url.scheme       = normalized_scheme
@@ -57,6 +59,12 @@ module Twingly
         # to handle this.
         public_suffix_domain = get_public_suffix_domain(normalized_url.host)
         self.class.send(:new, normalized_url, public_suffix_domain)
+      end
+
+      def addressable_normalized
+        addressable_normalized_url = normalize_addressable_url
+        public_suffix_domain = get_public_suffix_domain(addressable_normalized_url.host)
+        self.class.send(:new, addressable_normalized_url, public_suffix_domain)
       end
 
       def original_url_without_blacklisted_parameters
@@ -96,6 +104,10 @@ module Twingly
         without_blacklisted_query_parameters(addressable_uri.query_values)
       end
 
+      def normalize_addressable_url
+        addressable_uri.normalize
+      end
+
       def without_blacklisted_query_parameters(query_values)
         return if query_values.nil?
 
@@ -117,10 +129,8 @@ module Twingly
         nil
       end
 
-      def self.normalize_and_calculate_urlhash(url, percent_encode: false)
+      def self.normalize_and_calculate_urlhash(url, addressable_normalize: false)
         return empty_result if url.to_s.strip.empty?
-
-        url = canonicalize_percent_encoding(url.to_s) if percent_encode
 
         twingly_url = if url.is_a?(Extended)
                         url
@@ -130,17 +140,22 @@ module Twingly
 
         return empty_result unless twingly_url.valid?
 
-        original_url                  = twingly_url.original_url_without_blacklisted_parameters
+        original_url               = twingly_url.original_url_without_blacklisted_parameters
+        addressable_normalized     = twingly_url.addressable_normalized
+        addressable_normalized_url = addressable_normalized.to_s
+
+        twingly_url = addressable_normalized if addressable_normalize
+
         normalized_url                = twingly_url.normalized.to_s
         normalized_url_without_scheme = remove_scheme(normalized_url)
         urlhash                       = calculate_urlhash(normalized_url_without_scheme)
         legacy_urlhash                = calculate_urlhash(normalized_url)
 
-        HashResult.new(original_url, normalized_url_without_scheme, urlhash, legacy_urlhash)
+        HashResult.new(original_url, addressable_normalized_url, normalized_url_without_scheme, urlhash, legacy_urlhash)
       end
 
       def self.empty_result
-        HashResult.new(nil, nil, nil, nil)
+        HashResult.new(nil, nil, nil, nil, nil)
       end
 
       def self.remove_scheme(url)
@@ -151,15 +166,8 @@ module Twingly
         Twingly::URL::Hasher.documentdb_hash(url).to_s
       end
 
-      def self.canonicalize_percent_encoding(url)
-        Addressable::URI.parse(url).normalize.to_s
-      rescue StandardError
-        url
-      end
-
       private_class_method :empty_result
       private_class_method :calculate_urlhash
-      private_class_method :canonicalize_percent_encoding
     end
   end
 end
