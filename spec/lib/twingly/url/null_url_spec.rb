@@ -15,6 +15,11 @@ describe Twingly::URL::NullURL do
   describe "#normalized" do
     subject { url.normalized }
     it { is_expected.to equal(subject) }
+
+    context "with addressable_normalize: true" do
+      subject { url.normalized(addressable_normalize: true) }
+      it { is_expected.to equal(url) }
+    end
   end
 
   describe "#scheme" do
