@@ -13,7 +13,7 @@ module Twingly
       # This way the urlhashes here will be the same as the one we have in Elasticsearch
       PROTOCOL_EXPRESSION = /\Ahttps?:/i
 
-      HashResult = Struct.new(:url, :addressable_normalized_url, :normalized_url, :urlhash, :legacy_urlhash)
+      HashResult = Struct.new(:url, :callable_url, :normalized_url, :urlhash, :legacy_urlhash)
 
       # These parameters are just used for tracking, and should therefore not be included in the normalized URL
       # See https://en.wikipedia.org/wiki/UTM_parameters
@@ -142,7 +142,7 @@ module Twingly
 
         original_url               = twingly_url.original_url_without_blacklisted_parameters
         addressable_normalized     = twingly_url.addressable_normalized
-        addressable_normalized_url = addressable_normalized.to_s
+        callable_url               = addressable_normalized.original_url_without_blacklisted_parameters
 
         twingly_url = addressable_normalized if addressable_normalize
 
@@ -151,7 +151,7 @@ module Twingly
         urlhash                       = calculate_urlhash(normalized_url_without_scheme)
         legacy_urlhash                = calculate_urlhash(normalized_url)
 
-        HashResult.new(original_url, addressable_normalized_url, normalized_url_without_scheme, urlhash, legacy_urlhash)
+        HashResult.new(original_url, callable_url, normalized_url_without_scheme, urlhash, legacy_urlhash)
       end
 
       def self.empty_result
