@@ -1,5 +1,17 @@
 # Changelog
 
+## [v7.1.1](https://github.com/twingly/twingly-url/tree/v7.1.1) (2026-09-15)
+
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v7.0.1...v7.1.1)
+
+**Merged pull requests:**
+
+- Add optional addressable-normalize to Twingly::URL::Extended [\#169](https://github.com/twingly/twingly-url/pull/169) ([Eric-Twingly](https://github.com/Eric-Twingly))
+- Add Extended Twingly::URL hasher [\#166](https://github.com/twingly/twingly-url/pull/166) ([Eric-Twingly](https://github.com/Eric-Twingly))
+- Allow public\_suffix v7, bump versions in CI [\#164](https://github.com/twingly/twingly-url/pull/164) ([dentarg](https://github.com/dentarg))
+- Add Ruby 3.2 to CI matrix [\#162](https://github.com/twingly/twingly-url/pull/162) ([dentarg](https://github.com/dentarg))
+- Update CI workflow [\#161](https://github.com/twingly/twingly-url/pull/161) ([vikiv480](https://github.com/vikiv480))
+
 ## [v7.0.1](https://github.com/twingly/twingly-url/tree/v7.0.1) (2022-11-01)
 
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v7.0.0...v7.0.1)
