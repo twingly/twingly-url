@@ -78,6 +78,61 @@ RSpec.describe Twingly::URL::Extended do
 
       it { is_expected.to eq(expected) }
     end
+
+    context "with addressable_normalize: true" do
+      subject { described_class.parse(url).normalized(addressable_normalize: true).to_s }
+
+      context "removes dot segments before the trailing slash is stripped" do
+        let(:url)      { "https://example.com/a/../news/." }
+        let(:expected) { "https://www.example.com/news" }
+
+        it { is_expected.to eq(expected) }
+      end
+
+      context "decodes a percent-encoded blacklisted matrix parameter name before stripping it" do
+        let(:url)      { "https://example.com/path;%6Asessionid=ABC?id=1" }
+        let(:expected) { "https://www.example.com/path?id=1" }
+
+        it { is_expected.to eq(expected) }
+      end
+
+      context "still removes blacklisted parameters and the fragment and sorts the query" do
+        let(:url)      { "https://example.com/p%c3%a4ge;jsessionid=X?utm_source=y&b=2&a=1#frag" }
+        let(:expected) { "https://www.example.com/p%C3%A4ge?a=1&b=2" }
+
+        it { is_expected.to eq(expected) }
+      end
+
+      context "keeps the embedded URL percent-encoded in the query" do
+        let(:url)      { "https://example.com/login?next=https://example.com/account" }
+        let(:expected) { "https://www.example.com/login?next=https%3A%2F%2Fexample.com%2Faccount" }
+
+        it { is_expected.to eq(expected) }
+      end
+    end
+  end
+
+  describe "#addressable_normalized" do
+    subject { described_class.parse(url).addressable_normalized }
+
+    let(:url) { "https://example.com/a/../p%c3%a4ge;%6Asessionid=X?utm_source=y#frag" }
+
+    it { is_expected.to be_a(described_class) }
+
+    context "returns the URL canonicalized by Addressable" do
+      let(:expected) { "https://example.com/p%C3%A4ge;jsessionid=X?utm_source=y#frag" }
+
+      it { expect(subject.to_s).to eq(expected) }
+    end
+
+    it "does not modify the original instance" do
+      original = described_class.parse(url)
+      before   = original.to_s
+
+      original.addressable_normalized
+
+      expect(original.to_s).to eq(before)
+    end
   end
 
   describe "#original_url_without_blacklisted_parameters" do
@@ -109,7 +164,9 @@ RSpec.describe Twingly::URL::Extended do
   end
 
   describe ".normalize_and_calculate_urlhash" do
-    let(:url) { "https://example.com" }
+    let(:url)              { "https://example.com" }
+    let(:raw_spelling)     { "https://example.com/päge?id=1" }
+    let(:encoded_spelling) { "https://example.com/p%C3%A4ge?id=1" }
 
     it "produces same hash when blacklisted query parameters differ" do
       url_with = "https://example.com/page?id=1&session=x&PHPSESSID=y&utm_source=z&cb=w"
@@ -133,8 +190,9 @@ RSpec.describe Twingly::URL::Extended do
       expect(result_with.legacy_urlhash).to eq(result_without.legacy_urlhash)
     end
 
-    it "returns both original url, normalized url, urlhash and legacy_urlhash" do
-      expect(described_class.normalize_and_calculate_urlhash(url)).to have_attributes(url: url,
+    it "returns original url, callable url, normalized url, urlhash and legacy_urlhash" do
+      expect(described_class.normalize_and_calculate_urlhash(url)).to have_attributes(url:            url,
+                                                                 callable_url:   "https://example.com/",
                                                                  normalized_url: "//www.example.com/",
                                                                  urlhash:        "1119909257551956256",
                                                                  legacy_urlhash: "14653629529287702089")
@@ -147,12 +205,27 @@ RSpec.describe Twingly::URL::Extended do
         .to eq(Twingly::URL::Hasher.documentdb_hash("https:#{result.normalized_url}").to_s)
     end
 
+    it "returns the callable URL without applying the Addressable normalization to the normalized URL" do
+      result = described_class.normalize_and_calculate_urlhash("https://example.com/news/.")
+
+      expect(result).to have_attributes(callable_url:   "https://example.com/news/",
+                                        normalized_url: "//www.example.com/news/.")
+    end
+
+    it "produces different hashes for raw and percent-encoded spellings of the same URL" do
+      raw     = described_class.normalize_and_calculate_urlhash(raw_spelling)
+      encoded = described_class.normalize_and_calculate_urlhash(encoded_spelling)
+
+      expect(raw.urlhash).not_to eq(encoded.urlhash)
+    end
+
     ["", nil].each do |empty_value|
       context "when url is #{empty_value.inspect}" do
         let(:url) { empty_value }
 
         it "returns a result where all attributes are set to nil" do
           expect(described_class.normalize_and_calculate_urlhash(url)).to have_attributes(url:            nil,
+                                                                     callable_url:   nil,
                                                                      normalized_url: nil,
                                                                      urlhash:        nil,
                                                                      legacy_urlhash: nil)
@@ -165,11 +238,71 @@ RSpec.describe Twingly::URL::Extended do
 
       it "returns a result where all attributes are set to nil" do
         expect(described_class.normalize_and_calculate_urlhash(url)).to have_attributes(url:            nil,
+                                                                   callable_url:   nil,
                                                                    normalized_url: nil,
                                                                    urlhash:        nil,
                                                                    legacy_urlhash: nil)
       end
     end
-  end
 
+    context "with addressable_normalize: true" do
+      it "produces same hash for raw and percent-encoded spellings of the same URL" do
+        raw     = described_class.normalize_and_calculate_urlhash(raw_spelling, addressable_normalize: true)
+        encoded = described_class.normalize_and_calculate_urlhash(encoded_spelling, addressable_normalize: true)
+
+        expect(raw.urlhash).to eq(encoded.urlhash)
+        expect(raw.legacy_urlhash).to eq(encoded.legacy_urlhash)
+      end
+
+      it "applies the Addressable normalization before the extended normalization" do
+        result = described_class.normalize_and_calculate_urlhash("https://example.com/news/.", addressable_normalize: true)
+
+        expect(result.normalized_url).to eq("//www.example.com/news")
+      end
+
+      it "returns the same original url as without the option" do
+        with_option    = described_class.normalize_and_calculate_urlhash(raw_spelling, addressable_normalize: true)
+        without_option = described_class.normalize_and_calculate_urlhash(raw_spelling)
+
+        expect(with_option.url).to eq(without_option.url)
+      end
+
+      it "removes blacklisted parameters from the callable URL" do
+        url = "https://example.com/a;jsessionid=ABC/b?utm_source=x"
+
+        result = described_class.normalize_and_calculate_urlhash(url, addressable_normalize: true)
+
+        expect(result).to have_attributes(url:            "https://example.com/a/b",
+                                          callable_url:   "https://example.com/a/b",
+                                          normalized_url: "//www.example.com/a/b")
+      end
+
+      it "decodes a percent-encoded blacklisted parameter name before removing it from the callable URL" do
+        result = described_class.normalize_and_calculate_urlhash("https://example.com/path;%6Asessionid=ABC?id=1", addressable_normalize: true)
+
+        expect(result.callable_url).to eq("https://example.com/path?id=1")
+      end
+
+      it "is a no-op for an already canonical URL" do
+        url = "https://example.com/p%C3%A4ge;jsessionid=X?id=1"
+
+        with_option    = described_class.normalize_and_calculate_urlhash(url, addressable_normalize: true)
+        without_option = described_class.normalize_and_calculate_urlhash(url)
+
+        expect(with_option.to_h).to eq(without_option.to_h)
+      end
+
+      context "with an invalid URL" do
+        it "still returns a result where all attributes are set to nil" do
+          result = described_class.normalize_and_calculate_urlhash("http:// example.com? hello # there", addressable_normalize: true)
+
+          expect(result).to have_attributes(url:            nil,
+                                            callable_url:   nil,
+                                            normalized_url: nil,
+                                            urlhash:        nil,
+                                            legacy_urlhash: nil)
+        end
+      end
+    end
+  end
 end

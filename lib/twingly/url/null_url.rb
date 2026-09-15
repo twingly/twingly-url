@@ -12,7 +12,7 @@ module Twingly
         ""
       end
 
-      def normalized
+      def normalized(**)
         self
       end
 
