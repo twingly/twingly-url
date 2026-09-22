@@ -240,6 +240,39 @@ RSpec.describe Twingly::URL::Extended do
     end
   end
 
+  describe "#callable_url" do
+    it "is the addressable-normalized URL without blacklisted parameters" do
+      url = described_class.parse("https://Example.com/p%c3%a4ge;jsessionid=X?k=1&utm_source=a&k=2")
+
+      expect(url.callable_url).to eq("https://example.com/p%C3%A4ge?k=1&k=2")
+    end
+
+    it "matches HashResult#callable_url" do
+      url = "https://example.com/path?b=2&utm_medium=x&a=1"
+
+      expect(described_class.parse(url).callable_url)
+        .to eq(described_class.normalize_and_calculate_urlhash(url).callable_url)
+    end
+
+    it "keeps a literal '+' and an encoded '%2B' in the query as given" do
+      url = described_class.parse("https://example.com/?tag=c++&expr=a%2Bb")
+
+      expect(url.callable_url).to eq("https://example.com/?tag=c++&expr=a%2Bb")
+    end
+
+    it "decodes percent-encoded reserved characters that are allowed in the query" do
+      url = described_class.parse("https://example.com/?path=https%3A%2F%2Fx%2Fy&q=a%3Db")
+
+      expect(url.callable_url).to eq("https://example.com/?path=https://x/y&q=a=b")
+    end
+
+    it "percent-encodes characters that are not allowed in the query" do
+      url = described_class.parse("https://example.com/?q=a b&C=D;O=A")
+
+      expect(url.callable_url).to eq("https://example.com/?q=a%20b&C=D%3BO=A")
+    end
+  end
+
   describe ".normalize_and_calculate_urlhash" do
     let(:url)              { "https://example.com" }
     let(:raw_spelling)     { "https://example.com/päge?id=1" }

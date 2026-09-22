@@ -67,6 +67,10 @@ module Twingly
         self.class.send(:new, addressable_normalized_url, public_suffix_domain)
       end
 
+      def callable_url
+        addressable_normalized.original_url_without_blacklisted_parameters
+      end
+
       def original_url_without_blacklisted_parameters
         url = addressable_uri.dup
         url.path = without_blacklisted_matrix_parameters(addressable_uri.path)

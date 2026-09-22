@@ -14,12 +14,37 @@ describe Twingly::URL::NullURL do
 
   describe "#normalized" do
     subject { url.normalized }
-    it { is_expected.to equal(subject) }
+    it { is_expected.to equal(url) }
 
     context "with addressable_normalize: true" do
       subject { url.normalized(addressable_normalize: true) }
       it { is_expected.to equal(url) }
     end
+  end
+
+  describe "#addressable_normalized" do
+    subject { url.addressable_normalized }
+    it { is_expected.to equal(url) }
+  end
+
+  describe "#callable_url" do
+    subject { url.callable_url }
+    it { is_expected.to eq("") }
+  end
+
+  describe "#original_url_without_blacklisted_parameters" do
+    subject { url.original_url_without_blacklisted_parameters }
+    it { is_expected.to eq("") }
+  end
+
+  describe "#query" do
+    subject { url.query }
+    it { is_expected.to be_nil }
+  end
+
+  describe "#query_values" do
+    subject { url.query_values }
+    it { is_expected.to be_nil }
   end
 
   describe "#scheme" do

@@ -16,6 +16,26 @@ module Twingly
         self
       end
 
+      def addressable_normalized
+        self
+      end
+
+      def callable_url
+        ""
+      end
+
+      def original_url_without_blacklisted_parameters
+        ""
+      end
+
+      def query
+        nil
+      end
+
+      def query_values
+        nil
+      end
+
       def valid?
         false
       end
