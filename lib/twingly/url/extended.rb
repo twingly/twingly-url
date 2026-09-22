@@ -70,7 +70,7 @@ module Twingly
       def original_url_without_blacklisted_parameters
         url = addressable_uri.dup
         url.path = without_blacklisted_matrix_parameters(addressable_uri.path)
-        url.query_values = without_blacklisted_query_parameters(addressable_uri.query_values)
+        url.query = without_blacklisted_query_string(addressable_uri.query)
         url.to_s
       end
 
@@ -116,6 +116,19 @@ module Twingly
         return if values_without_blacklisted_params.empty?
 
         values_without_blacklisted_params
+      end
+
+      def without_blacklisted_query_string(query)
+        return if query.nil?
+
+        kept = query.split("&").reject do |pair|
+          next true if pair.empty?
+
+          name = Addressable::URI.unencode_component(pair.split("=", 2).first)
+          BLACKLISTED_QUERY_PARAMETERS.include?(name)
+        end
+
+        kept.join("&") unless kept.empty?
       end
 
       def without_blacklisted_matrix_parameters(path)
