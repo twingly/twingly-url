@@ -161,12 +161,130 @@ RSpec.describe Twingly::URL::Extended do
 
       it { is_expected.to eq(expected) }
     end
+
+    context "keeps duplicate query keys" do
+      let(:url)      { "https://example.com/?k=1&utm_source=foo&k=2" }
+      let(:expected) { "https://example.com/?k=1&k=2" }
+
+      it { is_expected.to eq(expected) }
+    end
+
+    context "keeps the parameter order" do
+      let(:url)      { "https://example.com/?b=2&utm_medium=foo&a=1" }
+      let(:expected) { "https://example.com/?b=2&a=1" }
+
+      it { is_expected.to eq(expected) }
+    end
+
+    context "keeps the query encoding as it is" do
+      let(:url)      { "https://example.com/?q=a+b&path=https://x/y&C=D;O=A&utm_source=foo" }
+      let(:expected) { "https://example.com/?q=a+b&path=https://x/y&C=D;O=A" }
+
+      it { is_expected.to eq(expected) }
+    end
+
+    context "removes a blacklisted parameter whose name is percent-encoded" do
+      let(:url)      { "https://example.com/?utm%5Fsource=foo&id=1" }
+      let(:expected) { "https://example.com/?id=1" }
+
+      it { is_expected.to eq(expected) }
+    end
+
+    context "removes a bare blacklisted parameter without a value" do
+      let(:url)      { "https://example.com/?id=1&utm_source" }
+      let(:expected) { "https://example.com/?id=1" }
+
+      it { is_expected.to eq(expected) }
+    end
+
+    context "drops empty pairs" do
+      let(:url)      { "https://example.com/?&id=1&&utm_source=foo&" }
+      let(:expected) { "https://example.com/?id=1" }
+
+      it { is_expected.to eq(expected) }
+    end
+
+    context "removes the query when only blacklisted parameters and empty pairs remain" do
+      let(:url)      { "https://example.com/?utm_source=foo&" }
+      let(:expected) { "https://example.com/" }
+
+      it { is_expected.to eq(expected) }
+    end
+
+    context "leaves the URL untouched when it has no query" do
+      let(:url)      { "https://example.com/path" }
+      let(:expected) { "https://example.com/path" }
+
+      it { is_expected.to eq(expected) }
+    end
+
+    context "matches blacklisted parameter names case-sensitively" do
+      let(:url)      { "https://example.com/?UTM_SOURCE=foo&Utm_Medium=bar&id=1" }
+      let(:expected) { "https://example.com/?UTM_SOURCE=foo&Utm_Medium=bar&id=1" }
+
+      it { is_expected.to eq(expected) }
+    end
+
+    context "keeps parameters whose names merely contain a blacklisted name" do
+      let(:url)      { "https://example.com/?xutm_source=1&utm_source_x=2&utm_source=3" }
+      let(:expected) { "https://example.com/?xutm_source=1&utm_source_x=2" }
+
+      it { is_expected.to eq(expected) }
+    end
+
+    context "keeps a value that contains an encoded blacklisted parameter" do
+      let(:url)      { "https://example.com/?q=a%26utm_source%3Dx&id=1" }
+      let(:expected) { "https://example.com/?q=a%26utm_source%3Dx&id=1" }
+
+      it { is_expected.to eq(expected) }
+    end
+  end
+
+  describe "#callable_url" do
+    it "is the addressable-normalized URL without blacklisted parameters" do
+      url = described_class.parse("https://Example.com/p%c3%a4ge;jsessionid=X?k=1&utm_source=a&k=2")
+
+      expect(url.callable_url).to eq("https://example.com/p%C3%A4ge?k=1&k=2")
+    end
+
+    it "matches HashResult#callable_url" do
+      url = "https://example.com/path?b=2&utm_medium=x&a=1"
+
+      expect(described_class.parse(url).callable_url)
+        .to eq(described_class.normalize_and_calculate_urlhash(url).callable_url)
+    end
+
+    it "keeps a literal '+' and an encoded '%2B' in the query as given" do
+      url = described_class.parse("https://example.com/?tag=c++&expr=a%2Bb")
+
+      expect(url.callable_url).to eq("https://example.com/?tag=c++&expr=a%2Bb")
+    end
+
+    it "decodes percent-encoded reserved characters that are allowed in the query" do
+      url = described_class.parse("https://example.com/?path=https%3A%2F%2Fx%2Fy&q=a%3Db")
+
+      expect(url.callable_url).to eq("https://example.com/?path=https://x/y&q=a=b")
+    end
+
+    it "percent-encodes characters that are not allowed in the query" do
+      url = described_class.parse("https://example.com/?q=a b&C=D;O=A")
+
+      expect(url.callable_url).to eq("https://example.com/?q=a%20b&C=D%3BO=A")
+    end
   end
 
   describe ".normalize_and_calculate_urlhash" do
     let(:url)              { "https://example.com" }
     let(:raw_spelling)     { "https://example.com/päge?id=1" }
     let(:encoded_spelling) { "https://example.com/p%C3%A4ge?id=1" }
+
+    it "still collapses duplicate query keys for the urlhash while keeping them in the callable URL" do
+      with_duplicates = described_class.normalize_and_calculate_urlhash("https://example.com/?k=1&k=2")
+      last_value_only = described_class.normalize_and_calculate_urlhash("https://example.com/?k=2")
+
+      expect(with_duplicates.urlhash).to eq(last_value_only.urlhash)
+      expect(with_duplicates.callable_url).to eq("https://example.com/?k=1&k=2")
+    end
 
     it "produces same hash when blacklisted query parameters differ" do
       url_with = "https://example.com/page?id=1&session=x&PHPSESSID=y&utm_source=z&cb=w"
@@ -230,6 +348,72 @@ RSpec.describe Twingly::URL::Extended do
                                                                      urlhash:        nil,
                                                                      legacy_urlhash: nil)
         end
+      end
+    end
+
+    context "when re-hashing the returned URLs" do
+      let(:input)  { "https://Example.com/päge?k=1&utm_source=a&k=2&q=a+b" }
+      let(:result) { described_class.normalize_and_calculate_urlhash(input) }
+
+      it "gives the same urlhash for url as for the input" do
+        expect(described_class.normalize_and_calculate_urlhash(result.url).urlhash).to eq(result.urlhash)
+      end
+
+      it "gives the addressable-normalized urlhash for callable_url" do
+        addressable_urlhash = described_class.normalize_and_calculate_urlhash(input, addressable_normalize: true).urlhash
+
+        expect(described_class.normalize_and_calculate_urlhash(result.callable_url).urlhash).to eq(addressable_urlhash)
+      end
+    end
+
+    context "when comparing the query of normalized_url with the query of callable_url" do
+      def normalized_query(url)
+        Addressable::URI.parse(described_class.normalize_and_calculate_urlhash(url).normalized_url).query
+      end
+
+      def callable_query(url)
+        Addressable::URI.parse(described_class.normalize_and_calculate_urlhash(url).callable_url).query
+      end
+
+      it "collapses duplicate keys to the last value in normalized_url, but keeps them in callable_url" do
+        url = "https://example.com/?k=1&k=2"
+
+        expect(normalized_query(url)).to eq("k=2")
+        expect(callable_query(url)).to eq("k=1&k=2")
+      end
+
+      it "sorts the parameters in normalized_url, but keeps their order in callable_url" do
+        url = "https://example.com/?b=2&a=1"
+
+        expect(normalized_query(url)).to eq("a=1&b=2")
+        expect(callable_query(url)).to eq("b=2&a=1")
+      end
+
+      it "rewrites a literal '+' as '%20' in normalized_url, so it decodes to spaces, but keeps it in callable_url" do
+        url = "https://example.com/?tag=c++"
+
+        normalized = normalized_query(url)
+        callable   = callable_query(url)
+
+        expect(normalized).to eq("tag=c%20%20")
+        expect(callable).to eq("tag=c++")
+
+        expect(Addressable::URI.unencode_component(normalized)).to eq("tag=c  ")
+        expect(Addressable::URI.unencode_component(callable)).to eq("tag=c++")
+      end
+
+      it "percent-encodes raw reserved characters in values in normalized_url, but keeps them in callable_url" do
+        url = "https://example.com/?path=https://x/y"
+
+        expect(normalized_query(url)).to eq("path=https%3A%2F%2Fx%2Fy")
+        expect(callable_query(url)).to eq("path=https://x/y")
+      end
+
+      it "re-encodes '=' inside a value in normalized_url, but not in callable_url" do
+        url = "https://example.com/?C=D;O=A"
+
+        expect(normalized_query(url)).to eq("C=D%3BO%3DA")
+        expect(callable_query(url)).to eq("C=D%3BO=A")
       end
     end
 
