@@ -1,5 +1,13 @@
 # Changelog
 
+## [v7.2.0](https://github.com/twingly/twingly-url/tree/v7.2.0) (2026-10-13)
+
+[Full Changelog](https://github.com/twingly/twingly-url/compare/v7.1.1...v7.2.0)
+
+**Merged pull requests:**
+
+- Add Extended\#callable\_url with order-preserving query stripping [\#170](https://github.com/twingly/twingly-url/pull/170) ([Eric-Twingly](https://github.com/Eric-Twingly))
+
 ## [v7.1.1](https://github.com/twingly/twingly-url/tree/v7.1.1) (2026-09-15)
 
 [Full Changelog](https://github.com/twingly/twingly-url/compare/v7.0.1...v7.1.1)
