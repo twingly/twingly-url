@@ -14,8 +14,8 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
   s.required_ruby_version = ">= 3.0"
 
-  s.add_dependency "addressable", "~> 2.6"
-  s.add_dependency "public_suffix", ">= 3.0.1", "< 8"
+  s.add_dependency "addressable", "2.9.0"
+  s.add_dependency "public_suffix", "5.1.1"
 
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec", "~> 3"
