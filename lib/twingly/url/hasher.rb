@@ -20,11 +20,11 @@ module Twingly
       end
 
       def documentdb_hash(url)
-        SHA256_DIGEST.digest(url).unpack("L!")[0]
+        SHA256_DIGEST.digest(url).unpack("Q<")[0]
       end
 
       def autopingdb_hash(url)
-        SHA256_DIGEST.digest(url).unpack("q")[0]
+        SHA256_DIGEST.digest(url).unpack("q<")[0]
       end
     end
   end
