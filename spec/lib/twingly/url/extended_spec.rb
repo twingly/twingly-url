@@ -79,6 +79,14 @@ RSpec.describe Twingly::URL::Extended do
       it { is_expected.to eq(expected) }
     end
 
+    # The urlhash is calculated from this URL, changing how '+' is treated changes the urlhash
+    context "keeps a literal '+' in a query parameter name as a plus, but rewrites it as a space in the value" do
+      let(:url)      { "https://example.com/?a+b=c+d" }
+      let(:expected) { "https://www.example.com/?a%2Bb=c%20d" }
+
+      it { is_expected.to eq(expected) }
+    end
+
     context "with addressable_normalize: true" do
       subject { described_class.parse(url).normalized(addressable_normalize: true).to_s }
 
@@ -240,6 +248,22 @@ RSpec.describe Twingly::URL::Extended do
     end
   end
 
+  describe "#query_values" do
+    subject { described_class.parse(url).query_values }
+
+    context "keeps a literal '+' in a name, but reads it as a space in a value" do
+      let(:url) { "https://example.com/?a+b=c+d" }
+
+      it { is_expected.to eq("a+b" => "c d") }
+    end
+
+    context "reads '%2B' as a plus in both names and values" do
+      let(:url) { "https://example.com/?a%2Bb=c%2Bd" }
+
+      it { is_expected.to eq("a+b" => "c+d") }
+    end
+  end
+
   describe "#callable_url" do
     it "is the addressable-normalized URL without blacklisted parameters" do
       url = described_class.parse("https://Example.com/p%c3%a4ge;jsessionid=X?k=1&utm_source=a&k=2")
@@ -314,6 +338,16 @@ RSpec.describe Twingly::URL::Extended do
                                                                  normalized_url: "//www.example.com/",
                                                                  urlhash:        "1119909257551956256",
                                                                  legacy_urlhash: "14653629529287702089")
+    end
+
+    it "keeps a literal '+' in a query parameter name as '%2B' in normalized_url, so the urlhash stays the same" do
+      url = "https://example.com/?a+b=c"
+
+      expect(described_class.normalize_and_calculate_urlhash(url)).to have_attributes(url:            url,
+                                                                 callable_url:   url,
+                                                                 normalized_url: "//www.example.com/?a%2Bb=c",
+                                                                 urlhash:        "12381321737887489877",
+                                                                 legacy_urlhash: "8901784836407991551")
     end
 
     it "calculates the legacy urlhash from the normalized URL with its scheme kept" do
@@ -400,6 +434,19 @@ RSpec.describe Twingly::URL::Extended do
 
         expect(Addressable::URI.unencode_component(normalized)).to eq("tag=c  ")
         expect(Addressable::URI.unencode_component(callable)).to eq("tag=c++")
+      end
+
+      it "rewrites a literal '+' in a name as '%2B' in normalized_url, so it decodes to a plus, but keeps it in callable_url" do
+        url = "https://example.com/?a+b=c"
+
+        normalized = normalized_query(url)
+        callable   = callable_query(url)
+
+        expect(normalized).to eq("a%2Bb=c")
+        expect(callable).to eq("a+b=c")
+
+        expect(Addressable::URI.unencode_component(normalized)).to eq("a+b=c")
+        expect(Addressable::URI.unencode_component(callable)).to eq("a+b=c")
       end
 
       it "percent-encodes raw reserved characters in values in normalized_url, but keeps them in callable_url" do
