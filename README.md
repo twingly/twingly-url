@@ -8,8 +8,8 @@ Twingly URL tools.
     * `Twingly::URL.parse` - Returns one or more `Twingly::URL` instance
 * `twingly/url/hasher` - Generate URL hashes suitable for primary keys
     * `Twingly::URL::Hasher.taskdb_hash(url)` - MD5 hexdigest
-    * `Twingly::URL::Hasher.documentdb_hash(url)` - SHA256 unsigned long, native endian digest
-    * `Twingly::URL::Hasher.autopingdb_hash(url)` - SHA256 64-bit signed, native endian digest
+    * `Twingly::URL::Hasher.documentdb_hash(url)` - SHA256 unsigned 64-bit little-endian digest
+    * `Twingly::URL::Hasher.autopingdb_hash(url)` - SHA256 64-bit signed little-endian digest
 * `twingly/url/utilities` - Utilities to work with URLs
     * `Twingly::URL::Utilities.extract_valid_urls` - Returns Array of valid `Twingly::URL`
 * `twingly/url/extended` - Extended normalization and hashing, stripping blacklisted query and matrix parameters as well as the fragment.
