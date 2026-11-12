@@ -78,8 +78,17 @@ module Twingly
         url.to_s
       end
 
+      # Parsed here instead of with Addressable::URI#query_values, as the urlhash depends on the result
+      # and has to stay the same when Addressable changes how it reads a query.
       def query_values
-        addressable_uri.query_values
+        return if query.nil?
+
+        query.split("&").each_with_object({}) do |pair, values|
+          next if pair.empty?
+
+          name, value = pair.split("=", 2)
+          values[decode_query_name(name)] = decode_query_value(value)
+        end
       end
 
       def query
@@ -105,11 +114,23 @@ module Twingly
       end
 
       def normalized_query
-        without_blacklisted_query_parameters(addressable_uri.query_values)
+        without_blacklisted_query_parameters(query_values)
       end
 
       def normalize_addressable_url
         addressable_uri.normalize
+      end
+
+      # A literal '+' in a name is a plus
+      def decode_query_name(name)
+        Addressable::URI.unencode_component(name)
+      end
+
+      # A literal '+' in a value is a space
+      def decode_query_value(value)
+        return if value.nil?
+
+        Addressable::URI.unencode_component(value.tr("+", " "))
       end
 
       def without_blacklisted_query_parameters(query_values)
@@ -128,7 +149,7 @@ module Twingly
         kept = query.split("&").reject do |pair|
           next true if pair.empty?
 
-          name = Addressable::URI.unencode_component(pair.split("=", 2).first)
+          name = decode_query_name(pair.split("=", 2).first)
           BLACKLISTED_QUERY_PARAMETERS.include?(name)
         end
 
